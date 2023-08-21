@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ladderwise_api.urls'
+ROOT_URLCONF = 'CCWebApp_api.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ladderwise_api.wsgi.application'
+WSGI_APPLICATION = 'CCWebApp_api.wsgi.application'
 
 
 # Database
