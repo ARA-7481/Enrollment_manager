@@ -119,7 +119,7 @@ SIMPLE_JWT = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lawi_db',
+        'NAME': 'CCWebApp',
         'USER': 'postgres',
         'PASSWORD': 'Asdfghjkl748123',
         'HOST': 'localhost'
