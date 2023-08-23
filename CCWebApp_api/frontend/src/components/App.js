@@ -1,11 +1,30 @@
 import React, { Component, Fragment } from 'react';
-//import * as ReactDOMClient from 'react-dom/client';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from '../store';
 
-class App extends Component{
-    render(){
-        return <h1>Hello World</h1>
+const container = document.getElementById('app');
+const root = ReactDOMClient.createRoot(container);
+
+function AppContent() {
+    const location = useLocation();
+    return (
+        <Fragment>
+            <h1>adril cute</h1>
+        </Fragment>
+    )}
+
+class App extends Component {
+    render() {
+      return (
+        <Provider store={store}>
+          <Router>
+            <AppContent />
+          </Router>
+        </Provider>
+      );
     }
-}
+  }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+root.render(<App />);
