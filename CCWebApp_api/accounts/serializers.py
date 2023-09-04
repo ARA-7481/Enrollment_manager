@@ -6,13 +6,18 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        token['username'] = user.username
+        token['email'] = user.email
         return token
+    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number', 'password',)
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'mobile_number', 'password',)
+        fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number', 'password',)
         extra_kwargs = {'password':{'write_only': True},}
 
     def create(self, validated_data):

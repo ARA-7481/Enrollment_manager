@@ -21,17 +21,16 @@ class User(AbstractUser):
     id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
-    username = models.CharField(max_length=200, unique=True)
+    email = models.EmailField(blank=False, max_length=254, verbose_name='email address', unique=True)
     address_value = models.CharField(max_length=200, null=True)
     mobile_number = models.CharField(max_length=200, unique=True, null=True)
-    #e_mail = models.EmailField(max_length=200, unique=True, blank=True)
     suspended = models.BooleanField(default=False)
     state = models.CharField(max_length=20, choices=STATE, default='Pending')
     usertype = models.CharField(max_length=20, choices=USERTYPE, null=True)
     registration_datetime = models.DateTimeField(auto_now_add=True)
 
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
