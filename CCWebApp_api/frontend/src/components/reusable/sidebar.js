@@ -18,8 +18,6 @@ const Sidebar = () => {
   const [isToggled, setIsToggled] = useState(false);
 
   useEffect(() => {
-    // console.log(isCollapsed);
-    console.log(isToggled);
   }, [isCollapsed, isToggled]);
 
   const handleCollapse = () => {
@@ -31,7 +29,7 @@ const Sidebar = () => {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
 
-      <CDBSidebar toggled={isToggled} breakpoint={0} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth='240px' minWidth='80px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
+      <CDBSidebar toggled={isToggled} breakpoint={200} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth='245px' minWidth='80px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
 
         <CDBSidebarHeader prefix={
           <div style={{display: 'flex'}}>
@@ -45,7 +43,7 @@ const Sidebar = () => {
             </div>
 
             
-          <Card onClick={handleCollapse} style={{ transform: 'translate(70px, 10px)', position:'fixed', width:'10px'}}>
+          <Card onClick={handleCollapse} style={{ transform: 'translate(50px, 6px)', position:'fixed', width:'10px'}}>
           {!isCollapsed && 
               <ToogleIcon />
             }
