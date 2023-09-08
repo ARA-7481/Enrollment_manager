@@ -9,32 +9,34 @@ import {
   CDBSidebarMenuItem,
 } from 'cdbreact';
 import Nav from 'react-bootstrap/Nav';
-import { Button, Card, Row } from 'react-bootstrap';
-import { FaBars } from 'react-icons/fa';
+import { Card } from 'react-bootstrap';
 
 import { MainIcon, UsersIcon, SchedulesIcon, DashboardIcon, ClassIcon, SubjectsIcon, CourseIcon, RoomsIcon, SettingsIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isToggled, setIsToggled] = useState(false);
 
   useEffect(() => {
-    console.log(isCollapsed);
-  }, [isCollapsed]);
+    // console.log(isCollapsed);
+    console.log(isToggled);
+  }, [isCollapsed, isToggled]);
 
-  const handleToggle = () => {
+  const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
+    setIsToggled(!isToggled);
   };
 
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
 
-      <CDBSidebar textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth='240px' minWidth='80px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
+      <CDBSidebar toggled={isToggled} breakpoint={0} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth='240px' minWidth='80px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
 
         <CDBSidebarHeader prefix={
           <div style={{display: 'flex'}}>
 
-            <div style={{transform: 'translate(-13px, 6px)', position:'fixed'}}>
+            <div style={{transform: 'translate(-6px, 6px)', position:'fixed'}}>
             {isCollapsed && 
              <Nav.Link href="/">
               <ColoredHat />
@@ -43,7 +45,7 @@ const Sidebar = () => {
             </div>
 
             
-          <Card onClick={handleToggle} style={{ transform: 'translate(60px, 10px)', position:'fixed', width:'10px'}}>
+          <Card onClick={handleCollapse} style={{ transform: 'translate(70px, 10px)', position:'fixed', width:'10px'}}>
           {!isCollapsed && 
               <ToogleIcon />
             }
@@ -67,7 +69,7 @@ const Sidebar = () => {
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu style={{display:'flex', justifyContent: 'center'}}>
+          <CDBSidebarMenu style={{display:'flex', justifyContent: 'center', paddingLeft: isCollapsed ? '20px' : '0px'}}>
 
             <Nav.Link href="/" style={{paddingBottom: '24px'}}>
             <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
