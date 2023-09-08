@@ -30,7 +30,7 @@ instanceAxios.interceptors.response.use(
 
         originalRequest.headers['Authorization'] = `Bearer ${res.data.access}`;
 
-        return instance(originalRequest);
+        return instanceAxios(originalRequest);
       } catch (err) {
         console.error(err);
         localStorage.removeItem('access');

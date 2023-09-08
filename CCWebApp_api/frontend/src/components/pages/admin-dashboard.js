@@ -3,15 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
+import { Col } from 'react-bootstrap';
+
 
 function Dashboard(props) {
 
   return (
-    <h1>Hello World</h1>
-  )
-
+      <>
+      <Col style={{backgroundColor: '#e9ecef'}}>
+      <div style={{display:'flex'}}>
+          
+      </div>
+      <div>
+          
+      </div>
+      </Col>
+      
+      </>
+    );
 }
-
 const mapStateToProps = (state) => ({
   });
 

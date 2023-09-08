@@ -4,8 +4,12 @@ import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-d
 import { Provider } from 'react-redux';
 import store from '../redux/reducers/store';
 
+import AuthLayout from './layouts/Authlayout';
+import MainLayout from './layouts/Mainlayout';
+
 import Signin from './accounts/admin-signin';
 import Dashboard from './pages/admin-dashboard';
+
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
@@ -14,18 +18,21 @@ function AppContent() {
     const location = useLocation();
     return (
         <Fragment>
+        <Routes>
 
-        {/* {
-       location.pathname !== '/admin-signin' && (
-        <Header />
-        )} */}
+         <Route path="" element={<Signin />} />
 
-          <Routes>
-          <Route exact path="*" element={<Signin />} />
-          <Route exact path="/admin-signin" element={<Signin />} />
-          <Route exact path="/admin-dashboard" element={<Dashboard />} />
-          </Routes>
-      
+          <Route path='/auth' element={<AuthLayout/>}>
+          <Route index element={<Signin />} />
+          <Route path="admin-signin" element={<Signin />} />
+          </Route>
+
+          <Route path='/admin' element={<MainLayout/>}>
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          </Route>
+
+        </Routes>
         </Fragment>
     )}
 

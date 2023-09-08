@@ -10,7 +10,7 @@ function withAuth(WrappedComponent) {
       console.log(accessToken)
       if (!accessToken){
         console.log('no token')
-        return <Navigate to="/admin-signin" />;
+        return <Navigate to="/auth/admin-signin" />;
       }
       else{
         instanceAxios.get('/api/success/')
@@ -20,7 +20,7 @@ function withAuth(WrappedComponent) {
         })
         .catch((error) => {
           console.log('fail')
-          return <Navigate to="/admin-signin" />;
+          return <Navigate to="/auth/admin-signin" />;
         })
       }
     }
