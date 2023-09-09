@@ -15,6 +15,10 @@ import Subjects from './pages/subjects';
 import Course from './pages/course';
 import Rooms from './pages/rooms';
 import Settings from './pages/settings';
+import UsersAdmin from './pages/users-admin';
+import UsersStudents from './pages/users-students';
+import UsersTeachers from './pages/users-teachers';
+import UsersMasterlist from './pages/users-masterlist';
 
 
 const container = document.getElementById('app');
@@ -42,6 +46,10 @@ function AppContent() {
           <Route path="course" element={<Course />} />
           <Route path="rooms" element={<Rooms />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="users-admin" element={<UsersAdmin />} />
+          <Route path="users-students" element={<UsersStudents />} />
+          <Route path="users-teachers" element={<UsersTeachers />} />
+          <Route path="users-masterlist" element={<UsersMasterlist />} />
           </Route>
 
         </Routes>

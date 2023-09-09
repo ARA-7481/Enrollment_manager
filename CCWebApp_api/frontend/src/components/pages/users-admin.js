@@ -7,18 +7,18 @@ import { setsidebarState, setsubsidebarState } from '../../redux/actions/main';
 
 import { Col } from 'react-bootstrap';
 
-function Schedules(props) {
+function UsersAdmin(props) {
 
   useEffect(() => {
-    props.setsidebarState('schedules');
-    props.setsubsidebarState(null);
+    props.setsidebarState('users');
+    props.setsubsidebarState('admin');
   }, []);
 
   return (
       <>
       <Col>
       <div style={{display:'flex'}}>
-          <h1>Schedules</h1>
+          <h1>User-admin</h1>
       </div>
       <div>
           
@@ -29,10 +29,10 @@ function Schedules(props) {
     );
 }
 
-Schedules.propTypes = {
+UsersAdmin.propTypes = {
   sidebarState: PropTypes.string,
-  setsidebarState: PropTypes.func.isRequired,
   subsidebarState: PropTypes.string,
+  setsidebarState: PropTypes.func.isRequired,
   setsubsidebarState: PropTypes.func.isRequired
 }
 
@@ -41,4 +41,4 @@ const mapStateToProps = (state) => ({
   subsidebarState: state.main.subsidebarState
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState})(Schedules))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState})(UsersAdmin))

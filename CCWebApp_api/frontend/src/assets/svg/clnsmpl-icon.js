@@ -100,6 +100,44 @@ const SettingsIcon = (props) => {
    )
    };
 
+
+const DotIconStudents = (props) => {
+   const fillColor = props.subsidebarState === 'students' ? 'white' : '#8A92A6';
+   return(
+   <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <circle cx="5" cy="5.9873" r="5" fill={fillColor}/>
+   </svg>
+   )
+   };
+
+const DotIconTeachers = (props) => {
+   const fillColor = props.subsidebarState === 'teachers' ? 'white' : '#8A92A6';
+   return(
+   <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <circle cx="5" cy="5.9873" r="5" fill={fillColor}/>
+   </svg>
+   )
+   };
+
+const DotIconAdmin = (props) => {
+   const fillColor = props.subsidebarState === 'admin' ? 'white' : '#8A92A6';
+   return(
+   <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <circle cx="5" cy="5.9873" r="5" fill={fillColor}/>
+   </svg>
+   )
+   };
+
+const DotIconMasterlist = (props) => {
+   const fillColor = props.subsidebarState === 'masterlist' ? 'white' : '#8A92A6';
+   return(
+   <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <circle cx="5" cy="5.9873" r="5" fill={fillColor}/>
+   </svg>
+      )
+      };
+   
+
 const ToogleIcon = () => (
    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
    <g clipPath="url(#clip0_171_842)">
@@ -138,33 +176,46 @@ const ColoredHat = () => (
 
 )
 
-DashboardIcon.PropTypes= {
+DashboardIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
-SchedulesIcon.PropTypes= {
+SchedulesIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
-UsersIcon.PropTypes= {
+UsersIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
-ClassIcon.PropTypes= {
+ClassIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
-SubjectsIcon.PropTypes= {
+SubjectsIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
-CourseIcon.PropTypes= {
+CourseIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
-RoomsIcon.PropTypes= {
+RoomsIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
-SettingsIcon.PropTypes= {
+SettingsIcon.propTypes= {
+   sidebarState: PropTypes.string,
+ }
+DotIconStudents.propTypes= {
+   sidebarState: PropTypes.string,
+ }
+DotIconTeachers.propTypes= {
+   sidebarState: PropTypes.string,
+ }
+DotIconAdmin.propTypes= {
+   sidebarState: PropTypes.string,
+ }
+DotIconMasterlist.propTypes= {
    sidebarState: PropTypes.string,
  }
 
 const mapStateToProps = (state) => ({
-   sidebarState: state.main.sidebarState
+   sidebarState: state.main.sidebarState,
+   subsidebarState: state.main.subsidebarState
    });
 
 const ConnectedDashboardIcon = connect(mapStateToProps)(DashboardIcon);
@@ -175,5 +226,9 @@ const ConnectedSubjectsIcon = connect(mapStateToProps)(SubjectsIcon);
 const ConnectedCourseIcon = connect(mapStateToProps)(CourseIcon);
 const ConnectedRoomsIcon = connect(mapStateToProps)(RoomsIcon);
 const ConnectedSettingsIcon = connect(mapStateToProps)(SettingsIcon);
+const ConnectedDotIconStudents = connect(mapStateToProps)(DotIconStudents);
+const ConnectedDotIconTeachers = connect(mapStateToProps)(DotIconTeachers);
+const ConnectedDotIconAdmin = connect(mapStateToProps)(DotIconAdmin);
+const ConnectedDotIconMasterlist = connect(mapStateToProps)(DotIconMasterlist);
 
-export { ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon };
+export { ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
   CDBSidebar,
@@ -11,23 +12,37 @@ import {
   CDBSidebarMenuItem,
 } from 'cdbreact';
 import Nav from 'react-bootstrap/Nav';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, Accordion } from 'react-bootstrap';
+import { setsidebarState, setsubsidebarState } from '../../redux/actions/main';
 
-import { ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
+import { ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
 
 
 function Sidebar(props){
+  const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    console.log(props.sidebarState)
-  }, [isCollapsed, isToggled, props.sidebarState]);
+    console.log(open)
+  }, [isCollapsed, isToggled, props.sidebarState, open, props.subsidebarState]);
 
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
     setIsToggled(!isToggled);
   };
+
+  const handleAccordion = () => {
+    navigate('/admins/users-admin');
+    if(open && props.sidebarState !== 'users'){
+      setOpen(true)
+    }
+    else{
+    setOpen(!open);
+    props.setsidebarState('users');
+      }
+ };
 
 
   return (
@@ -79,8 +94,10 @@ function Sidebar(props){
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/" style={{paddingBottom: '8px'}}>
-            <div style={{color: props.sidebarState === 'users' ? 'white' : '', backgroundColor: props.sidebarState === 'users' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+           
+           
+            <Accordion defaultActiveKey="0" style={{paddingBottom: '8px'}}>
+            <div onClick={handleAccordion} style={{color: props.sidebarState === 'users' ? 'white' : '', backgroundColor: props.sidebarState === 'users' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedUsersIcon/>
             </div>
@@ -88,7 +105,73 @@ function Sidebar(props){
             {!isCollapsed && 'Users'}
             </div>
             </div>
-           </Nav.Link>
+            {open && (
+            <Accordion.Collapse eventKey="0">
+               
+              <>
+              <Nav.Link href="/#/admins/users-students" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <div style={{color: props.subsidebarState === 'students' ? 'white' : '', backgroundColor: props.subsidebarState === 'students' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
+              {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>S</h6>}
+              {!isCollapsed && (
+                <div style={{ marginLeft: isCollapsed ? '20px' : '10px' }}>
+              <ConnectedDotIconStudents/>
+              </div>
+                )}
+              <div style={{paddingLeft: '20px'}}>
+              {!isCollapsed && 'Students'}
+              </div>
+              </div>
+              </Nav.Link>
+
+              <Nav.Link href="/#/admins/users-teachers" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <div style={{color: props.subsidebarState === 'teachers' ? 'white' : '', backgroundColor: props.subsidebarState === 'teachers' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
+              {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>T</h6>}
+              {!isCollapsed && (
+                <div style={{ marginLeft: isCollapsed ? '20px' : '10px' }}>
+                  <ConnectedDotIconTeachers />
+                </div>
+                )}
+              <div style={{paddingLeft: '20px'}}>
+              {!isCollapsed && 'Teachers'}
+              </div>
+              </div>
+              </Nav.Link>
+
+              <Nav.Link href="/#/admins/users-admin" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <div style={{color: props.subsidebarState === 'admin' ? 'white' : '', backgroundColor: props.subsidebarState === 'admin' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
+              {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>A</h6>}
+              {!isCollapsed && (
+                <div style={{ marginLeft: isCollapsed ? '20px' : '10px' }}>
+              <ConnectedDotIconAdmin/>
+              </div>
+                )}
+              <div style={{paddingLeft: '20px'}}>
+              {!isCollapsed && 'Admin & Staff'}
+              </div>
+              </div>
+              </Nav.Link>
+
+              <Nav.Link href="/#/admins/users-masterlist" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <div style={{color: props.subsidebarState === 'masterlist' ? 'white' : '', backgroundColor: props.subsidebarState === 'masterlist' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
+              {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>M</h6>}
+              {!isCollapsed && (
+                <div style={{ marginLeft: isCollapsed ? '20px' : '10px' }}>
+              <ConnectedDotIconMasterlist/>
+              </div>
+                )}
+              <div style={{paddingLeft: '20px'}}>
+              {!isCollapsed && 'Masterlist'}
+              </div>
+              </div>
+              </Nav.Link>
+              </>
+
+
+            </Accordion.Collapse>
+              )}
+           </Accordion>
+           
+            
 
             <Nav.Link href="/#/admins/schedules" style={{paddingBottom: '8px'}}>
             <div style={{color: props.sidebarState === 'schedules' ? 'white' : '', backgroundColor: props.sidebarState === 'schedules' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
@@ -175,11 +258,15 @@ function Sidebar(props){
 
 Sidebar.propTypes = {
   sidebarState: PropTypes.string,
+  subsidebarState: PropTypes.string,
+  setsidebarState: PropTypes.func.isRequired,
+  setsubsidebarState: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  sidebarState: state.main.sidebarState
+  sidebarState: state.main.sidebarState,
+  subsidebarState: state.main.subsidebarState,
   });
 
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps, {setsidebarState, setsubsidebarState})(Sidebar);

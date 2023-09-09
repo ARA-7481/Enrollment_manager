@@ -1,7 +1,8 @@
-import { SET_SIDEBAR } from "../types/types";
+import { SET_SIDEBAR, SET_SUBSIDEBAR } from "../types/types";
 
 const initialState = {
-    sidebarState: null
+    sidebarState: null,
+    subsidebarState: null,
 }
 
 export default function(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 sidebarState: action.payload,
+            }
+        case SET_SUBSIDEBAR:
+            return{
+                ...state,
+                subsidebarState: action.payload,
             }
         default:
             return state;
