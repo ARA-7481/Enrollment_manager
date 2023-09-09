@@ -22,7 +22,7 @@ function Signin (props) {
 
   useEffect(() => {
    if (props.isAuthenticated) {
-     navigate('/admin/dashboard');
+     navigate('/admins/dashboard');
    }
  }, [props.isAuthenticated]);
  
@@ -89,7 +89,7 @@ function Signin (props) {
 Signin.propTypes = {
     isAuthenticated: PropTypes.bool,
     SignIn : PropTypes.func.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,

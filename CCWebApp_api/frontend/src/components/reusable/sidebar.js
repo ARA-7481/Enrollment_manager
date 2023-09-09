@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import {
   CDBSidebar,
@@ -9,16 +11,18 @@ import {
   CDBSidebarMenuItem,
 } from 'cdbreact';
 import Nav from 'react-bootstrap/Nav';
-import { Card } from 'react-bootstrap';
+import { Card, Container } from 'react-bootstrap';
 
-import { MainIcon, UsersIcon, SchedulesIcon, DashboardIcon, ClassIcon, SubjectsIcon, CourseIcon, RoomsIcon, SettingsIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
+import { ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
 
-const Sidebar = () => {
+
+function Sidebar(props){
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
 
   useEffect(() => {
-  }, [isCollapsed, isToggled]);
+    console.log(props.sidebarState)
+  }, [isCollapsed, isToggled, props.sidebarState]);
 
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -29,21 +33,19 @@ const Sidebar = () => {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
 
-      <CDBSidebar toggled={isToggled} breakpoint={200} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth='245px' minWidth='80px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
+      <CDBSidebar toggled={isToggled} breakpoint={200} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth='257px' minWidth='92px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
 
         <CDBSidebarHeader prefix={
           <div style={{display: 'flex'}}>
 
-            <div style={{transform: 'translate(-6px, 6px)', position:'fixed'}}>
+            <div style={{transform: 'translate( 0px, 6px)', position:'fixed'}}>
             {isCollapsed && 
-             <Nav.Link href="/">
+             <Nav.Link href="/#/admins/dashboard" onClick={handleCollapse}>
               <ColoredHat />
             </Nav.Link>
             }
             </div>
-
-            
-          <Card onClick={handleCollapse} style={{ transform: 'translate(50px, 6px)', position:'fixed', width:'10px'}}>
+          <Card onClick={handleCollapse} style={{backgroundColor:'rgba(51, 51, 51, 0.00)', transform: 'translate(62px, 6px)', position:'fixed', width:'10px'}}>
           {!isCollapsed && 
               <ToogleIcon />
             }
@@ -51,90 +53,103 @@ const Sidebar = () => {
               <ToogleIconOn />
             }
           </Card>
-
-
           </div>
                                   }
 
-
-         style={{display: 'flex', height: '100px'}} 
+         style={{display: 'flex', height: '78px'}} 
         >
             {!isCollapsed && 
-            <Nav.Link href="/" style={{}}>
+            <Nav.Link href="/#/admins/dashboard" style={{transform: 'translate( 0px, -12px)'}}>
               <MainIcon />
             </Nav.Link>
             }
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu style={{display:'flex', justifyContent: 'center', paddingLeft: isCollapsed ? '20px' : '0px'}}>
+          <CDBSidebarMenu style={{  display:'flex', justifyContent: 'start', paddingLeft:'24px'}}>
 
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <DashboardIcon/>
+            <Nav.Link href="/#/admins/dashboard" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'dashboard' ? 'white' : '', backgroundColor: props.sidebarState === 'dashboard' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedDashboardIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Dashboard'}
             </div>
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <UsersIcon/>
+            <Nav.Link href="/" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'users' ? 'white' : '', backgroundColor: props.sidebarState === 'users' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedUsersIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Users'}
             </div>
             </div>
-            </Nav.Link>
+           </Nav.Link>
 
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <SchedulesIcon/>
+            <Nav.Link href="/#/admins/schedules" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'schedules' ? 'white' : '', backgroundColor: props.sidebarState === 'schedules' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedSchedulesIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Schedules'}
             </div>
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <ClassIcon/>
+            <Nav.Link href="/#/admins/class" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'class' ? 'white' : '', backgroundColor: props.sidebarState === 'class' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedClassIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Class'}
             </div>
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <SubjectsIcon/>
+            <Nav.Link href="/#/admins/subjects" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'subjects' ? 'white' : '', backgroundColor: props.sidebarState === 'subjects' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedSubjectsIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Subjects'}
             </div>
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <CourseIcon/>
+            <Nav.Link href="/#/admins/course" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'course' ? 'white' : '', backgroundColor: props.sidebarState === 'course' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedCourseIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Course'}
             </div>
             </div>
             </Nav.Link>
             
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <RoomsIcon/>
+            <Nav.Link href="/#/admins/rooms" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'rooms' ? 'white' : '', backgroundColor: props.sidebarState === 'rooms' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedRoomsIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Rooms'}
             </div>
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/" style={{paddingBottom: '24px'}}>
-            <div style={{display:'flex', justifyContent: 'start', alignItems: 'center'}}>
-            <SettingsIcon/>
+            <Nav.Link href="/#/admins/settings" style={{paddingBottom: '8px'}}>
+            <div style={{color: props.sidebarState === 'settings' ? 'white' : '', backgroundColor: props.sidebarState === 'settings' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedSettingsIcon/>
+            </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Settings'}
             </div>
@@ -158,4 +173,13 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+Sidebar.propTypes = {
+  sidebarState: PropTypes.string,
+}
+
+const mapStateToProps = (state) => ({
+  sidebarState: state.main.sidebarState
+  });
+
+
+export default connect(mapStateToProps)(Sidebar);

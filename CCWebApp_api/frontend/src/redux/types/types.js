@@ -12,3 +12,5 @@ export const GET_USERS = 'GET_USERS';
 export const DELETE_USER = 'DELETE_USER';
 export const ACCESS_VERIFY_SUCCESS = 'ACCESS_VERIFY_SUCCESS';
 export const SET_LOADING = 'SET_LOADING';
+
+export const SET_SIDEBAR = 'SET_SIDEBAR';

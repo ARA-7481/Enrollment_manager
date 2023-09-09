@@ -7,17 +7,17 @@ import { setsidebarState } from '../../redux/actions/main';
 
 import { Col } from 'react-bootstrap';
 
-function Dashboard(props) {
+function Subjects(props) {
 
   useEffect(() => {
-    props.setsidebarState('dashboard');
+    props.setsidebarState('subjects');
   }, []);
 
   return (
       <>
       <Col>
       <div style={{display:'flex'}}>
-          <h1>Dashboard</h1>
+          <h1>Subjects</h1>
       </div>
       <div>
           
@@ -28,7 +28,7 @@ function Dashboard(props) {
     );
 }
 
-Dashboard.propTypes = {
+Subjects.propTypes = {
   sidebarState: PropTypes.string,
   setsidebarState: PropTypes.func.isRequired
 }
@@ -37,4 +37,4 @@ const mapStateToProps = (state) => ({
   sidebarState: state.main.sidebarState
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState})(Dashboard))
+export default withAuth(connect(mapStateToProps, {setsidebarState})(Subjects))

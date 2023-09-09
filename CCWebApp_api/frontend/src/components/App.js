@@ -9,6 +9,12 @@ import MainLayout from './layouts/Mainlayout';
 
 import Signin from './accounts/admin-signin';
 import Dashboard from './pages/admin-dashboard';
+import Schedules from './pages/schedules';
+import Class from './pages/class';
+import Subjects from './pages/subjects';
+import Course from './pages/course';
+import Rooms from './pages/rooms';
+import Settings from './pages/settings';
 
 
 const container = document.getElementById('app');
@@ -27,9 +33,15 @@ function AppContent() {
           <Route path="admin-signin" element={<Signin />} />
           </Route>
 
-          <Route path='/admin' element={<MainLayout/>}>
+          <Route path='/admins' element={<MainLayout/>}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="schedules" element={<Schedules />} />
+          <Route path="class" element={<Class />} />
+          <Route path="subjects" element={<Subjects />} />
+          <Route path="course" element={<Course />} />
+          <Route path="rooms" element={<Rooms />} />
+          <Route path="settings" element={<Settings />} />
           </Route>
 
         </Routes>

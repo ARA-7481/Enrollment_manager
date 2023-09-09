@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from '../reusable/sidebar';
+import TopNavbar from '../reusable/topnavbar';
 
 
 
@@ -9,10 +10,16 @@ import Sidebar from '../reusable/sidebar';
 const MainLayout = () => {
     return (
       <>
-
-      <div style={{display: 'flex'}} > 
+      <div style={{display: 'flex', backgroundColor: '#e9ecef'}} > 
               <Sidebar/>
-               <Outlet/>  
+              <div style={{width: '100%'}}>
+                <div>
+                <TopNavbar/>
+                </div>
+                <div style={{transform: 'translate( 40px, -36px)', backgroundColor: '#ffffff', marginRight: '80px', borderRadius:'8px'}}>
+                <Outlet/>
+                </div> 
+              </div> 
         </div>
 
 
