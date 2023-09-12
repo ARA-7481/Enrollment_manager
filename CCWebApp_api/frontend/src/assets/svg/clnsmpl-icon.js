@@ -13,6 +13,26 @@ const MainIcon = () => (
                         </svg>
 );
 
+const AccordionIconClose = (props) => {
+   const fillColor = props.sidebarState === 'users' ? 'white' : '#8A92A6';
+   return(
+      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fillRule="evenodd" clipRule="evenodd" d="M4.58579 6L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893C0.683418 -0.0976305 1.31658 -0.0976305 1.70711 0.292893L6.70711 5.29289C7.09763 5.68342 7.09763 6.31658 6.70711 6.70711L1.70711 11.7071C1.31658 12.0976 0.683418 12.0976 0.292893 11.7071C-0.0976311 11.3166 -0.0976311 10.6834 0.292893 10.2929L4.58579 6Z" fill={fillColor}/>
+      </svg>
+   )
+
+   };
+
+const AccordionIconOpen = (props) => {
+   const fillColor = props.sidebarState === 'users' ? 'white' : '#8A92A6';
+   return(
+      <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fillRule="evenodd" clipRule="evenodd" d="M6.5 5.08579L10.7929 0.792893C11.1834 0.402369 11.8166 0.402369 12.2071 0.792893C12.5976 1.18342 12.5976 1.81658 12.2071 2.20711L7.20711 7.20711C6.81658 7.59763 6.18342 7.59763 5.79289 7.20711L0.792893 2.20711C0.402369 1.81658 0.402369 1.18342 0.792893 0.792893C1.18342 0.402369 1.81658 0.402369 2.20711 0.792893L6.5 5.08579Z" fill={fillColor}/>
+      </svg>
+   )
+   
+   };
+
 const UsersIcon = (props) => {
    const fillColor = props.sidebarState === 'users' ? 'white' : '#8A92A6';
    return(
@@ -201,15 +221,21 @@ SettingsIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
 DotIconStudents.propTypes= {
-   sidebarState: PropTypes.string,
+   subsidebarState: PropTypes.string,
  }
 DotIconTeachers.propTypes= {
-   sidebarState: PropTypes.string,
+   subsidebarState: PropTypes.string,
  }
 DotIconAdmin.propTypes= {
-   sidebarState: PropTypes.string,
+   subsidebarState: PropTypes.string,
  }
 DotIconMasterlist.propTypes= {
+   subsidebarState: PropTypes.string,
+ }
+AccordionIconClose.propTypes= {
+   sidebarState: PropTypes.string,
+ }
+AccordionIconOpen.propTypes= {
    sidebarState: PropTypes.string,
  }
 
@@ -230,5 +256,7 @@ const ConnectedDotIconStudents = connect(mapStateToProps)(DotIconStudents);
 const ConnectedDotIconTeachers = connect(mapStateToProps)(DotIconTeachers);
 const ConnectedDotIconAdmin = connect(mapStateToProps)(DotIconAdmin);
 const ConnectedDotIconMasterlist = connect(mapStateToProps)(DotIconMasterlist);
+const ConnectedAccordionIconClose = connect(mapStateToProps)(AccordionIconClose);
+const ConnectedAccordionIconOpen = connect(mapStateToProps)(AccordionIconOpen);
 
-export { ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon };
+export {ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon };

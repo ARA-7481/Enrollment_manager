@@ -1,8 +1,9 @@
-import { SET_SIDEBAR, SET_SUBSIDEBAR } from "../types/types";
+import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER } from "../types/types";
 
 const initialState = {
     sidebarState: null,
     subsidebarState: null,
+    pageHeader: {}
 }
 
 export default function(state = initialState, action) {
@@ -16,6 +17,11 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 subsidebarState: action.payload,
+            }
+        case SET_PAGEHEADER:
+            return{
+                ...state,
+                pageHeader: action.payload,
             }
         default:
             return state;

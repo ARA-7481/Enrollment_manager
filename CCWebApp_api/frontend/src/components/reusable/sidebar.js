@@ -15,7 +15,7 @@ import Nav from 'react-bootstrap/Nav';
 import { Card, Container, Accordion } from 'react-bootstrap';
 import { setsidebarState, setsubsidebarState } from '../../redux/actions/main';
 
-import { ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
+import {ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
 
 
 function Sidebar(props){
@@ -34,9 +34,24 @@ function Sidebar(props){
   };
 
   const handleAccordion = () => {
+    if (props.subsidebarState === 'admin'){
     navigate('/admins/users-admin');
+    }
+    else if (props.subsidebarState === 'student'){
+    navigate('/admins/users-students');
+    }
+    else if (props.subsidebarState === 'teachers'){
+      navigate('/admins/users-teachers');
+      }
+    else if (props.subsidebarState === 'masterlist'){
+      navigate('/admins/users-masterlist');
+      }
+    else if(props.subsidebarState === null){
+      navigate('/admins/users-students');
+      }
+
     if(open && props.sidebarState !== 'users'){
-      setOpen(true)
+      setOpen(false)
     }
     else{
     setOpen(!open);
@@ -48,7 +63,7 @@ function Sidebar(props){
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
 
-      <CDBSidebar toggled={isToggled} breakpoint={200} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth='257px' minWidth='92px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
+      <CDBSidebar toggled={isToggled} breakpoint={200} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth={isCollapsed ? '92px' : '257px'} minWidth='92px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
 
         <CDBSidebarHeader prefix={
           <div style={{display: 'flex'}}>
@@ -97,12 +112,20 @@ function Sidebar(props){
            
            
             <Accordion defaultActiveKey="0" style={{paddingBottom: '8px'}}>
-            <div onClick={handleAccordion} style={{color: props.sidebarState === 'users' ? 'white' : '', backgroundColor: props.sidebarState === 'users' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div onClick={handleAccordion} style={{cursor: 'pointer', color: props.sidebarState === 'users' ? 'white' : '', backgroundColor: props.sidebarState === 'users' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedUsersIcon/>
             </div>
             <div style={{paddingLeft: '20px'}}>
             {!isCollapsed && 'Users'}
+            </div>
+            <div style={{marginLeft: 'auto', paddingRight: isCollapsed ? '0px':'12px'}}>
+            {!isCollapsed && open && 
+            <ConnectedAccordionIconOpen/>
+            }
+            {!isCollapsed && !open && 
+            <ConnectedAccordionIconClose/>
+            }
             </div>
             </div>
             {open && (

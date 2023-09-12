@@ -15,3 +15,5 @@ export const SET_LOADING = 'SET_LOADING';
 
 export const SET_SIDEBAR = 'SET_SIDEBAR';
 export const SET_SUBSIDEBAR = 'SET_SUBSIDEBAR';
+
+export const SET_PAGEHEADER = 'SET_PAGEHEADER';

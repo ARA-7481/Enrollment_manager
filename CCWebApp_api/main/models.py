@@ -9,6 +9,46 @@ def random_code_generator(length=10):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
 
+class Subject(models.Model):
+    code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
+    description = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.code
+
+class Course(models.Model):
+    code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
+    description = models.CharField(max_length=200)
+    subjects = models.ManyToManyField(Subject)
+
+    def __str__(self):
+        return self.code
+
+class Classes(models.Model):
+    code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
+    subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
+    students = models.ManyToManyField(User, related_name='student_user')
+    teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='teacher_user')
+
+    def __str__(self):
+        return self.code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Company(models.Model):
     u_id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)
     name = models.CharField(max_length=200)

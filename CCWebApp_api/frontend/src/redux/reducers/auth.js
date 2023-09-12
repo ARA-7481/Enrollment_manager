@@ -13,6 +13,7 @@ export default function(state = initialState, action) {
     switch(action.type){
         case LOGIN_SUCCESS:
             localStorage.setItem('access',action.payload.token)
+            localStorage.setItem('user',JSON.stringify(action.payload.user))
             return{
                 ...state,
                 isAuthenticated: true,

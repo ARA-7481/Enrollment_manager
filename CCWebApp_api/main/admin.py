@@ -1,13 +1,11 @@
 from django.contrib import admin
 
-from .models import Company, Service, Licenses, CompanyStaff, Project, Collaboration
-from accounts.models import User
+from .models import Subject, Course, Classes
+from accounts.models import User, StudentProfile
 
-# admin.site.register(Company)
-# admin.site.register(Service)
-# admin.site.register(Licenses)
-# admin.site.register(CompanyStaff)
-# admin.site.register(Project)
-# admin.site.register(Collaboration)
 admin.site.register(User)
+admin.site.register(StudentProfile)
+admin.site.register(Subject)
+admin.site.register(Course)
+admin.site.register(Classes)
 
