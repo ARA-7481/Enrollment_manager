@@ -3,8 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Col, Row } from 'react-bootstrap';
 import Sidebar from '../reusable/sidebar';
 import TopNavbar from '../reusable/topnavbar';
-
-
+import Footer from '../reusable/footer';
 
 
 const MainLayout = () => {
@@ -16,8 +15,11 @@ const MainLayout = () => {
                 <div>
                 <TopNavbar/>
                 </div>
-                <div style={{transform: 'translate( 40px, -36px)', backgroundColor: '#ffffff', marginRight: '80px', borderRadius:'8px'}}>
+                <div style={{transform: 'translate( 40px, -36px)', backgroundColor: '#ffffff', marginRight: '80px', borderRadius:'8px', minHeight: '64.5vh'}}>
                 <Outlet/>
+                </div> 
+                <div style={{position: 'sticky', bottom: 0, backgroundColor: '#ffffff'}}>
+                <Footer/>
                 </div> 
               </div> 
         </div>

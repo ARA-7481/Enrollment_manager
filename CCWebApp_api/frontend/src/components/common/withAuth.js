@@ -7,7 +7,6 @@ function withAuth(WrappedComponent) {
   function WithAuth(props) {
     const accessToken = localStorage.getItem('access')
     if (!props.isAuthenticated) {
-      console.log(accessToken)
       if (!accessToken){
         console.log('no token')
         return <Navigate to="/auth/admin-signin" />;
@@ -15,7 +14,6 @@ function withAuth(WrappedComponent) {
       else{
         instanceAxios.get('/api/success/')
         .then((response) => {
-          console.log('success')
           return <WrappedComponent {...props} />;
         })
         .catch((error) => {

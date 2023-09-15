@@ -25,7 +25,6 @@ function Sidebar(props){
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    console.log(open)
   }, [isCollapsed, isToggled, props.sidebarState, open, props.subsidebarState]);
 
   const handleCollapse = () => {
@@ -61,14 +60,14 @@ function Sidebar(props){
 
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial', }}>
 
       <CDBSidebar toggled={isToggled} breakpoint={200} textColor='#8A92A6' backgroundColor="#fff" collapsed={isCollapsed} maxWidth={isCollapsed ? '92px' : '257px'} minWidth='92px' style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px'}}>
 
         <CDBSidebarHeader prefix={
           <div style={{display: 'flex'}}>
 
-            <div style={{transform: 'translate( 0px, 6px)', position:'fixed'}}>
+            <div style={{transform: 'translate( 0px, 6px)'}}>
             {isCollapsed && 
              <Nav.Link href="/#/admins/dashboard" onClick={handleCollapse}>
               <ColoredHat />
@@ -264,16 +263,6 @@ function Sidebar(props){
 
           </CDBSidebarMenu>
         </CDBSidebarContent>
-
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              padding: '20px 5px',
-            }}
-          >
-            Footer
-          </div>
-        </CDBSidebarFooter>
       </CDBSidebar>
     </div>
   );

@@ -1,6 +1,6 @@
 import axios from "axios";
 import instanceAxios from "../interceptor/interceptor";
-import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER } from "../types/types";
+import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS } from "../types/types";
 
 
 
@@ -24,4 +24,18 @@ export const setpageHeader = (pageHeaderMain, pageHeaderMain2, pageHeaderSub) =>
       type: SET_PAGEHEADER,
       payload: pageHeader
     })
+  };
+
+export const getStudents = () => async dispatch => {
+    try {
+      const res = await instanceAxios.get('/api/students/');
+      if(res.status === 200){
+        dispatch({
+          type: GET_STUDENTS,
+          payload: res.data
+        });
+      }
+    } catch (error) {
+        console.error(error);
+    }
   };

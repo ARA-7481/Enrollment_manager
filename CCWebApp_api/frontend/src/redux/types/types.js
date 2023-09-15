@@ -17,3 +17,5 @@ export const SET_SIDEBAR = 'SET_SIDEBAR';
 export const SET_SUBSIDEBAR = 'SET_SUBSIDEBAR';
 
 export const SET_PAGEHEADER = 'SET_PAGEHEADER';
+
+export const GET_STUDENTS = 'GET_STUDENTS'

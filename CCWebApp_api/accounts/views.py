@@ -5,7 +5,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer
+from .permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
+from .models import User, StudentProfile
+
 
 class SuccessView(APIView):
     def get(self, request):
@@ -68,3 +71,10 @@ class RegisterView(generics.GenericAPIView):
             "message": "Success",
             "token": token
         })
+    
+class StudentsViewSet(viewsets.ModelViewSet):
+    queryset = StudentProfile.objects.all()
+    permission_classes = [
+        IsSuperAdmin
+    ]
+    serializer_class = StudentSerializer

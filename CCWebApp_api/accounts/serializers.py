@@ -1,6 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import User
+from .models import User, StudentProfile
+from main.models import Course, Department
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -14,10 +15,34 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number')
 
+class StudentUserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'date_joined')
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = ('code', 'description')
+
+class CourseSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer(read_only=False)
+    class Meta:
+        model = Course
+        fields = ('code','department',)
+
+class StudentSerializer(serializers.ModelSerializer):
+    userprofile = StudentUserProfileSerializer(read_only=False)
+    course = CourseSerializer(read_only=False)
+
+    class Meta:
+        model = StudentProfile
+        fields = ('id', 'userprofile', 'course', 'yearlevel', 'status' )
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number', 'password',)
+        fields = ('id', 'usertype', 'first_name', 'last_name', 'email', 'mobile_number', 'password')
         extra_kwargs = {'password':{'write_only': True},}
 
     def create(self, validated_data):
