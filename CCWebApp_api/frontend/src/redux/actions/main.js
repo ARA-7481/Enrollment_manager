@@ -1,6 +1,6 @@
 import axios from "axios";
 import instanceAxios from "../interceptor/interceptor";
-import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS } from "../types/types";
+import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMENTS } from "../types/types";
 
 
 
@@ -26,12 +26,26 @@ export const setpageHeader = (pageHeaderMain, pageHeaderMain2, pageHeaderSub) =>
     })
   };
 
-export const getStudents = () => async dispatch => {
+export const getStudents = (queryStatus, queryYrlvl, queryDepartment, queryCourse, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get('/api/students/');
+      const res = await instanceAxios.get(`/api/students?search=${queryStatus} ${queryYrlvl} ${queryDepartment} ${queryCourse} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_STUDENTS,
+          payload: res.data
+        });
+      }
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+export const getDepartments = () => async dispatch => {
+    try {
+      const res = await instanceAxios.get('/api/departments/');
+      if(res.status === 200){
+        dispatch({
+          type: GET_DEPARTMENTS,
           payload: res.data
         });
       }

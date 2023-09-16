@@ -31,7 +31,7 @@ class Course(models.Model):
     code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
     description = models.CharField(max_length=200)
     subjects = models.ManyToManyField(Subject)
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, related_name='related_course')
 
     def __str__(self):
         return self.code

@@ -23,7 +23,7 @@ class StudentUserProfileSerializer(serializers.ModelSerializer):
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
-        fields = ('code', 'description')
+        fields = ('code', 'related_course')
 
 class CourseSerializer(serializers.ModelSerializer):
     department = DepartmentSerializer(read_only=False)

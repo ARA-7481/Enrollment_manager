@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer
 from .permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
 from .models import User, StudentProfile
+from rest_framework import filters
 
 
 class SuccessView(APIView):
@@ -78,3 +79,5 @@ class StudentsViewSet(viewsets.ModelViewSet):
         IsSuperAdmin
     ]
     serializer_class = StudentSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['yearlevel', 'status', 'course__department__code', 'course__code', '$userprofile__first_name', '$userprofile__last_name', '=id']

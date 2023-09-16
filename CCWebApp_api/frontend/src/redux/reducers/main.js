@@ -1,10 +1,11 @@
-import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS } from "../types/types";
+import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMENTS } from "../types/types";
 
 const initialState = {
     sidebarState: null,
     subsidebarState: null,
     pageHeader: {},
     studentsList: [],
+    departmentsList: [],
 }
 
 export default function(state = initialState, action) {
@@ -28,6 +29,11 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 studentsList: action.payload
+            }
+        case GET_DEPARTMENTS:
+            return{
+                ...state,
+                departmentsList: action.payload
             }
         default:
             return state;

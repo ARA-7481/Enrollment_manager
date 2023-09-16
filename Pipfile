@@ -9,6 +9,7 @@ djangorestframework = "*"
 django-rest-knox = "*"
 psycopg2 = "*"
 djangorestframework-simplejwt = {extras = ["crypto"], version = "*"}
+django-filter = "*"
 
 [dev-packages]
 
