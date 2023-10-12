@@ -5,7 +5,9 @@ import instanceAxios from '../../redux/interceptor/interceptor';
 
 function withAuth(WrappedComponent) {
   function WithAuth(props) {
+    
     const accessToken = localStorage.getItem('access')
+
     if (!props.isAuthenticated) {
       if (!accessToken){
         console.log('no token')

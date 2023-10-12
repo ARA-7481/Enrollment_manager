@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.db.models import JSONField
-from accounts.models import User
+from accounts.models import User, FacultyProfile, StudentProfile
 import random
 import string
 
@@ -23,6 +23,8 @@ class Subject(models.Model):
     corequisite = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='corequisites', blank=True)
     first_sem = models.BooleanField(default=True)
     second_sem = models.BooleanField(default=True)
+    lecture = models.FloatField(blank=False, default=0)
+    lab = models.FloatField(blank=False, default=0)
 
     def __str__(self):
         return self.code
@@ -35,14 +37,38 @@ class Course(models.Model):
 
     def __str__(self):
         return self.code
+    
+class Room(models.Model):
+    code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
+    description = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.code    
+    
+class ScheduleInstance(models.Model):
+    time_in = models.TimeField()
+    time_out = models.TimeField()
+    day = models.CharField(max_length=200, null=True)
+    room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
 
 class Classes(models.Model):
-    code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
-    room = models.CharField(max_length=50, null=False, default='none-allocated')
+    CLASS_TYPE = (
+        ('Face to Face' , 'Face to Face'),
+        ('Virtual' , 'Virtual'),
+        ('Hybrid' , 'Hybrid'),
+    )
+    code = models.CharField(max_length=20, primary_key=True, null=False, unique=True)
+    description = models.CharField(max_length=200, null=True)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    yearlevel = models.CharField(max_length=20, null=True)
+    type = models.CharField(max_length=20, choices=CLASS_TYPE, null=False, default= 'Face to Face')
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
-    students = models.ManyToManyField(User, related_name='student_user')
-    teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='teacher_user')
+    students = models.ManyToManyField(StudentProfile, related_name='student_related_class', blank=True)
+    teacher = models.ForeignKey(FacultyProfile, on_delete=models.SET_NULL, null=True, related_name='teacher_related_class')
+    schedule = models.ManyToManyField(ScheduleInstance, related_name='related_class', blank=True)
+    startdate = models.DateField(null=True)
+    enddate = models.DateField(null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.code
-

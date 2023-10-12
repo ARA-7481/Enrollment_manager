@@ -5,9 +5,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer
 from .permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
-from .models import User, StudentProfile
+from .models import User, StudentProfile, FacultyProfile, StaffProfile
 from rest_framework import filters
 
 
@@ -81,3 +81,21 @@ class StudentsViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['yearlevel', 'status', 'course__department__code', 'course__code', '$userprofile__first_name', '$userprofile__last_name', '=id']
+
+class FacultyViewSet(viewsets.ModelViewSet):
+    queryset = FacultyProfile.objects.all()
+    permission_classes = [
+        IsSuperAdmin
+    ]
+    serializer_class = FacultySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['position', 'courses__department__code', 'courses__code', '$userprofile__first_name', '$userprofile__last_name', '=id']
+
+class StaffViewSet(viewsets.ModelViewSet):
+    queryset = StaffProfile.objects.all()
+    permission_classes = [
+        IsSuperAdmin
+    ]
+    serializer_class = StaffSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['$userprofile__first_name', '$userprofile__last_name', '=role', '=id']

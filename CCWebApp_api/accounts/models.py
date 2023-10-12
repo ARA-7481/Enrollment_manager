@@ -78,4 +78,31 @@ class StudentProfile(models.Model):
     userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
 
-   
+class FacultyProfile(models.Model):
+    POSITION = (
+        ('Dean','Dean'),
+        ('Assistant Dean', 'Assistant Dean'),
+        ('Professor', 'Professor'),
+        ('Part-Time', 'Part-Time'),
+        ('Teacher', 'Teacher'),
+        ('Laboratory Attendant', 'Laboratory Attendant'),
+        
+    )
+    id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
+    courses = models.ManyToManyField('main.Course')
+    position = models.CharField(max_length=50, choices=POSITION, null=False, default= 'Teacher')
+    userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+
+
+class StaffProfile(models.Model):
+    ROLE = (     
+        ('Admin', 'Admin'),
+        ('Staff','Staff'),
+        ('Not Specified', 'Not Specified'),
+        ('Registrar', 'Registrar'),
+        ('Guidance', 'Guidance'),
+        
+    )
+    id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
+    role = models.CharField(max_length=50, choices=ROLE, null=False, default= 'Not Specified')
+    userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)

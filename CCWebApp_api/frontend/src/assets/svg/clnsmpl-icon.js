@@ -267,6 +267,43 @@ const ColoredHat = () => (
 
 )
 
+const ColoredClassIcon = () => (
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path fillRule="evenodd" clipRule="evenodd" d="M12 2C11.3096 2 10.75 2.55964 10.75 3.25V4H4C2.89543 4 2 4.89543 2 6V17C2 18.1046 2.89543 19 4 19H6.21019L4.89025 21.2931C4.54584 21.8914 4.75168 22.6556 5.34999 23C5.87351 23.3014 6.52406 23.1814 6.90924 22.7459C6.96427 22.6837 7.01388 22.6151 7.05693 22.5403L9.09479 19H14.9552L16.9931 22.5403C17.3375 23.1386 18.1017 23.3444 18.7 23C19.2983 22.6556 19.5041 21.8914 19.1597 21.2931L17.8398 19H20C21.1046 19 22 18.1046 22 17V6C22 4.89543 21.1046 4 20 4H13.25V3.25C13.25 2.55964 12.6904 2 12 2ZM15.2322 9.5L13.5 11.2322L11.3839 9.11612C11.1495 8.8817 10.8315 8.75 10.5 8.75C10.1685 8.75 9.85054 8.88169 9.61611 9.11611L7 11.7322C6.51184 12.2204 6.51184 13.0118 7 13.5C7.48815 13.9882 8.27961 13.9882 8.76776 13.5L10.5 11.7678L12.6161 13.8839C12.8505 14.1183 13.1684 14.25 13.5 14.25C13.8315 14.25 14.1494 14.1183 14.3839 13.8839L17 11.2678C17.4881 10.7796 17.4881 9.98815 17 9.5C16.5118 9.01184 15.7204 9.01184 15.2322 9.5Z" fill="#3A57E8"/>
+   </svg>
+)
+
+const BlueExclamation = () => (
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M21.9996 12C21.9996 17.524 17.5226 22 11.9996 22C6.47663 22 1.99963 17.524 1.99963 12C1.99963 6.478 6.47663 2 11.9996 2C17.5226 2 21.9996 6.478 21.9996 12Z" fill="#293DA2"/>
+   <path d="M12 14.3068C12.6958 14.3068 13.2631 13.7576 13.2631 13.0839V6.9065C13.2631 6.23285 12.6958 5.68359 12 5.68359C11.3042 5.68359 10.7368 6.23285 10.7368 6.9065V13.0839C10.7368 13.7576 11.3042 14.3068 12 14.3068Z" fill="white"/>
+   <path d="M12.0003 15.8516C11.3108 15.8516 10.7479 16.4049 10.7479 17.0835C10.7479 17.762 11.3165 18.3153 12.0147 18.3153C12.71 18.3153 13.2742 17.762 13.2742 17.0835C13.2742 16.4049 12.71 15.8516 12.0003 15.8516Z" fill="white"/>
+   </svg>
+)
+
+const RedExclamation = () => (
+   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M10 0C4.47254 0 0 4.47293 0 10C0 15.5275 4.47293 20 10 20C15.5275 20 20 15.5271 20 10C20 4.47254 15.5271 0 10 0ZM10 18.4375C5.33621 18.4375 1.5625 14.6635 1.5625 10C1.5625 5.33621 5.33652 1.5625 10 1.5625C14.6638 1.5625 18.4375 5.33652 18.4375 10C18.4375 14.6638 14.6635 18.4375 10 18.4375Z" fill="#FF0000"/>
+   <path d="M10 5.03516C9.56852 5.03516 9.21875 5.38492 9.21875 5.81641V10.8474C9.21875 11.2789 9.56852 11.6286 10 11.6286C10.4315 11.6286 10.7812 11.2789 10.7812 10.8474V5.81641C10.7812 5.38492 10.4315 5.03516 10 5.03516Z" fill="#FF0000"/>
+   <path d="M10 14.6953C10.5825 14.6953 11.0547 14.2231 11.0547 13.6406C11.0547 13.0581 10.5825 12.5859 10 12.5859C9.41751 12.5859 8.94531 13.0581 8.94531 13.6406C8.94531 14.2231 9.41751 14.6953 10 14.6953Z" fill="#FF0000"/>
+   </svg>
+)
+
+const SimpleCalendar = () => (
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M3.09277 9.40234H20.9167" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M16.4419 13.3086H16.4511" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M12.0044 13.3086H12.0136" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M7.55811 13.3086H7.56737" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M16.4419 17.1953H16.4511" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M12.0044 17.1953H12.0136" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M7.55811 17.1953H7.56737" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M16.0435 2V5.29078" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M7.96533 2V5.29078" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path fillRule="evenodd" clipRule="evenodd" d="M16.2383 3.57812H7.77096C4.83427 3.57812 3 5.21407 3 8.22116V17.2708C3 20.3251 4.83427 21.9989 7.77096 21.9989H16.229C19.175 21.9989 21 20.3535 21 17.3464V8.22116C21.0092 5.21407 19.1842 3.57812 16.2383 3.57812Z" stroke="#8A92A6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   </svg>
+)
+
 DashboardIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
@@ -330,4 +367,4 @@ const ConnectedDotIconMasterlist = connect(mapStateToProps)(DotIconMasterlist);
 const ConnectedAccordionIconClose = connect(mapStateToProps)(AccordionIconClose);
 const ConnectedAccordionIconOpen = connect(mapStateToProps)(AccordionIconOpen);
 
-export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon };
+export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon, ColoredClassIcon, BlueExclamation, RedExclamation, SimpleCalendar};

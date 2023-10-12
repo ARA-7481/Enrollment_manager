@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { Card, Navbar, Button } from 'react-bootstrap';
 import Media from 'react-media';
 
-import { AddUser } from '../../assets/svg/clnsmpl-icon';
+import { AddUser, ColoredClassIcon } from '../../assets/svg/clnsmpl-icon';
 
 
 function TopNavbar(props){
 const user = JSON.parse(localStorage.getItem('user'))
+if (!user){
+  return <Navigate to="/auth/admin-signin" />;
+}
 
 return(
   <Card style={{ width: '100%' , height: '100%', borderTopLeftRadius: '0px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px', borderColorbackgroundColor:'rgba(51, 51, 51, 0.00)'}}>
@@ -66,6 +70,27 @@ return(
         </Button>
         </div>}
 
+        {props.sidebarState === 'users' && props.subsidebarState === 'teachers' &&
+          <div style={{marginRight: '24px', marginTop: '12px'}}>
+        <Button type="button" style={{borderColor:'white', display:'flex', borderRadius: '4px', backgroundColor: 'white', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '210px', height: '40px'}}>
+          <AddUser/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '12px'}}>Add Faculty</h1>
+        </Button>
+        </div>}
+
+        {props.sidebarState === 'users' && props.subsidebarState === 'admin' &&
+          <div style={{marginRight: '24px', marginTop: '12px'}}>
+        <Button type="button" style={{borderColor:'white', display:'flex', borderRadius: '4px', backgroundColor: 'white', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '210px', height: '40px'}}>
+          <AddUser/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '22px'}}>Add Staff</h1>
+        </Button>
+        </div>}
+
+        {props.sidebarState === 'class' && props.classState === 'list' &&
+          <div style={{marginRight: '24px', marginTop: '12px'}}>
+        <Button type="button" href="/#/admins/class-create" style={{borderColor:'white', display:'flex', borderRadius: '4px', backgroundColor: 'white', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '210px', height: '40px'}}>
+          <ColoredClassIcon/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '22px'}}>Create Class</h1>
+        </Button>
+        </div>}
+
         </div>
       </Card.Body>
     </Card>
@@ -75,13 +100,15 @@ return(
 TopNavbar.propTypes = {
   sidebarState: PropTypes.string,
   subsidebarState: PropTypes.string,
-  pageHeader: PropTypes.object.isRequired
+  pageHeader: PropTypes.object.isRequired,
+  classState: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
   pageHeader: state.main.pageHeader,
   sidebarState: state.main.sidebarState,
   subsidebarState: state.main.subsidebarState,
+  classState: state.main.classState,
   });
 
 export default connect(mapStateToProps, {})(TopNavbar);

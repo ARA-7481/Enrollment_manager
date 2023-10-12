@@ -3,6 +3,8 @@ import * as ReactDOMClient from 'react-dom/client';
 import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../redux/reducers/store';
+import '../assets/css/text.css'
+import '../assets/css/forms.css'
 
 import AuthLayout from './layouts/Authlayout';
 import MainLayout from './layouts/Mainlayout';
@@ -19,6 +21,7 @@ import UsersAdmin from './pages/users-admin';
 import UsersStudents from './pages/users-students';
 import UsersTeachers from './pages/users-teachers';
 import UsersMasterlist from './pages/users-masterlist';
+import ClassCreate from './pages/class-create';
 
 
 const container = document.getElementById('app');
@@ -42,6 +45,7 @@ function AppContent() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="schedules" element={<Schedules />} />
           <Route path="class" element={<Class />} />
+          <Route path="class-create" element={<ClassCreate />} />
           <Route path="subjects" element={<Subjects />} />
           <Route path="course" element={<Course />} />
           <Route path="rooms" element={<Rooms />} />

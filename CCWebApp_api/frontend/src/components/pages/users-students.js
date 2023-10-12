@@ -6,7 +6,6 @@ import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setpageHeader, getStudents, getDepartments } from '../../redux/actions/main';
 
 import { Card, Col, Table, Form, Dropdown, Button } from 'react-bootstrap';
-
 import { Magnifier, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, New} from '../../assets/svg/clnsmpl-icon';
 
 function UsersStudents(props) {
@@ -107,7 +106,7 @@ function UsersStudents(props) {
           </Form.Group>
         </Form>
       
-        <h1 style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', paddingTop: '10px'}}>
+        <h1 className='inter-500-16px' style={{paddingTop: '10px'}}>
           Sort: 
         </h1>
         <Dropdown style={{width: '16%'}}>
@@ -123,7 +122,7 @@ function UsersStudents(props) {
             </Dropdown.Menu>
         </Dropdown>
 
-        <h1 style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', paddingTop: '10px', marginLeft: '20px'}}>
+        <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
           Filter: 
         </h1>
         <Dropdown style={{width: '16%'}}>
@@ -200,18 +199,18 @@ function UsersStudents(props) {
 
       <div style={{backgroundColor:'#ffffff', borderRadius:'8px'}}>
         <div style={{height: '81px', display: 'flex'}}>
-          <h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '30px', padding: '24px'}}>List of Students</h1>
+          <h1 className='table-title'>List of Students</h1>
         </div>
         <Table hover style={{border: 'none'}}>
         <thead >
           <tr>
-            <th style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', backgroundColor: '#F5F6FA', border: 'none', width: '15%', paddingLeft:'20px'}}>IDs</th>
-            <th style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', backgroundColor: '#F5F6FA', border: 'none', width: '23%'}}>FULL NAME</th>
-            <th style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', backgroundColor: '#F5F6FA', border: 'none', width: '13%'}}>COURSE</th>
-            <th style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', backgroundColor: '#F5F6FA', border: 'none', width: '13%'}}>DEPARTMENT</th>
-            <th style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', backgroundColor: '#F5F6FA', border: 'none', width: '10%'}}>YEAR</th>
-            <th style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', backgroundColor: '#F5F6FA', border: 'none', width: '20%'}}>STATUS</th>
-            <th style={{color:'#8A92A6', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '16px', backgroundColor: '#F5F6FA', border: 'none'}}>ACTION</th>
+            <th className='table-head' style={{width: '15%', paddingLeft:'20px'}}>IDs</th>
+            <th className='table-head' style={{width: '23%'}}>FULL NAME</th>
+            <th className='table-head' style={{width: '13%'}}>COURSE</th>
+            <th className='table-head' style={{width: '13%'}}>DEPARTMENT</th>
+            <th className='table-head' style={{width: '10%'}}>YEAR</th>
+            <th className='table-head' style={{width: '20%'}}>STATUS</th>
+            <th className='table-head' >ACTION</th>
           </tr>
         </thead>
         <tbody style={{cursor: 'pointer', }}>
@@ -232,17 +231,17 @@ function UsersStudents(props) {
               })
               ?.map((student) =>(
               <tr key={student.id} style={{border: 'none'}}>
-                <td style={{color:'#232D42', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', border: 'none', height:'62px', verticalAlign: 'middle', paddingLeft:'20px'}}>
+                <td className='table-body' style={{paddingLeft:'20px'}}>
                   {student.id}</td>
-                <td style={{color:'#232D42', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', border: 'none', height:'62px', verticalAlign: 'middle'}}>
+                <td className='table-body' >
                   {student.userprofile.first_name} {student.userprofile.last_name} {new Date() - new Date(student.userprofile.date_joined) <= 3 * 24 * 60 * 60 * 1000 && <New/>}</td>
-                <td style={{color:'#232D42', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', border: 'none', height:'62px', verticalAlign: 'middle'}}>
+                <td className='table-body' >
                   {student.course.code}</td>
-                <td style={{color:'#232D42', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', border: 'none', height:'62px', verticalAlign: 'middle'}}>
+                <td className='table-body' >
                   {student.course.department.code}</td>
-                <td style={{color:'#232D42', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', border: 'none', height:'62px', verticalAlign: 'middle'}}>
+                <td className='table-body' >
                   {student.yearlevel}</td>
-                <td style={{color:'#232D42', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', border: 'none', height:'62px', verticalAlign: 'middle'}}>
+                <td className='table-body' >
                   
                   {(() => {
                     switch(student.status) {
@@ -258,7 +257,7 @@ function UsersStudents(props) {
                     })()}
                     
                   </td>
-                <td style={{color:'#232D42', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', border: 'none', height:'62px', verticalAlign: 'middle'}}>
+                <td className='table-body'>
                 
                 <Dropdown>
                     <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: '#e9ecef', color: 'rgba(51, 51, 51, 0.00)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'center', marginLeft: '10px'}}>
@@ -268,44 +267,44 @@ function UsersStudents(props) {
                     <Dropdown.Menu>
                       {student.status === 'Verification Failed'  && 
                         <>
-                          <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>View Student</h1></Dropdown.Item>
+                          <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
                         </>}
                       {student.status === 'For Evaluation'  && 
                         <>
-                          <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>View Student</h1></Dropdown.Item>
-                          <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Update To Evaluation In Progress</h1></Dropdown.Item>
-                          <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Reject This Student</h1></Dropdown.Item>
+                          <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                          <Dropdown.Item><h1 className='dropdown-item'>Update To Evaluation In Progress</h1></Dropdown.Item>
+                          <Dropdown.Item><h1 className='dropdown-item'>Reject This Student</h1></Dropdown.Item>
                         </>}
                       {student.status === 'Evaluation In Progress'  && 
                         <>
-                          <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>View Student</h1></Dropdown.Item>
-                          <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Evaluation Complete</h1></Dropdown.Item>
-                          <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Contact Student</h1></Dropdown.Item>
+                          <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                          <Dropdown.Item><h1 className='dropdown-item'>Evaluation Complete</h1></Dropdown.Item>
+                          <Dropdown.Item><h1 className='dropdown-item'>Contact Student</h1></Dropdown.Item>
                         </>}
                       {student.status === 'Evaluation Complete'  && 
                         <>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>View Student</h1></Dropdown.Item>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Notify Student Via Portal & Email</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>Notify Student Via Portal & Email</h1></Dropdown.Item>
                         </>}
                       {student.status === 'Pending Payment'  && 
                         <>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>View Student</h1></Dropdown.Item>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Input Payment Information</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>Input Payment Information</h1></Dropdown.Item>
                         </>}
                       {student.status === 'Payment Received'  && 
                         <>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>View Student</h1></Dropdown.Item>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Marked As Enrolled</h1></Dropdown.Item>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Student Verification Failed</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>Marked As Enrolled</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>Student Verification Failed</h1></Dropdown.Item>
                         </>}
                       {student.status === 'Enrolled'  && 
                         <>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>View Student</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
                         </>}
                       {student.status === 'Draft'  && 
                         <>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Update Student Info</h1></Dropdown.Item>
-                        <Dropdown.Item><h1 style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '14px', marginTop:'10px'}}>Delete</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>Update Student Info</h1></Dropdown.Item>
+                        <Dropdown.Item><h1 className='dropdown-item'>Delete</h1></Dropdown.Item>
                         </>}
                     </Dropdown.Menu>
                 </Dropdown>
@@ -331,6 +330,7 @@ UsersStudents.propTypes = {
   subsidebarState: PropTypes.string,
   pageHeader: PropTypes.object,
   studentsList: PropTypes.array.isRequired,
+  departmentsList: PropTypes.array.isRequired,
   setsidebarState: PropTypes.func.isRequired,
   setsubsidebarState: PropTypes.func.isRequired,
   setpageHeader: PropTypes.func.isRequired,
