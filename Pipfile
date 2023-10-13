@@ -10,6 +10,8 @@ django-rest-knox = "*"
 psycopg2 = "*"
 djangorestframework-simplejwt = {extras = ["crypto"], version = "*"}
 django-filter = "*"
+psycopg2-binary = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
