@@ -1,12 +1,7 @@
 const path = require('path');
-const { SplitChunksPlugin } = require("webpack").optimize;
-const TerserPlugin = require("terser-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
-const webpack = require('webpack');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './CCWebApp_api/frontend/src/index.js',
   output: {
     path: path.resolve(__dirname, 'CCWebApp_api/frontend/static/frontend'),
@@ -93,14 +88,6 @@ module.exports = {
       },
     ]
   },
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: "all",
-  //   },
-  // },
-  plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-  ],
   performance: {
     hints: process.env.NODE_ENV === 'production' ? "warning" : false,
     maxAssetSize: 1000000, // bytes

@@ -13,16 +13,16 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 import environ
 
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -34,7 +34,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
-    'frontend'
+    'frontend',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -147,7 +149,7 @@ import dj_database_url
 
 DATABASES = {
 
-    'default': dj_database_url.parse('postgres://ccwebapp_user:h13u5Kxz1mFGeyKNbglQrM3fB6BXr4uO@dpg-ckn3kln83ejs739ft2sg-a.singapore-postgres.render.com/ccwebapp')
+    'default': dj_database_url.parse(os.environ.get("DB_URL"),)
 
 }
 
@@ -195,5 +197,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+# # STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+AWS_ACCESS_KEY_ID =  os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
+# AWS_ACCESS_KEY_ID =  "AKIA5WBNZMEFEJCJH43W"
+# AWS_SECRET_ACCESS_KEY = "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"
+
+AWS_STORAGE_BUCKET_NAME = "ccwebappbucket"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
