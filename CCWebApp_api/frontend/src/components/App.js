@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, lazy, Suspense } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -6,23 +6,21 @@ import store from '../redux/reducers/store';
 import '../assets/css/text.css'
 import '../assets/css/forms.css'
 
-import AuthLayout from './layouts/Authlayout';
-import MainLayout from './layouts/Mainlayout';
-
-import Signin from './accounts/admin-signin';
-import Dashboard from './pages/admin-dashboard';
-import Schedules from './pages/schedules';
-import Class from './pages/class';
-import Subjects from './pages/subjects';
-import Course from './pages/course';
-import Rooms from './pages/rooms';
-import Settings from './pages/settings';
-import UsersAdmin from './pages/users-admin';
-import UsersStudents from './pages/users-students';
-import UsersTeachers from './pages/users-teachers';
-import UsersMasterlist from './pages/users-masterlist';
-import ClassCreate from './pages/class-create';
-
+const AuthLayout = lazy(() =>  import('./layouts/Authlayout'))
+const MainLayout = lazy(() =>  import('./layouts/Mainlayout'))
+const Signin = lazy(() =>  import('./accounts/admin-signin'))
+const Dashboard = lazy(() => wait(1000).then(() => import('./pages/admin-dashboard')))
+const Schedules = lazy(() =>  import('./pages/schedules'))
+const Class = lazy(() =>  import('./pages/class'))
+const Subjects = lazy(() =>  import('./pages/subjects'))
+const Course = lazy(() =>  import('./pages/course'))
+const Rooms = lazy(() =>  import('./pages/rooms'))
+const Settings = lazy(() =>  import('./pages/settings'))
+const UsersAdmin = lazy(() =>  import('./pages/users-admin'))
+const UsersStudents = lazy(() =>  import('./pages/users-students'))
+const UsersTeachers = lazy(() =>  import('./pages/users-teachers'))
+const UsersMasterlist = lazy(() =>  import('./pages/users-masterlist'))
+const ClassCreate = lazy(() =>  import('./pages/class-create'))
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
@@ -65,11 +63,19 @@ class App extends Component {
       return (
         <Provider store={store}>
           <Router>
+            <Suspense fallback={<h1>Loading...</h1>}>
             <AppContent />
+            </Suspense>
           </Router>
         </Provider>
       );
     }
   }
+
+function wait(time){
+  return new Promise(resolve => {
+    setTimeout(resolve, time)
+  })
+}
 
 root.render(<App />);

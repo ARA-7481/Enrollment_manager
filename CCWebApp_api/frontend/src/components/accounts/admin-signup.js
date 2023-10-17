@@ -3,11 +3,7 @@ import { Row, Col, Image, Form, Button, ListGroup } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import Card from '../Card'
 
-import facebook from '../../assets/images/brands/fb.svg'
-import google from '../../assets/images/brands/gm.svg'
-import instagram from '../../assets/images/brands/im.svg'
-import linkedin from '../../assets/images/brands/li.svg'
-import auth5 from '../../assets/images/auth/bg1.jpg'
+import bg1 from '../../assets/images/auth/bg2.webp'
 
 const SignUp = () => {
     let history = useNavigate()
@@ -16,7 +12,7 @@ const SignUp = () => {
           <section className="login-content">
              <Row className="m-0 align-items-center bg-white vh-100">
                 <div className="col-md-6 d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
-                   <Image src={auth5} className="Image-fluid gradient-main animated-scaleX" alt="images" />
+                   <Image src={bg1} className="Image-fluid gradient-main animated-scaleX" alt="images" />
                 </div>
                 <Col md="6">
                    <Row className="justify-content-center">

@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SignIn } from '../../redux/actions/auth'
 
-import bg1 from '../../assets/images/auth/bg2.jpg'
+import bg1 from '../../assets/images/auth/bg2.webp'
 import { MainIcon } from '../../assets/svg/clnsmpl-icon';
 
 function Signin (props) {
@@ -78,7 +78,7 @@ function Signin (props) {
                   </Row>
                </Col>
                <Col md="6" className="d-md-block d-none bg-primary p-0 vh-100 overflow-hidden">
-                  <Image src={bg1} className="Image-fluid gradient-main animated-scaleX" alt="images" />
+                  <Image src={bg1} className="Image-fluid gradient-main animated-scaleX" alt="images" loading='lazy'/>
                </Col>
             </Row>
          </section>
