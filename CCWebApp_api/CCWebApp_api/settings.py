@@ -147,7 +147,7 @@ import dj_database_url
 
 DATABASES = {
 
-    'default': dj_database_url.parse(env('DB_URL'))
+    'default': dj_database_url.parse('postgres://ccwebapp_user:h13u5Kxz1mFGeyKNbglQrM3fB6BXr4uO@dpg-ckn3kln83ejs739ft2sg-a.singapore-postgres.render.com/ccwebapp')
 
 }
 
