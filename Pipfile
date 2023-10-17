@@ -12,6 +12,9 @@ djangorestframework-simplejwt = {extras = ["crypto"], version = "*"}
 django-filter = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
+dj-database-url = "*"
+django-environ = "*"
+gunicorn = "*"
 
 [dev-packages]
 

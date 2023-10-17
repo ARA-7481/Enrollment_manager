@@ -10,8 +10,7 @@ module.exports = {
   entry: './CCWebApp_api/frontend/src/index.js',
   output: {
     path: path.resolve(__dirname, 'CCWebApp_api/frontend/static/frontend'),
-    filename: '[name].js',
-    chunkFilename: '[name].bundle.js',
+    filename: 'main.js',
   },
   module: {
     rules: [
@@ -94,12 +93,11 @@ module.exports = {
       },
     ]
   },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
-    mergeDuplicateChunks: false,
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "all",
+  //   },
+  // },
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
