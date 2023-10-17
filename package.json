@@ -1,7 +1,4 @@
 {
-  "engines": {
-    "node": "16.x"
-  },
   "name": "ccwebapp",
   "version": "1.0.0",
   "description": "",
