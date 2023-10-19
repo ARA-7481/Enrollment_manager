@@ -17,6 +17,8 @@ django-environ = "*"
 gunicorn = "*"
 django-storages = "*"
 boto3 = "*"
+channels = "*"
+channels-redis = "*"
 
 [dev-packages]
 

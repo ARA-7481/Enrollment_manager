@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_filters',
     'frontend',
     'storages',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -92,6 +93,15 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
 
 SIMPLE_JWT = {
@@ -195,13 +205,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-# # STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
 AWS_ACCESS_KEY_ID =  os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
-# AWS_ACCESS_KEY_ID =  "AKIA5WBNZMEFEJCJH43W"
-# AWS_SECRET_ACCESS_KEY = "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"
+
 
 AWS_STORAGE_BUCKET_NAME = "ccwebappbucket"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

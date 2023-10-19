@@ -91,7 +91,22 @@ function UsersStudents(props) {
     props.setpageHeader('Manage Students', '{semester} {SY: 20xx-20xx}', 'Manage students here. Enroll, Update, Evaluate etc.');
     props.getStudents('','','','','');
     props.getDepartments();
-  }, [props.studentsList, props.departmentsList, props.getDepartments(), props.getStudents()]);
+
+    const websocket = new WebSocket('ws://ccwebapp-api.onrender.com/ws/dbupdatetrigger/');
+
+    websocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.event === 'New Object') {
+          props.getStudents();
+        }
+      };
+
+      return () => {
+        websocket.close();
+      };
+
+   
+    }, []);
 
   return (
       <>
