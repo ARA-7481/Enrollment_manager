@@ -92,11 +92,11 @@ function UsersStudents(props) {
     props.getStudents('','','','','');
     props.getDepartments();
 
-    const websocket = new WebSocket('ws://ccwebapp-api.onrender.com/ws/dbupdatetrigger/');
+    const websocket = new WebSocket('wss://https://ccwebapp-api.onrender.com/ws/dbupdatetrigger/');
 
     websocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        if (data.event === 'New Object') {
+        if (data.event === 'student_model_update') {
           props.getStudents();
         }
       };
