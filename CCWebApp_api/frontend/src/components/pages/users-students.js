@@ -97,7 +97,7 @@ function UsersStudents(props) {
     websocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
         if (data.event === 'student_model_update') {
-          props.getStudents();
+          props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
         }
       };
 
