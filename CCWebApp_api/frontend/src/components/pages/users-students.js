@@ -91,7 +91,7 @@ function UsersStudents(props) {
     props.setpageHeader('Manage Students', '{semester} {SY: 20xx-20xx}', 'Manage students here. Enroll, Update, Evaluate etc.');
     props.getStudents('','','','','');
     props.getDepartments();
-  }, []);
+  }, [props.studentsList, props.departmentsList, props.getDepartments(), props.getStudents()]);
 
   return (
       <>
