@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const instanceAxios = axios.create({
   baseURL: 'https://ccwebapp-api.onrender.com',
-  // baseURL: 'https://127.0.0.1:8000',
  });
 
 

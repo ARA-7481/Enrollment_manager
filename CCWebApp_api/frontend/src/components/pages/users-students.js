@@ -92,7 +92,7 @@ function UsersStudents(props) {
     props.getStudents('','','','','');
     props.getDepartments();
 
-    const websocket = new WebSocket('ws://ccwebapp-api.onrender.com/ws/dbupdatetrigger/');
+    const websocket = new WebSocket('wss://ccwebapp-api.onrender.com/ws/dbupdatetrigger/');
 
     websocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -100,7 +100,7 @@ function UsersStudents(props) {
           props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
         }
       };
-
+s
       return () => {
         websocket.close();
       };
