@@ -88,7 +88,7 @@ function UsersStudents(props) {
   useEffect(() => {
     props.setsidebarState('users');
     props.setsubsidebarState('students');
-    props.setpageHeader('Manage Students', '{semester} {SY: 20xx-20xx}', 'Manage students here. Enroll, Update, Evaluate etc.');
+    props.setpageHeader('Manage Studentssss', '{semester} {SY: 20xx-20xx}', 'Manage students here. Enroll, Update, Evaluate etc.');
     props.getStudents('','','','','');
     props.getDepartments();
 
