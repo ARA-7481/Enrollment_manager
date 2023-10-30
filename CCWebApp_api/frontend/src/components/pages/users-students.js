@@ -92,7 +92,7 @@ function UsersStudents(props) {
     props.getStudents('','','','','');
     props.getDepartments();
 
-    const websocket = new WebSocket('ws://127.0.0.1:8000/dbupdatetrigger/');
+    const websocket = new WebSocket('ws://ccwebapp-api.onrender.com/ws/dbupdatetrigger/');
 
     websocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
