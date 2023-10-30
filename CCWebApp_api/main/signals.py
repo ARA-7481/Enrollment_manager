@@ -6,14 +6,11 @@ from accounts.models import StudentProfile
 
 @receiver(post_save, sender=StudentProfile)
 def announce_new_object(sender, instance, created, **kwargs):
-    if created:
-        event_type = 'new.object'
-        event = 'student_model_update'
-    else:
-        event_type = 'updated.object'
-        event = 'student_model_update'
-
+    
+    event_type = 'new.object'
+    event = 'student_model_update'
     channel_layer = get_channel_layer()
+
     async_to_sync(channel_layer.group_send)('dbupdatetrigger', {
         'type': event_type,
         'event': event,

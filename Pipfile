@@ -19,6 +19,9 @@ django-storages = "*"
 boto3 = "*"
 channels = "*"
 channels-redis = "*"
+django-extensions = "*"
+werkzeug = "*"
+pyopenssl = "*"
 
 [dev-packages]
 

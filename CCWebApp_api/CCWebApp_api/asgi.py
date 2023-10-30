@@ -17,6 +17,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CCWebApp_api.settings')
 
 application = ProtocolTypeRouter({
     'http': get_asgi_application(),
+    'https': get_asgi_application(),
     'websocket': TokenAuthMiddleware(
         URLRouter(
             main.routing.websocket_urlpatterns
