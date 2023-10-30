@@ -39,7 +39,7 @@ SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'frontend',
     'storages',
     'channels',
-    'django_extensions',
 ]
 
 MIDDLEWARE = [
