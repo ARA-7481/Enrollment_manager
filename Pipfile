@@ -22,7 +22,6 @@ django-extensions = "*"
 werkzeug = "*"
 pyopenssl = "*"
 daphne = "*"
-gunicorn = "*"
 
 [dev-packages]
 
