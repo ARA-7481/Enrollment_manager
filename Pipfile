@@ -14,7 +14,6 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 dj-database-url = "*"
 django-environ = "*"
-gunicorn = "*"
 django-storages = "*"
 boto3 = "*"
 channels = "*"
@@ -23,6 +22,7 @@ django-extensions = "*"
 werkzeug = "*"
 pyopenssl = "*"
 daphne = "*"
+gunicorn = "*"
 
 [dev-packages]
 
