@@ -92,18 +92,18 @@ function UsersStudents(props) {
     props.getStudents('','','','','');
     props.getDepartments();
 
-    const websocket = new WebSocket('wss://ccwebapp-api.onrender.com/ws/dbupdatetrigger/');
+    const websocket = new WebSocket(`ws://${window.location.host}/ws/dbupdatetrigger/`);
 
-    websocket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.event === 'student_model_update') {
-          props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
-        }
-      };
-s
-      return () => {
-        websocket.close();
-      };
+//     websocket.onmessage = (event) => {
+//         const data = JSON.parse(event.data);
+//         if (data.event === 'student_model_update') {
+//           props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
+//         }
+//       };
+// s
+//       return () => {
+//         websocket.close();
+//       };
 
    
     }, []);
