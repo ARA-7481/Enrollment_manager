@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'frontend',
     'storages',
     'channels',
+    'daphne',
 ]
 
 MIDDLEWARE = [
