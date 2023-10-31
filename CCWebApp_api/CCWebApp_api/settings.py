@@ -92,7 +92,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'CCWebApp_api.wsgi.application'
 ASGI_APPLICATION = 'CCWebApp_api.asgi.application'
 
 
