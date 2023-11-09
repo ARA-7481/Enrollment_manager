@@ -47,17 +47,20 @@ export default function(state = initialState, action) {
         case GET_STUDENTS:
             return{
                 ...state,
-                studentsList: action.payload
+                studentsList: action.payload,
+                loadingState: 'isNotLoading'
             }
         case GET_FACULTY:
             return{
                 ...state,
-                facultyList: action.payload
+                facultyList: action.payload,
+                loadingState: 'isNotLoading'
             }
         case GET_STAFF:
             return{
                 ...state,
-                staffList: action.payload
+                staffList: action.payload,
+                loadingState: 'isNotLoading'
             }
         case GET_DEPARTMENTS:
             return{
@@ -82,12 +85,13 @@ export default function(state = initialState, action) {
         case GET_CLASSES:
             return{
                 ...state,
-                classesList: action.payload
+                classesList: action.payload,
                 }
         case GET_CLASSES_LIST:
             return{
                 ...state,
-                classesListForTable: action.payload
+                classesListForTable: action.payload,
+                loadingState: 'isNotLoading'
                 }
         case ADD_CLASS:
             return{

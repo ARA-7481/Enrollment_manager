@@ -1,12 +1,13 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, SET_LOADING } from "../types/types";
+import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, SET_LOADING_USER, NULL_ERROR } from "../types/types";
 
 const initialState = {
     access: null,
     isAuthenticated: false,
-    isLoading: false,
+    isloadingUser: false,
     user: {},
     users: [],
     message: null,
+    error: null,
 }
 
 export default function(state = initialState, action) {
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 user: action.payload.user,
+                isloadingUser: false
             }
         case LOGIN_FAIL:
             localStorage.removeItem('access');
@@ -26,12 +28,19 @@ export default function(state = initialState, action) {
                 access: null,
                 user: null,
                 isAuthenticated: false,
+                isloadingUser: false,
+                error: action.payload
             }
         case LOGOUT_SUCCESS:
-        case SET_LOADING:
+        case SET_LOADING_USER:
             return{
                 ...state,
-                isLoading: action.payload,
+                isloadingUser: action.payload,
+            }
+        case NULL_ERROR:
+            return{
+                ...state,
+                error: null,
             }
         default:
             return state;

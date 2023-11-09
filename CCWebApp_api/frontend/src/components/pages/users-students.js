@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getStudents, getDepartments } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getStudents, getDepartments, setLoading } from '../../redux/actions/main';
 
-import { Card, Col, Table, Form, Dropdown, Button } from 'react-bootstrap';
+import { Card, Col, Table, Form, Dropdown, Button, Placeholder } from 'react-bootstrap';
 import { Magnifier, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, New} from '../../assets/svg/clnsmpl-icon';
 
 function UsersStudents(props) {
@@ -29,6 +29,7 @@ function UsersStudents(props) {
 
   const handleSearch = (query) => {
     props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, query)
+    props.setLoading('isLoading')
   };
 
   const handleSort = (sort) => {
@@ -85,25 +86,31 @@ function UsersStudents(props) {
     }
   };
 
+  const websocket = useRef(null);
+
   useEffect(() => {
     props.setsidebarState('users');
     props.setsubsidebarState('students');
-    props.setpageHeader('Manage Studentssss', '{semester} {SY: 20xx-20xx}', 'Manage students here. Enroll, Update, Evaluate etc.');
+    props.setpageHeader('Manage Students', '{semester} {SY: 20xx-20xx}', 'Manage students here. Enroll, Update, Evaluate etc.');
+    props.setLoading('isLoading')
+
     props.getStudents('','','','','');
     props.getDepartments();
 
-    const websocket = new WebSocket(`ws://${window.location.host}/ws/dbupdatetrigger/`);
-
-//     websocket.onmessage = (event) => {
-//         const data = JSON.parse(event.data);
-//         if (data.event === 'student_model_update') {
-//           props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
-//         }
-//       };
-// s
-//       return () => {
-//         websocket.close();
-//       };
+    websocket.current = new WebSocket(`wss://${window.location.host}/ws/dbupdatetrigger/`);
+    websocket.current.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data)
+      console.log(data.event.event)
+      if (data.event.event === 'student_model_update') {
+        props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
+      }
+    };
+    return () => {
+      if (websocket.current) {
+        websocket.current.close();
+      }
+    }
 
    
     }, []);
@@ -216,6 +223,63 @@ function UsersStudents(props) {
         <div style={{height: '81px', display: 'flex'}}>
           <h1 className='table-title'>List of Students</h1>
         </div>
+        {props.loadingState == 'isLoading' ?  
+        <div style={{marginLeft: '20px', marginRight: '40px', marginTop: '7px'}}>
+          <div style={{display:'flex', marginBottom: '27px'}}>
+          <Placeholder animation="glow" style={{width: '15%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={2} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '30%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={8} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '13%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={7} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '20%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={8} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '10%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={4} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '25%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={12} />
+          </Placeholder>
+          </div> 
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        </div>
+      :
         <Table hover style={{border: 'none'}}>
         <thead >
           <tr>
@@ -228,6 +292,9 @@ function UsersStudents(props) {
             <th className='table-head' >ACTION</th>
           </tr>
         </thead>
+
+            
+
         <tbody style={{cursor: 'pointer', }}>
           {[...props.studentsList]
               .sort((a, b) => {
@@ -328,8 +395,10 @@ function UsersStudents(props) {
               </tr>
           ))}
         </tbody>
-
         </Table>
+        
+      }
+
       <div style={{height: '10px'}}>
         
       </div>
@@ -351,6 +420,8 @@ UsersStudents.propTypes = {
   setpageHeader: PropTypes.func.isRequired,
   getStudents: PropTypes.func.isRequired,
   getDepartments: PropTypes.func.isRequired,
+  setLoading: PropTypes.func,
+  loadingState: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
@@ -359,6 +430,7 @@ const mapStateToProps = (state) => ({
   pageHeader: state.main.pageHeader,
   studentsList: state.main.studentsList,
   departmentsList: state.main.departmentsList,
+  loadingState: state.main.loadingState,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getStudents, getDepartments})(UsersStudents))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getStudents, getDepartments, setLoading})(UsersStudents))

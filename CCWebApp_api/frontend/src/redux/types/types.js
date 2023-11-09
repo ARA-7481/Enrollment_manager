@@ -1,4 +1,3 @@
-export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const GET_ERRORS = 'GET_ERRORS';
@@ -12,6 +11,9 @@ export const GET_USERS = 'GET_USERS';
 export const DELETE_USER = 'DELETE_USER';
 export const ACCESS_VERIFY_SUCCESS = 'ACCESS_VERIFY_SUCCESS';
 
+
+export const NULL_ERROR = "NULL_ERROR";
+export const SET_LOADING_USER = "SET_LOADING_USER";
 export const SET_LOADING = 'SET_LOADING';
 
 export const SET_SIDEBAR = 'SET_SIDEBAR';

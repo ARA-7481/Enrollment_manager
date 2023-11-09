@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setclassState, setpageHeader, getClassesList, getDepartments } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setclassState, setpageHeader, getClassesList, getDepartments, setLoading } from '../../redux/actions/main';
 
-import { Col, Table, Dropdown, Form } from 'react-bootstrap';
-
+import { Col, Table, Dropdown, Form, Placeholder } from 'react-bootstrap';
 import { Magnifier } from '../../assets/svg/clnsmpl-icon';
 
 function Class(props) {
@@ -27,6 +26,7 @@ function Class(props) {
 
   const handleSearch = (query) => {
     props.getClassesList(queryYearlevel,queryDepartment,queryCourse, query)
+    props.setLoading('isLoading')
   };
 
   const handleSort = (sort) => {
@@ -77,6 +77,7 @@ function Class(props) {
     props.setclassState('list')
     props.setpageHeader('Manage Class', '', 'Add and update classes. Assign student, room and subjects');
     props.getClassesList('','','','');
+    props.setLoading('isLoading')
     props.getDepartments();
   }, []);
 
@@ -169,7 +170,72 @@ function Class(props) {
       <div style={{height: '81px', display: 'flex'}}>
         <h1 className='table-title'>List of Classes</h1>
       </div>
-
+      {props.loadingState == 'isLoading' ?  
+        <div style={{marginLeft: '20px', marginRight: '40px', marginTop: '7px'}}>
+          <div style={{display:'flex', marginBottom: '27px'}}>
+          <Placeholder animation="glow" style={{width: '15%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '15%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '10%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '10%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '10%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '10%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '15%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '15%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '15%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={5} />
+          </Placeholder>
+          </div> 
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        </div>
+      :
       <Table hover style={{border: 'none'}}>
       <thead >
         <tr>
@@ -240,6 +306,7 @@ function Class(props) {
       </tbody>
 
       </Table>
+      }
     <div style={{height: '10px'}}>
       
     </div>
@@ -263,6 +330,8 @@ Class.propTypes = {
   getClassesList: PropTypes.func,
   getDepartments: PropTypes.func,
   departmentsList: PropTypes.array.isRequired,
+  setLoading: PropTypes.func,
+  loadingState: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
@@ -272,6 +341,7 @@ const mapStateToProps = (state) => ({
   pageHeader: state.main.pageHeader,
   classesListForTable: state.main.classesListForTable,
   departmentsList: state.main.departmentsList,
+  loadingState: state.main.loadingState,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setclassState, setpageHeader, getClassesList, getDepartments})(Class))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setclassState, setpageHeader, getClassesList, getDepartments, setLoading})(Class))

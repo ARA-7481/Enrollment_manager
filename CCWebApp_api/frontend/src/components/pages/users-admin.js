@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, getStaff, setpageHeader } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, getStaff, setpageHeader, setLoading } from '../../redux/actions/main';
 
-import { Card, Col, Table, Form, Dropdown, Button } from 'react-bootstrap';
+import { Card, Col, Table, Form, Dropdown, Button, Placeholder } from 'react-bootstrap';
 import { Magnifier, New } from '../../assets/svg/clnsmpl-icon';
 
 function UsersAdmin(props) {
@@ -23,6 +23,7 @@ function UsersAdmin(props) {
 
   const handleSearch = (query) => {
     props.getStaff(queryRole,query)
+    props.setLoading('isLoading')
   };
 
   const handleSort = (sort) => {
@@ -46,6 +47,7 @@ function UsersAdmin(props) {
     props.setsubsidebarState('admin');
     props.setpageHeader('Manage Admin & Staff', '', 'Manage Admin & Staff here. Add, Update, etc.');
     props.getStaff('','');
+    props.setLoading('isLoading')
   }, []);
 
   return (
@@ -104,6 +106,54 @@ function UsersAdmin(props) {
       <div style={{height: '81px', display: 'flex'}}>
         <h1 className='table-title'>List of Admin & Staff</h1>
       </div>
+      {props.loadingState == 'isLoading' ?  
+        <div style={{marginLeft: '20px', marginRight: '40px', marginTop: '7px'}}>
+          <div style={{display:'flex', marginBottom: '27px'}}>
+          <Placeholder animation="glow" style={{width: '15%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={2} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '50%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={2} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '35%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={4} />
+          </Placeholder>
+          <Placeholder animation="glow" style={{width: '5%', color: 'rgba(51, 51, 51, 0.20)'}}>
+            <Placeholder xs={7} />
+          </Placeholder>
+          </div> 
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        <div style={{marginBottom: '35px'}}>
+        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+          <Placeholder xs={12} />
+        </Placeholder>
+        </div>
+        </div>
+      :
       <Table hover style={{border: 'none'}}>
       <thead >
         <tr>
@@ -156,6 +206,7 @@ function UsersAdmin(props) {
       </tbody>
 
       </Table>
+    }
     <div style={{height: '10px'}}>
       
     </div>
@@ -174,6 +225,8 @@ UsersAdmin.propTypes = {
   setsidebarState: PropTypes.func.isRequired,
   setsubsidebarState: PropTypes.func.isRequired,
   getStaff: PropTypes.func.isRequired,
+  setLoading: PropTypes.func,
+  loadingState: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
@@ -181,6 +234,7 @@ const mapStateToProps = (state) => ({
   subsidebarState: state.main.subsidebarState,
   pageHeader: state.main.pageHeader,
   staffList: state.main.staffList,
+  loadingState: state.main.loadingState,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, getStaff, setpageHeader})(UsersAdmin))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, getStaff, setpageHeader, setLoading})(UsersAdmin))

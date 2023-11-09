@@ -304,6 +304,19 @@ const SimpleCalendar = () => (
    </svg>
 )
 
+const RedX = () => (
+   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M10 0C4.48578 0 0 4.48578 0 10C0 15.5142 4.48578 20 10 20C15.5142 20 20 15.5142 20 10C20 4.48578 15.5142 0 10 0ZM13.6826 12.5041C14.0083 12.83 14.0083 13.3566 13.6826 13.6826C13.5201 13.8451 13.3067 13.9267 13.0933 13.9267C12.8799 13.9267 12.6666 13.8451 12.5041 13.6826L10 11.1783L7.49588 13.6826C7.33337 13.8451 7.12006 13.9267 6.90674 13.9267C6.69327 13.9267 6.47995 13.8451 6.31744 13.6826C5.99167 13.3566 5.99167 12.83 6.31744 12.5041L8.82172 10L6.31744 7.49588C5.99167 7.16995 5.99167 6.64337 6.31744 6.31744C6.64337 5.99167 7.16995 5.99167 7.49588 6.31744L10 8.82172L12.5041 6.31744C12.83 5.99167 13.3566 5.99167 13.6826 6.31744C14.0083 6.64337 14.0083 7.16995 13.6826 7.49588L11.1783 10L13.6826 12.5041Z" fill="#FF0000"/>
+   </svg>
+)
+
+const CloseButton = () => (
+   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M16.4899 1.50195L1.50244 16.4863" stroke="#232D42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="M16.5 16.5L1.5 1.5" stroke="#232D42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+   </svg>
+)
+
 DashboardIcon.propTypes= {
    sidebarState: PropTypes.string,
  }
@@ -367,4 +380,4 @@ const ConnectedDotIconMasterlist = connect(mapStateToProps)(DotIconMasterlist);
 const ConnectedAccordionIconClose = connect(mapStateToProps)(AccordionIconClose);
 const ConnectedAccordionIconOpen = connect(mapStateToProps)(AccordionIconOpen);
 
-export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon, ColoredClassIcon, BlueExclamation, RedExclamation, SimpleCalendar};
+export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon, ColoredClassIcon, BlueExclamation, RedExclamation, SimpleCalendar, RedX, CloseButton};
