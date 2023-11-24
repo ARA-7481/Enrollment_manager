@@ -19,12 +19,13 @@ class Subject(models.Model):
     code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
     description = models.CharField(max_length=200)
     units = models.IntegerField(blank=False, default=0)
-    prerequisite = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='prerequisites', blank=True)
-    corequisite = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='corequisites', blank=True)
+    prerequisite = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='postrequisite', blank=True)
+    corequisite = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='related_corequisite', blank=True)
     first_sem = models.BooleanField(default=True)
     second_sem = models.BooleanField(default=True)
     lecture = models.FloatField(blank=False, default=0)
     lab = models.FloatField(blank=False, default=0)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.code
@@ -32,15 +33,33 @@ class Subject(models.Model):
 class Course(models.Model):
     code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
     description = models.CharField(max_length=200)
-    subjects = models.ManyToManyField(Subject)
+    subjects_11 = models.ManyToManyField(Subject, related_name='y1s1', blank=True)
+    subjects_12 = models.ManyToManyField(Subject, related_name='y1s2', blank=True)
+    subjects_21 = models.ManyToManyField(Subject, related_name='y2s1', blank=True)
+    subjects_22 = models.ManyToManyField(Subject, related_name='y2s2', blank=True)
+    subjects_31 = models.ManyToManyField(Subject, related_name='y3s1', blank=True)
+    subjects_32 = models.ManyToManyField(Subject, related_name='y3s2', blank=True)
+    subjects_41 = models.ManyToManyField(Subject, related_name='y4s1', blank=True)
+    subjects_42 = models.ManyToManyField(Subject, related_name='y4s2', blank=True)
+    subjects_51 = models.ManyToManyField(Subject, related_name='y5s1', blank=True)
+    subjects_52 = models.ManyToManyField(Subject, related_name='y5s2', blank=True)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, related_name='related_course')
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.code
     
 class Room(models.Model):
+    ROOM_TYPE = (
+        ('Lecture' , 'Lecture'),
+        ('Laboratory' , 'Laboratory'),
+        ('Unspecified' , 'Unspecified'),
+    )
     code = models.CharField(max_length=10, primary_key=True, null=False, unique=True)
     description = models.CharField(max_length=200)
+    type = models.CharField(max_length=20, choices=ROOM_TYPE, null=False, default= 'Unspecified')
+    capacity = models.IntegerField(null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.code    

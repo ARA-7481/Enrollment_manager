@@ -74,11 +74,13 @@ function UsersTeachers(props) {
   };
 
   useEffect(() => {
+    if (props.facultyList.length == 0){
+      props.setLoading('isLoading');
+    }
     props.setsidebarState('users');
     props.setsubsidebarState('teachers');
     props.setpageHeader('Manage Faculty', '', 'Manage faculty here. Add, Update, etc.');
     props.getFaculty('','','','');
-    props.setLoading('isLoading')
     props.getDepartments();
   }, []);
 

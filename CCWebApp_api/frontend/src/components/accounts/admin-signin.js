@@ -31,11 +31,12 @@ function Signin (props) {
 
    return (
       <>
-       { props.error &&
-              <div style={{position: 'fixed', transform: 'translateX(-50%)', left: '50%', zIndex: 9999}}>
-              <ErrorPopup errorMessage={'Invalid Credentials.'}/>
+       { props.error  &&
+         <div style={{position: 'fixed', transform: 'translateX(-50%)', left: '50%', zIndex: 9999}}>
+            <ErrorPopup errorMessage={props.error}/>
           </div>          
             }
+      
          <section className="login-content">
             <Row className="m-0 bg-white vh-100">
                <Col md="6">
@@ -73,7 +74,7 @@ function Signin (props) {
                                     </Col>
                                  </Row>
                                  <div className="d-flex justify-content-center">
-                                    <Button onClick={handleSignIn} type="button" variant="btn btn-primary" style={{borderRadius: '4px', backgroundColor: '#3A57E8', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '188px', height: '44px'}}>{props.isloadingUser? <Spinner animation="border" variant="light" /> : <h>Sign In</h> }</Button>
+                                    <Button onClick={handleSignIn} type="button" variant="btn btn-primary" style={{borderRadius: '4px', backgroundColor: '#3A57E8', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '188px', height: '44px'}}>{props.isloadingUser? <Spinner animation="border" variant="light" /> : <>Sign In</> }</Button>
                                  </div >
                                  <p className="mt-3 text-center">
                                     Do you have problems with your account? <Link to="/auth/sign-up" className="text-underline">Please contact the school administrator.</Link>

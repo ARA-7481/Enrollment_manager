@@ -273,6 +273,30 @@ const ColoredClassIcon = () => (
    </svg>
 )
 
+const ColoredSubjectIcon = () => (
+   <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M0 3C0 1.34315 1.34315 0 3 0H14C15.1046 0 16 0.89543 16 2V12.5H2.5C1.58928 12.5 0.73543 12.7435 0 13.1689V3Z" fill="#3A57E8"/>
+   <path d="M0.01123 17.2614C0.13135 15.9926 1.19975 15 2.5 15H16V18C16 19.1046 15.1046 20 14 20H2.5C1.11929 20 0 18.8807 0 17.5C0 17.4807 0.000219929 17.4615 0.000649929 17.4423C0.000779929 17.4365 0.000940077 17.4307 0.00111008 17.4248C0.00273008 17.3699 0.00611999 17.3154 0.01123 17.2614Z" fill="#3A57E8"/>
+   </svg>
+
+)
+
+const ColoredRoomIcon = () => (
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M9.25 3C10.0784 3 10.75 3.67157 10.75 4.5V9.25C10.75 10.0784 10.0784 10.75 9.25 10.75H4.5C3.67157 10.75 3 10.0784 3 9.25V4.5C3 3.67157 3.67157 3 4.5 3H9.25Z" fill="#3A57E8"/>
+   <path d="M13.25 4.5C13.25 3.67157 13.9216 3 14.75 3H19.5C20.3284 3 21 3.67157 21 4.5V9.25C21 10.0784 20.3284 10.75 19.5 10.75H14.75C13.9216 10.75 13.25 10.0784 13.25 9.25V4.5Z" fill="#3A57E8"/>
+   <path d="M21 14.75C21 13.9216 20.3284 13.25 19.5 13.25H14.75C13.9216 13.25 13.25 13.9216 13.25 14.75V19.5C13.25 20.3284 13.9216 21 14.75 21H19.5C20.3284 21 21 20.3284 21 19.5V14.75Z" fill="#3A57E8"/>
+   <path d="M10.75 19.5C10.75 20.3284 10.0784 21 9.25 21H4.5C3.67157 21 3 20.3284 3 19.5V14.75C3 13.9216 3.67157 13.25 4.5 13.25H9.25C10.0784 13.25 10.75 13.9216 10.75 14.75V19.5Z" fill="#3A57E8"/>
+   </svg>
+)
+
+const ColoredCourseIcon = () => (
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M13.0077 2.58884C12.385 2.22559 11.615 2.22559 10.9922 2.58884L1.48075 8.13721C0.819242 8.52309 0.819243 9.4789 1.48075 9.86477L10.9922 15.4132C11.0701 15.4586 11.1502 15.4983 11.2321 15.5324C11.8052 15.7708 12.4628 15.731 13.0077 15.4132L21.5 10.4594V14.751C21.5 15.4414 22.0596 16.001 22.75 16.001C23.4404 16.001 24 15.4414 24 14.751V9.57536C24 9.2197 23.8111 8.8908 23.5039 8.71159L13.0077 2.58884Z" fill="#3A57E8"/>
+   <path d="M4.99225 18.9132C4.37781 18.5547 3.99999 17.8969 3.99999 17.1856V13.8344L10.9922 17.9132C11.615 18.2764 12.385 18.2764 13.0077 17.9132L20 13.8344V17.1856C20 17.8969 19.6222 18.5547 19.0077 18.9132L13.0077 22.4132C12.385 22.7764 11.615 22.7764 10.9922 22.4132L4.99225 18.9132Z" fill="#3A57E8"/>
+   </svg>
+)
+
 const BlueExclamation = () => (
    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
    <path d="M21.9996 12C21.9996 17.524 17.5226 22 11.9996 22C6.47663 22 1.99963 17.524 1.99963 12C1.99963 6.478 6.47663 2 11.9996 2C17.5226 2 21.9996 6.478 21.9996 12Z" fill="#293DA2"/>
@@ -312,8 +336,8 @@ const RedX = () => (
 
 const CloseButton = () => (
    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-   <path d="M16.4899 1.50195L1.50244 16.4863" stroke="#232D42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-   <path d="M16.5 16.5L1.5 1.5" stroke="#232D42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="M16.4899 1.50195L1.50244 16.4863" stroke="#232D42" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M16.5 16.5L1.5 1.5" stroke="#232D42" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
    </svg>
 )
 
@@ -380,4 +404,4 @@ const ConnectedDotIconMasterlist = connect(mapStateToProps)(DotIconMasterlist);
 const ConnectedAccordionIconClose = connect(mapStateToProps)(AccordionIconClose);
 const ConnectedAccordionIconOpen = connect(mapStateToProps)(AccordionIconOpen);
 
-export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon, ColoredClassIcon, BlueExclamation, RedExclamation, SimpleCalendar, RedX, CloseButton};
+export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon, ColoredClassIcon, ColoredSubjectIcon, ColoredRoomIcon, ColoredCourseIcon, BlueExclamation, RedExclamation, SimpleCalendar, RedX, CloseButton};

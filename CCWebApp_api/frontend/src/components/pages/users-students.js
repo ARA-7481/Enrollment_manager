@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, Fragment, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -89,10 +89,12 @@ function UsersStudents(props) {
   const websocket = useRef(null);
 
   useEffect(() => {
+    if (props.studentsList.length == 0){
+      props.setLoading('isLoading');
+    }
     props.setsidebarState('users');
     props.setsubsidebarState('students');
     props.setpageHeader('Manage Students', '{semester} {SY: 20xx-20xx}', 'Manage students here. Enroll, Update, Evaluate etc.');
-    props.setLoading('isLoading')
 
     props.getStudents('','','','','');
     props.getDepartments();

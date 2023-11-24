@@ -6,7 +6,7 @@ import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setclassState, setpageHeader, getCourses, getSubject, getFaculty, getRooms, getClasses, addClass, setLoading, getClassesList } from '../../redux/actions/main';
 
 import DatePicker from "react-datepicker";
-import { Col, Form, InputGroup, Dropdown, DropdownButton, Table, Card, Button } from 'react-bootstrap';
+import { Col, Form, InputGroup, Dropdown, DropdownButton, Table, Card, Button, Spinner } from 'react-bootstrap';
 import { BlueExclamation, RedExclamation, SimpleCalendar } from '../../assets/svg/clnsmpl-icon';
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -277,11 +277,51 @@ function ClassCreate(props) {
             <Form.Group>
               <Form.Label htmlFor="subject" className='form-label'>Subject</Form.Label>
               <div style={{display: 'flex'}}>
-              <Form.Select id="subject" disabled={course === ''} value={subject} onChange={e => handleSubject(e.target.value)} className='formselect-border'>
+              <Form.Select id="subject" disabled={course === '' || yearlevel === ''} value={subject} onChange={e => handleSubject(e.target.value)} className='formselect-border'>
               <option value="" disabled>Select Subject</option>
-              { props.coursesList.filter(c => c.code === course)[0]?.subjects.map((subject, index) => (
-                <option key={index} value={subject}>{subject}</option>
-              ))}
+              { 
+                (() => {
+                  switch(yearlevel) {
+                    case 'First Year':
+                      return [
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_11 || []),
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_12 || [])
+                      ].map((subject, index) => (
+                        <option key={index} value={subject}>{subject}</option>
+                      ));
+                    case 'Second Year':
+                      return [
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_21 || []),
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_22 || [])
+                      ].map((subject, index) => (
+                        <option key={index} value={subject}>{subject}</option>
+                      ));
+                    case 'Third Year':
+                      return [
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_31 || []),
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_32 || [])
+                      ].map((subject, index) => (
+                        <option key={index} value={subject}>{subject}</option>
+                      ));
+                    case 'Fourth Year':
+                      return [
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_41 || []),
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_42 || [])
+                      ].map((subject, index) => (
+                        <option key={index} value={subject}>{subject}</option>
+                      ));
+                    case 'Fifth Year':
+                      return [
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_51 || []),
+                        ...(props.coursesList.filter(c => c.code === course)[0]?.subjects_52 || [])
+                      ].map((subject, index) => (
+                        <option key={index} value={subject}>{subject}</option>
+                      ));
+                    default:
+                      return null;
+                  }
+                })()
+              }
               </Form.Select>
               {!subject &&
                 <div style={{transform: 'translate( -55px, 5px)', width: '0px', pointerEvents: 'none'}}>
@@ -568,8 +608,9 @@ function ClassCreate(props) {
           </InputGroup>
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
-        <Button disabled={!course || !yearlevel || !subject || !classname || !instructor || !startDate || !endDate || schedule.length === 0} type="button" onClick={handleSubmit} style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '10%', height: '48px', alignContent: 'center', marginRight: '24px'}}>
-            <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>Create Class</h1>
+        <Button disabled={!course || !yearlevel || !subject || !classname || !instructor || !startDate || !endDate || schedule.length === 0} type="button" onClick={handleSubmit} style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '15%', height: '48px', alignContent: 'center', marginRight: '24px'}}>
+            <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
+              {props.loadingState == 'isNotLoading'? <>Create Class</> : <div style={{transform: 'translate( 0px, -6px)'}}><Spinner animation="border" variant="light"/></div>}</h1>
         </Button>
         </div>
       </div>

@@ -1,6 +1,10 @@
 import axios from "axios";
 import instanceAxios from "../interceptor/interceptor";
-import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMENTS, GET_FACULTY, GET_STAFF, SET_CLASS, GET_COURSES, GET_SUBJECT, GET_ROOMS, GET_CLASSES, ADD_CLASS, GET_CLASSES_LIST, SET_LOADING } from "../types/types";
+import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMENTS, GET_FACULTY,
+         GET_STAFF, SET_CLASS, GET_COURSES, GET_SUBJECT, GET_ROOMS, GET_CLASSES, ADD_CLASS, ADD_SUBJECT, 
+         GET_CLASSES_LIST, SET_LOADING, GET_SUBJECTS_LIST, SET_SUBJECT, GET_ROOMS_LIST, SET_ROOM, ADD_ROOM,
+         GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE,
+        } from "../types/types";
 
 function formatTime(time) {
   return `${time}:00`;
@@ -18,11 +22,24 @@ function formatDate(date) {
   return `${year}-${month}-${day}`;
 }
 
-export const setLoading = (loadingState) => dispatch => {
+export const setError = (errorMessage) => dispatch => {
     dispatch({
-      type: SET_LOADING,
-      payload: loadingState
+      type: ERROR_MAIN,
+      payload: errorMessage
     })
+}
+
+export const nullErrormain = () => dispatch => {
+  dispatch({
+    type: NULL_ERROR_MAIN,
+  })
+}
+
+export const setLoading = (loadingState) => dispatch => {
+  dispatch({
+    type: SET_LOADING,
+    payload: loadingState
+  })
 }
 
 export const setsidebarState = (sidebarState) => dispatch => {
@@ -51,6 +68,27 @@ export const setclassState = (classState) => dispatch => {
     dispatch({
       type: SET_CLASS,
       payload: classState
+    })
+  };
+
+export const setsubjectState = (subjectState) => dispatch => {
+    dispatch({
+      type: SET_SUBJECT,
+      payload: subjectState
+    })
+  };
+
+export const setroomState = (roomState) => dispatch => {
+    dispatch({
+      type: SET_ROOM,
+      payload: roomState
+    })
+  };
+
+export const setcourseState = (coursestate) => dispatch => {
+    dispatch({
+      type: SET_COURSE,
+      payload: coursestate
     })
   };
 
@@ -116,6 +154,20 @@ export const getCourses = () => async dispatch => {
       if(res.status === 200){
         dispatch({
           type: GET_COURSES,
+          payload: res.data
+        });
+      }
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+export const getCoursesList = (queryDepartment, querySearch) => async dispatch => {
+    try {
+      const res = await instanceAxios.get(`/api/courses?search=${queryDepartment} ${querySearch}`);
+      if(res.status === 200){
+        dispatch({
+          type: GET_COURSES_LIST,
           payload: res.data
         });
       }
@@ -207,5 +259,76 @@ export const getSubject = (subject) => async dispatch => {
       });
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  export const addSubject = (formData) => async dispatch => {
+    try {
+      const res = await instanceAxios.post('/api/subject/', formData);
+      dispatch({
+        type: ADD_SUBJECT,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  export const setSubjectformdata = (formData) => async dispatch => {
+      dispatch({
+        type: SET_SUBJECT_FORMDATA,
+        payload: formData,
+      });
+  };
+
+  export const getSubjectsList = (querySearch) => async dispatch => {
+    try {
+      const res = await instanceAxios.get(`/api/subject?search=${querySearch}`);
+      if(res.status === 200){
+        dispatch({
+          type: GET_SUBJECTS_LIST,
+          payload: res.data
+        });
+      }
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+  export const addRoom = (formData) => async dispatch => {
+    try {
+      const res = await instanceAxios.post('/api/rooms/', formData);
+      dispatch({
+        type: ADD_ROOM,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  export const addCourse = (formData) => async dispatch => {
+    try {
+      const res = await instanceAxios.post('/api/coursespost/', formData);
+      dispatch({
+        type: ADD_COURSE,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  export const getRoomsList = (querySearch) => async dispatch => {
+    try {
+      const res = await instanceAxios.get(`/api/rooms?search=${querySearch}`);
+      if(res.status === 200){
+        dispatch({
+          type: GET_ROOMS_LIST,
+          payload: res.data
+        });
+      }
+    } catch (error) {
+        console.error(error);
     }
   };

@@ -72,12 +72,14 @@ function Class(props) {
   };
 
   useEffect(() => {
+    if (props.classesListForTable.length == 0){
+        props.setLoading('isLoading');
+      }
     props.setsidebarState('class');
     props.setsubsidebarState(null);
     props.setclassState('list')
     props.setpageHeader('Manage Class', '', 'Add and update classes. Assign student, room and subjects');
     props.getClassesList('','','','');
-    props.setLoading('isLoading')
     props.getDepartments();
   }, []);
 
@@ -121,11 +123,11 @@ function Class(props) {
 
             <Dropdown.Menu style={{ width: '100%'}}>
               {yearlevelStatus !== 'All Year Levels'  && <Dropdown.Item onClick={() => handleYearlevel('All Year Levels')}>All Year Levels</Dropdown.Item>}
-              {yearlevelStatus !== '1st'  && <Dropdown.Item onClick={() => handleYearlevel('First Year')}>1st</Dropdown.Item>}
-              {yearlevelStatus !== '2nd'  && <Dropdown.Item onClick={() => handleYearlevel('Second Year')}>2nd</Dropdown.Item>}
-              {yearlevelStatus !== '3rd'  && <Dropdown.Item onClick={() => handleYearlevel('Third Year')}>3rd</Dropdown.Item>}
-              {yearlevelStatus !== '4th'  && <Dropdown.Item onClick={() => handleYearlevel('Fourth Year')}>4th</Dropdown.Item>}
-              {yearlevelStatus !== '5th'  && <Dropdown.Item onClick={() => handleYearlevel('Fifth Year')}>5th</Dropdown.Item>}
+              {yearlevelStatus !== 'First Year'  && <Dropdown.Item onClick={() => handleYearlevel('First Year')}>First Year</Dropdown.Item>}
+              {yearlevelStatus !== 'Second Year'  && <Dropdown.Item onClick={() => handleYearlevel('Second Year')}>Second Year</Dropdown.Item>}
+              {yearlevelStatus !== 'Third Year'  && <Dropdown.Item onClick={() => handleYearlevel('Third Year')}>Third Year</Dropdown.Item>}
+              {yearlevelStatus !== 'Fourth Year'  && <Dropdown.Item onClick={() => handleYearlevel('Fourth Year')}>Fourth Year</Dropdown.Item>}
+              {yearlevelStatus !== 'Fifth Year'  && <Dropdown.Item onClick={() => handleYearlevel('Fifth Year')}>Fifth Year</Dropdown.Item>}
             </Dropdown.Menu>
         </Dropdown>
 
@@ -134,7 +136,7 @@ function Class(props) {
               <div>{departmentStatus}</div>
             </Dropdown.Toggle>
 
-            <Dropdown.Menu style={{ width: '100%'}}>
+            <Dropdown.Menu style={{ width: '100%', maxHeight: '300px', overflow: 'auto'}}>
               {departmentStatus !== 'All Departments'  && <Dropdown.Item onClick={() => handleDepartment('All Departments')}>All Departments</Dropdown.Item>}
               {props.departmentsList.filter(dept => dept.code !== departmentStatus).map((department) => (
                 <Dropdown.Item key={department.code} onClick={() => handleDepartment(department.code)}>{department.code}</Dropdown.Item>
@@ -147,7 +149,7 @@ function Class(props) {
               <div>{courseStatus}</div>
             </Dropdown.Toggle>
 
-            <Dropdown.Menu style={{ width: '100%'}}>
+            <Dropdown.Menu style={{ width: '100%', maxHeight: '300px', overflow: 'auto'}}>
                 {courseStatus !== 'All Courses'  && <Dropdown.Item onClick={() => handleCourse('All Courses')}>All Courses</Dropdown.Item>}
                 {departmentStatus === 'All Departments' ? 
                   props.departmentsList.flatMap(dept => dept.related_course).filter(course => course !== courseStatus).map((course, index) => (

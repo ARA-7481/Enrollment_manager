@@ -5,11 +5,13 @@ import { Provider } from 'react-redux';
 import store from '../redux/reducers/store';
 import '../assets/css/text.css'
 import '../assets/css/forms.css'
+import '../assets/css/skeleton.css'
+import '../assets/css/popups.css'
 
 const AuthLayout = lazy(() =>  import('./layouts/Authlayout'))
 const MainLayout = lazy(() =>  import('./layouts/Mainlayout'))
 const Signin = lazy(() =>  import('./accounts/admin-signin'))
-const Dashboard = lazy(() => wait(1000).then(() => import('./pages/admin-dashboard')))
+const Dashboard = lazy(() => import('./pages/admin-dashboard'))
 const Schedules = lazy(() =>  import('./pages/schedules'))
 const Class = lazy(() =>  import('./pages/class'))
 const Subjects = lazy(() =>  import('./pages/subjects'))
@@ -21,6 +23,9 @@ const UsersStudents = lazy(() =>  import('./pages/users-students'))
 const UsersTeachers = lazy(() =>  import('./pages/users-teachers'))
 const UsersMasterlist = lazy(() =>  import('./pages/users-masterlist'))
 const ClassCreate = lazy(() =>  import('./pages/class-create'))
+const SubjectCreate = lazy(() =>  import('./pages/subject-create'))
+const RoomCreate = lazy(() =>  import('./pages/room-create'))
+const CourseCreate = lazy(() =>  import('./pages/course-create'))
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
@@ -45,8 +50,11 @@ function AppContent() {
           <Route path="class" element={<Class />} />
           <Route path="class-create" element={<ClassCreate />} />
           <Route path="subjects" element={<Subjects />} />
+          <Route path="subjects-create" element={<SubjectCreate />} />
           <Route path="course" element={<Course />} />
+          <Route path="course-create" element={<CourseCreate />} />
           <Route path="rooms" element={<Rooms />} />
+          <Route path="rooms-create" element={<RoomCreate />} />
           <Route path="settings" element={<Settings />} />
           <Route path="users-admin" element={<UsersAdmin />} />
           <Route path="users-students" element={<UsersStudents />} />
@@ -63,7 +71,7 @@ class App extends Component {
       return (
         <Provider store={store}>
           <Router>
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<></>}>
             <AppContent />
             </Suspense>
           </Router>
@@ -71,11 +79,5 @@ class App extends Component {
       );
     }
   }
-
-function wait(time){
-  return new Promise(resolve => {
-    setTimeout(resolve, time)
-  })
-}
 
 root.render(<App />);

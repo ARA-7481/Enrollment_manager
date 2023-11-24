@@ -27,19 +27,27 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     department = DepartmentSerializer(read_only=False)
+    date_created = serializers.DateTimeField(format="%m-%d-%Y", read_only=True)
     class Meta:
         model = Course
-        fields = ('code','department','subjects','description')
+        fields = ('code','department', 'description', 'date_created', 'subjects_11', 'subjects_12', 'subjects_21', 'subjects_22', 'subjects_31', 'subjects_32', 'subjects_41', 'subjects_42', 'subjects_51', 'subjects_52')
+
+class CourseSerializerPost(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ('code','department', 'description', 'subjects_11', 'subjects_12', 'subjects_21', 'subjects_22', 'subjects_31', 'subjects_32', 'subjects_41', 'subjects_42', 'subjects_51', 'subjects_52')
 
 class SubjectSerializer(serializers.ModelSerializer):
+    postrequisite = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    related_corequisite = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Subject
-        fields = ('code','description','units','prerequisite', 'corequisite', 'first_sem', 'second_sem', 'lecture', 'lab')
+        fields = ('code','description','units','prerequisite', 'corequisite', 'first_sem', 'second_sem', 'lecture', 'lab', 'date_created', 'postrequisite', 'related_corequisite')
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('code','description')
+        fields = ('code','description', 'type', 'capacity', 'date_created')
 
 class ScheduleInstanceSerializer(serializers.ModelSerializer):
     class Meta:

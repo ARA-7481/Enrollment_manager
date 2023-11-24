@@ -43,11 +43,13 @@ function UsersAdmin(props) {
   };
   
   useEffect(() => {
+    if (props.staffList.length == 0){
+      props.setLoading('isLoading');
+    }
     props.setsidebarState('users');
     props.setsubsidebarState('admin');
     props.setpageHeader('Manage Admin & Staff', '', 'Manage Admin & Staff here. Add, Update, etc.');
     props.getStaff('','');
-    props.setLoading('isLoading')
   }, []);
 
   return (

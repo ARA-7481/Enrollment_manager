@@ -20,7 +20,6 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 import environ
-os.environ['DJANGO_SETTINGS_MODULE'] = 'CCw.settings'
 # env = environ.Env()
 # environ.Env.read_env()
 # Quick-start development settings - unsuitable for production
@@ -40,7 +39,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
 ALLOWED_HOSTS = ['*']
 
 import mimetypes
@@ -62,9 +60,12 @@ INSTALLED_APPS = [
     'frontend',
     'storages',
     'channels',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -93,7 +94,7 @@ TEMPLATES = [
 ]
 
 ASGI_APPLICATION = 'CCWebApp_api.asgi.application'
-
+# WSGI_APPLICATION = 'CCWebApp_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -113,9 +114,10 @@ CHANNEL_LAYERS = {
     },
 }
 
+
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=59),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
@@ -141,8 +143,8 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=59),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=3),
 }
 
 # DATABASES = {
@@ -167,7 +169,7 @@ SIMPLE_JWT = {
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.parse("postgres://ccwebapp_user:h13u5Kxz1mFGeyKNbglQrM3fB6BXr4uO@dpg-ckn3kln83ejs739ft2sg-a.singapore-postgres.render.com/ccwebapp")
+    'default': dj_database_url.parse("postgres://ccwebapp_postgres_user:RcBl5SNNixYGKgehCOkiTmxwnIi1Z8oA@dpg-claetnpm6hds739pd5lg-a.singapore-postgres.render.com/ccwebapp_postgres")
 }
 
 

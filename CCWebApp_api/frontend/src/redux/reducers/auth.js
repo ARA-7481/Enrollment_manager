@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, SET_LOADING_USER, NULL_ERROR } from "../types/types";
+import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, SET_LOADING_USER, NULL_ERROR, BAD_REQUEST } from "../types/types";
 
 const initialState = {
     access: null,
@@ -31,6 +31,16 @@ export default function(state = initialState, action) {
                 isloadingUser: false,
                 error: action.payload
             }
+        case BAD_REQUEST:
+            localStorage.removeItem('access');
+            return {
+                ...state,
+                access: null,
+                user: null,
+                isAuthenticated: false,
+                isloadingUser: false,
+                error: action.payload
+                }
         case LOGOUT_SUCCESS:
         case SET_LOADING_USER:
             return{

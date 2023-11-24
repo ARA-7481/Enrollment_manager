@@ -1,6 +1,6 @@
 import axios from "axios";
 import instanceAxios from "../interceptor/interceptor";
-import { LOGIN_SUCCESS, LOGIN_FAIL, SET_LOADING_USER, NULL_ERROR } from "../types/types";
+import { LOGIN_SUCCESS, LOGIN_FAIL, SET_LOADING_USER, NULL_ERROR, BAD_REQUEST } from "../types/types";
 
 
 
@@ -20,14 +20,19 @@ export const SignIn = (email, password) => async dispatch => {
         });
       }
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      if (error.response.data.detail) {
         dispatch({
           type: LOGIN_FAIL,
-          payload: error.response.data
+          payload: 'Invalid Credentials'
         });
-      } else {
-        console.error(error);
       }
+      else if (error.response.data.email || error.response.data.password) {
+        dispatch({
+          type: BAD_REQUEST,
+          payload: 'Please Fill Missing Fields'
+        });
+      }
+      // console.error(error);
     }
   };
 

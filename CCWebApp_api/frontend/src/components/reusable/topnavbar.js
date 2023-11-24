@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { Card, Navbar, Button } from 'react-bootstrap';
 import Media from 'react-media';
 
-import { AddUser, ColoredClassIcon } from '../../assets/svg/clnsmpl-icon';
+import { AddUser, ColoredClassIcon, ColoredSubjectIcon, ColoredRoomIcon, ColoredCourseIcon } from '../../assets/svg/clnsmpl-icon';
 
 
 function TopNavbar(props){
@@ -87,7 +87,28 @@ return(
         {props.sidebarState === 'class' && props.classState === 'list' &&
           <div style={{marginRight: '24px', marginTop: '12px'}}>
         <Button type="button" href="/#/admins/class-create" style={{borderColor:'white', display:'flex', borderRadius: '4px', backgroundColor: 'white', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '210px', height: '40px'}}>
-          <ColoredClassIcon/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '22px'}}>Create Class</h1>
+          <ColoredClassIcon/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '12px'}}>Create Class</h1>
+        </Button>
+        </div>}
+
+        {props.sidebarState === 'subjects' && props.subjectState === 'list' &&
+          <div style={{marginRight: '24px', marginTop: '12px'}}>
+        <Button type="button" href="/#/admins/subjects-create" style={{borderColor:'white', display:'flex', borderRadius: '4px', backgroundColor: 'white', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '210px', height: '40px'}}>
+          <ColoredSubjectIcon/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '12px'}}>Create Subject</h1>
+        </Button>
+        </div>}
+
+        {props.sidebarState === 'rooms' && props.roomState === 'list' &&
+          <div style={{marginRight: '24px', marginTop: '12px'}}>
+        <Button type="button" href="/#/admins/rooms-create" style={{borderColor:'white', display:'flex', borderRadius: '4px', backgroundColor: 'white', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '210px', height: '40px'}}>
+        <ColoredRoomIcon/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '12px'}}>Create Room</h1>
+        </Button>
+        </div>}
+
+        {props.sidebarState === 'course' && props.courseState === 'list' &&
+          <div style={{marginRight: '24px', marginTop: '12px'}}>
+        <Button type="button" href="/#/admins/course-create" style={{borderColor:'white', display:'flex', borderRadius: '4px', backgroundColor: 'white', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '210px', height: '40px'}}>
+        <ColoredCourseIcon/><h1 style={{color:'#3A57E8', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingLeft: '12px'}}>Create Course</h1>
         </Button>
         </div>}
 
@@ -102,6 +123,9 @@ TopNavbar.propTypes = {
   subsidebarState: PropTypes.string,
   pageHeader: PropTypes.object.isRequired,
   classState: PropTypes.string,
+  subjectState: PropTypes.string,
+  roomState: PropTypes.string,
+  courseState: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
@@ -109,6 +133,9 @@ const mapStateToProps = (state) => ({
   sidebarState: state.main.sidebarState,
   subsidebarState: state.main.subsidebarState,
   classState: state.main.classState,
+  subjectState: state.main.subjectState,
+  roomState: state.main.roomState,
+  courseState: state.main.courseState,
   });
 
 export default connect(mapStateToProps, {})(TopNavbar);

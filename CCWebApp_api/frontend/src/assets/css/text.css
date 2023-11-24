@@ -21,6 +21,12 @@
     font-size: 19px;
     padding: 24px;
   }
+.inter-500-20px {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+  }
 .inter-400-16px {
     color:#8A92A6;
     font-family: 'Inter', sans-serif;
