@@ -64,41 +64,43 @@ function Course(props) {
       </div>
       <Form style={{width: '30%'}}>
         <Form.Group controlId="searchbar">
-          <Form.Control type='search' placeholder="Search Subject or Subject Code" value={value} onChange={handleChange} style={{border: 'none', width:'100%'}}/>
+          <Form.Control type='search' placeholder="Search Subject or Subject Code" value={value} onChange={handleChange} style={{border: 'none', width:'100%', minWidth: '145px'}}/>
         </Form.Group>
       </Form>
     
       <h1 className='inter-500-16px' style={{paddingTop: '10px'}}>
         Sort: 
       </h1>
-      <Dropdown style={{width: '16%'}}>
-          <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-            <div>{sortStatus}</div>
+      <Dropdown style={{width: '32.5%'}}>
+          <Dropdown.Toggle id="dropdown-basic" 
+                           style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', 
+                           display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+            <div style={{overflow: 'hidden'}}>{sortStatus}</div>
           </Dropdown.Toggle>
 
-          <Dropdown.Menu style={{ width: '100%'}}>
-            {sortStatus !== 'Newest-Oldest'  && <Dropdown.Item onClick={() => handleSort('Newest-Oldest')}>Newest-Oldest</Dropdown.Item>}
-            {sortStatus !== 'Oldest-Newest'  && <Dropdown.Item onClick={() => handleSort('Oldest-Newest')}>Oldest-Newest</Dropdown.Item>}
-            {sortStatus !== 'A-Z'  && <Dropdown.Item onClick={() => handleSort('A-Z')}>A-Z</Dropdown.Item>}
-            {sortStatus !== 'Z-A'  && <Dropdown.Item onClick={() => handleSort('Z-A')}>Z-A</Dropdown.Item>}
-            {/* {sortStatus !== 'Units(ASC)'  && <Dropdown.Item onClick={() => handleSort('Units(ASC)')}>Units(ASC)</Dropdown.Item>}
-            {sortStatus !== 'Units(DESC)'  && <Dropdown.Item onClick={() => handleSort('Units(DESC)')}>Units(DESC)</Dropdown.Item>} */}
+          <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
+            {sortStatus !== 'Newest-Oldest'  && <Dropdown.Item onClick={() => handleSort('Newest-Oldest')}><div className="zooming-text">Newest-Oldest</div></Dropdown.Item>}
+            {sortStatus !== 'Oldest-Newest'  && <Dropdown.Item onClick={() => handleSort('Oldest-Newest')}><div className="zooming-text">Oldest-Newest</div></Dropdown.Item>}
+            {sortStatus !== 'A-Z'  && <Dropdown.Item onClick={() => handleSort('A-Z')}><div className="zooming-text">A-Z</div></Dropdown.Item>}
+            {sortStatus !== 'Z-A'  && <Dropdown.Item onClick={() => handleSort('Z-A')}><div className="zooming-text">Z-A</div></Dropdown.Item>}
           </Dropdown.Menu>
       </Dropdown>
 
       <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
           Filter: 
-        </h1>
+      </h1>
 
-      <Dropdown style={{width: '16%'}}>
-            <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-              <div>{departmentStatus}</div>
+      <Dropdown style={{width: '32.5%'}}>
+            <Dropdown.Toggle id="dropdown-basic" 
+                             style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', 
+                                     display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+              <div style={{overflow: 'hidden'}}>{departmentStatus}</div>
             </Dropdown.Toggle>
 
-            <Dropdown.Menu style={{ width: '100%', maxHeight: '300px', overflow: 'auto'}}>
-              {departmentStatus !== 'All Departments'  && <Dropdown.Item onClick={() => handleDepartment('All Departments')}>All Departments</Dropdown.Item>}
+            <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
+              {departmentStatus !== 'All Departments'  && <Dropdown.Item onClick={() => handleDepartment('All Departments')}><div className="zooming-text">All Departments</div></Dropdown.Item>}
               {props.departmentsList.filter(dept => dept.code !== departmentStatus).map((department) => (
-                <Dropdown.Item key={department.code} onClick={() => handleDepartment(department.code)}>{department.code}</Dropdown.Item>
+                <Dropdown.Item key={department.code} onClick={() => handleDepartment(department.code)}><div className="zooming-text">{department.code}</div></Dropdown.Item>
               ))}
             </Dropdown.Menu>
         </Dropdown>

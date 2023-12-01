@@ -59,43 +59,47 @@ function UsersAdmin(props) {
       <div onClick={() => handleSearch(value)} style={{cursor: 'pointer'}}>
       <Magnifier/>
       </div>
-      <Form style={{width: '30%'}}>
+      <Form style={{width: '35%'}}>
         <Form.Group controlId="searchbar">
-          <Form.Control type='search' placeholder="Search staff name or faculty id..." value={value} onChange={handleChange} style={{border: 'none', width:'100%'}}/>
+          <Form.Control type='search' placeholder="Search staff name or faculty id..." value={value} onChange={handleChange} style={{border: 'none', width:'100%', minWidth: '145px'}}/>
         </Form.Group>
       </Form>
     
       <h1 className='inter-500-16px' style={{paddingTop: '10px'}}>
         Sort: 
       </h1>
-      <Dropdown style={{width: '16%'}}>
-          <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-            <div>{sortStatus}</div>
+      <Dropdown style={{width: '32.5%'}}>
+          <Dropdown.Toggle id="dropdown-basic" 
+                           style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', 
+                                   display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+            <div style={{overflow: 'hidden'}}>{sortStatus}</div>
           </Dropdown.Toggle>
 
-          <Dropdown.Menu style={{ width: '100%'}}>
-            {sortStatus !== 'Newest-Oldest'  && <Dropdown.Item onClick={() => handleSort('Newest-Oldest')}>Newest-Oldest</Dropdown.Item>}
-            {sortStatus !== 'Oldest-Newest'  && <Dropdown.Item onClick={() => handleSort('Oldest-Newest')}>Oldest-Newest</Dropdown.Item>}
-            {sortStatus !== 'A-Z'  && <Dropdown.Item onClick={() => handleSort('A-Z')}>A-Z</Dropdown.Item>}
-            {sortStatus !== 'Z-A'  && <Dropdown.Item onClick={() => handleSort('Z-A')}>Z-A</Dropdown.Item>}
+          <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
+            {sortStatus !== 'Newest-Oldest'  && <Dropdown.Item onClick={() => handleSort('Newest-Oldest')}><div className="zooming-text">Newest-Oldest</div></Dropdown.Item>}
+            {sortStatus !== 'Oldest-Newest'  && <Dropdown.Item onClick={() => handleSort('Oldest-Newest')}><div className="zooming-text">Oldest-Newest</div></Dropdown.Item>}
+            {sortStatus !== 'A-Z'  && <Dropdown.Item onClick={() => handleSort('A-Z')}><div className="zooming-text">A-Z</div></Dropdown.Item>}
+            {sortStatus !== 'Z-A'  && <Dropdown.Item onClick={() => handleSort('Z-A')}><div className="zooming-text">Z-A</div></Dropdown.Item>}
           </Dropdown.Menu>
       </Dropdown>
 
       <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
         Filter: 
       </h1>
-      <Dropdown style={{width: '16%'}}>
-          <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-            <div>{roleStatus}</div>
+      <Dropdown style={{width: '32.5%'}}>
+          <Dropdown.Toggle id="dropdown-basic" 
+                           style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', 
+                                   display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+            <div style={{overflow: 'hidden'}}>{roleStatus}</div>
           </Dropdown.Toggle>
 
-          <Dropdown.Menu style={{ width: '100%'}}>
-            {roleStatus !== 'All Roles'  && <Dropdown.Item onClick={() => handleRole('All Roles')}>All Roles</Dropdown.Item>}
-            {roleStatus !== 'Admin'  && <Dropdown.Item onClick={() => handleRole('Admin')}>Admin</Dropdown.Item>}
-            {roleStatus !== 'Staff'  && <Dropdown.Item onClick={() => handleRole('Staff')}>Staff</Dropdown.Item>}
-            {roleStatus !== 'Registrar'  && <Dropdown.Item onClick={() => handleRole('Registrar')}>Registrar</Dropdown.Item>}
-            {roleStatus !== 'Guidance'  && <Dropdown.Item onClick={() => handleRole('Guidance')}>Guidance</Dropdown.Item>}
-            {roleStatus !== 'Not Specified'  && <Dropdown.Item onClick={() => handleRole('Not Specified')}>Not Specified</Dropdown.Item>}
+          <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
+            {roleStatus !== 'All Roles'  && <Dropdown.Item onClick={() => handleRole('All Roles')}><div className="zooming-text"></div>All Roles</Dropdown.Item>}
+            {roleStatus !== 'Admin'  && <Dropdown.Item onClick={() => handleRole('Admin')}><div className="zooming-text">Admin</div></Dropdown.Item>}
+            {roleStatus !== 'Staff'  && <Dropdown.Item onClick={() => handleRole('Staff')}><div className="zooming-text">Staff</div></Dropdown.Item>}
+            {roleStatus !== 'Registrar'  && <Dropdown.Item onClick={() => handleRole('Registrar')}><div className="zooming-text">Registrar</div></Dropdown.Item>}
+            {roleStatus !== 'Guidance'  && <Dropdown.Item onClick={() => handleRole('Guidance')}><div className="zooming-text">Guidance</div></Dropdown.Item>}
+            {roleStatus !== 'Not Specified'  && <Dropdown.Item onClick={() => handleRole('Not Specified')}><div className="zooming-text">Not Specified</div></Dropdown.Item>}
           </Dropdown.Menu>
       </Dropdown>
     </div>

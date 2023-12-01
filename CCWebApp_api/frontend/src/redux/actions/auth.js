@@ -1,6 +1,6 @@
 import axios from "axios";
 import instanceAxios from "../interceptor/interceptor";
-import { LOGIN_SUCCESS, LOGIN_FAIL, SET_LOADING_USER, NULL_ERROR, BAD_REQUEST } from "../types/types";
+import { LOGIN_SUCCESS, LOGIN_FAIL, SET_LOADING_USER, NULL_ERROR, BAD_REQUEST, LOGOUT_SUCCESS } from "../types/types";
 
 
 
@@ -35,6 +35,12 @@ export const SignIn = (email, password) => async dispatch => {
       // console.error(error);
     }
   };
+
+export const SignOut = () => dispatch => {
+  dispatch({
+    type: LOGOUT_SUCCESS,
+  })
+}
 
 export const setloadingUser = (boolLoading) => dispatch => {
     dispatch({

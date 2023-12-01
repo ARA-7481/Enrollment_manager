@@ -1,7 +1,7 @@
 import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMENTS, 
         GET_FACULTY, GET_STAFF, SET_CLASS, GET_COURSES, GET_SUBJECT, GET_ROOMS, GET_CLASSES, 
         ADD_CLASS, ADD_SUBJECT, GET_CLASSES_LIST, SET_LOADING, GET_SUBJECTS_LIST, SET_SUBJECT, GET_ROOMS_LIST, SET_ROOM, ADD_ROOM,
-        GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE,
+        GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE, RESO_UPDATE, AUTO_COLLAPSE
         } from "../types/types";
 
 const initialState = {
@@ -16,6 +16,7 @@ const initialState = {
     subject: {},
     pageHeader: {},
     subjectFormdata: {},
+    windowDimensions: {},
     studentsList: [],
     facultyList: [],
     staffList: [],
@@ -27,6 +28,7 @@ const initialState = {
     subjectsListForTable: [],
     roomsListForTable: [],
     coursesListForTable: [],
+    isLess800: false,
 }
 
 export default function(state = initialState, action) {
@@ -173,6 +175,16 @@ export default function(state = initialState, action) {
                 ...state,
                 loadingState: 'isNotLoading'
                 }
+        case RESO_UPDATE:
+            return{
+                ...state,
+                windowDimensions: action.payload
+            }
+        case AUTO_COLLAPSE:
+            return{
+                ...state,
+                isLess800: action.payload
+            }
         default:
             return state;
     }

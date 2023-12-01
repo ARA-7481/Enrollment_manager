@@ -42,6 +42,15 @@ export default function(state = initialState, action) {
                 error: action.payload
                 }
         case LOGOUT_SUCCESS:
+            localStorage.removeItem('access');
+            return {
+                ...state,
+                access: null,
+                user: null,
+                isAuthenticated: false,
+                isloadingUser: false,
+            }
+            
         case SET_LOADING_USER:
             return{
                 ...state,

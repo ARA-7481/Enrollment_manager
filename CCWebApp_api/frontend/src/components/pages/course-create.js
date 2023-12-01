@@ -216,10 +216,10 @@ function CourseCreate(props) {
       } else if (semester === 'Second Semester') {
         semesterarray[year-1].secondsemester.push(subject);
         if (subjectdetails.corequisite){
-          semesterarray[year-1].firstsemester.push(subjectdetails.corequisite);
+          semesterarray[year-1].secondsemester.push(subjectdetails.corequisite);
         }
         if (subjectdetails.related_corequisite.length > 0){
-          semesterarray[year-1].firstsemester.push(...subjectdetails.related_corequisite);
+          semesterarray[year-1].secondsemester.push(...subjectdetails.related_corequisite);
         }
       }
     

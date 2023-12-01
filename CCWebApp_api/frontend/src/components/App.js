@@ -1,13 +1,16 @@
-import React, { Component, Fragment, lazy, Suspense } from 'react';
+import React, { Component, Fragment, lazy, Suspense, useEffect } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../redux/reducers/store';
+import { Spinner } from 'react-bootstrap';
 import '../assets/css/text.css'
 import '../assets/css/forms.css'
 import '../assets/css/skeleton.css'
 import '../assets/css/popups.css'
+import '../assets/css/sidebar.css'
 
+const Fallback = lazy(() =>  import('./reusable/fallback'))
 const AuthLayout = lazy(() =>  import('./layouts/Authlayout'))
 const MainLayout = lazy(() =>  import('./layouts/Mainlayout'))
 const Signin = lazy(() =>  import('./accounts/admin-signin'))
@@ -27,11 +30,15 @@ const SubjectCreate = lazy(() =>  import('./pages/subject-create'))
 const RoomCreate = lazy(() =>  import('./pages/room-create'))
 const CourseCreate = lazy(() =>  import('./pages/course-create'))
 
+
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
 
 function AppContent() {
     const location = useLocation();
+    useEffect(() => {
+      // console.log('Page changed to: ', location.pathname);
+      }, [location]);
     return (
         <Fragment>
         <Routes>
@@ -71,7 +78,7 @@ class App extends Component {
       return (
         <Provider store={store}>
           <Router>
-            <Suspense fallback={<></>}>
+            <Suspense  fallback={<h1>loading...</h1>}>
             <AppContent />
             </Suspense>
           </Router>

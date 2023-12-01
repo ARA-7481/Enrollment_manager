@@ -3,7 +3,7 @@ import instanceAxios from "../interceptor/interceptor";
 import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMENTS, GET_FACULTY,
          GET_STAFF, SET_CLASS, GET_COURSES, GET_SUBJECT, GET_ROOMS, GET_CLASSES, ADD_CLASS, ADD_SUBJECT, 
          GET_CLASSES_LIST, SET_LOADING, GET_SUBJECTS_LIST, SET_SUBJECT, GET_ROOMS_LIST, SET_ROOM, ADD_ROOM,
-         GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE,
+         GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE, RESO_UPDATE, AUTO_COLLAPSE,
         } from "../types/types";
 
 function formatTime(time) {
@@ -206,10 +206,8 @@ export const getSubject = (subject) => async dispatch => {
 
   export const getClasses = (subject, yearlevel) => async dispatch => {
     try {
-      console.log(subject, yearlevel)
       const res = await instanceAxios.get(`/api/classes?search=${subject} ${yearlevel}`);
       if(res.status === 200){
-        console.log(res.data)
         dispatch({
           type: GET_CLASSES,
           payload: res.data
@@ -224,7 +222,6 @@ export const getSubject = (subject) => async dispatch => {
     try {
       const res = await instanceAxios.get(`/api/classeslist?search=${queryYearlevel} ${queryDepartment} ${queryCourse} ${querySearch}`);
       if(res.status === 200){
-        console.log(res.data)
         dispatch({
           type: GET_CLASSES_LIST,
           payload: res.data
@@ -250,8 +247,6 @@ export const getSubject = (subject) => async dispatch => {
         enddate: formatDate(new Date(formData.enddate)),
         schedule: adjustedSchedule,
       };  
-
-      console.log(adjustedFormData)
       const res = await instanceAxios.post('/api/classes/', adjustedFormData);
       dispatch({
         type: ADD_CLASS,
@@ -331,4 +326,17 @@ export const getSubject = (subject) => async dispatch => {
     } catch (error) {
         console.error(error);
     }
+  };
+
+  export const setResolution = (dimensions) => dispatch => {
+    dispatch({
+      type: RESO_UPDATE,
+      payload: dimensions
+    })
+  }
+  export const setCollapseState = (state) => dispatch => {
+      dispatch({
+        type: AUTO_COLLAPSE,
+        payload: state
+    })
   };

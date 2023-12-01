@@ -3,29 +3,31 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader } from '../../redux/actions/main';
 
 import { Col } from 'react-bootstrap';
+import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 
 function Settings(props) {
 
   useEffect(() => {
     props.setsidebarState('settings');
     props.setsubsidebarState(null);
+    props.setpageHeader('Settings', '', 'Welcome to the settings');
   }, []);
 
   return (
-      <>
-      <Col>
-      <div style={{display:'flex'}}>
-          <h1>Settings</h1>
+    <div style={{backgroundColor:'#ffffff', display: 'flex', borderRadius:'8px', padding: '100px', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+    <div>
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '24px'}}>
+        <h1>Coming Soon</h1>
       </div>
-      <div>
-          
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '48px'}}>
+        <h6 className='inter-500-16px'>This page is a work in progress. We'll let you know once this page is published. </h6>
       </div>
-      </Col>
-      
-      </>
+      <ComingSoon/>
+    </div>
+  </div>
     );
 }
 
@@ -33,7 +35,8 @@ Settings.propTypes = {
   sidebarState: PropTypes.string,
   setsidebarState: PropTypes.func.isRequired,
   subsidebarState: PropTypes.string,
-  setsubsidebarState: PropTypes.func.isRequired
+  setsubsidebarState: PropTypes.func.isRequired,
+  setpageHeader: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -41,4 +44,4 @@ const mapStateToProps = (state) => ({
   subsidebarState: state.main.subsidebarState
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState})(Settings))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader})(Settings))

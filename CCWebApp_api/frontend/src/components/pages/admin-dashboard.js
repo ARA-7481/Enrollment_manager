@@ -3,28 +3,33 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader } from '../../redux/actions/main';
 
 import { Col } from 'react-bootstrap';
+
+import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 
 function Dashboard(props) {
 
   useEffect(() => {
     props.setsidebarState('dashboard');
     props.setsubsidebarState(null);
+    props.setpageHeader('Dashboard', '', 'Welcome to the dashboard');
   }, []);
 
   return (
       <>
-      <Col>
-      <div style={{display:'flex'}}>
-          <h1>Dashboard</h1>
+      <div style={{backgroundColor:'#ffffff', display: 'flex', borderRadius:'8px', padding: '100px', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+        <div>
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '24px'}}>
+            <h1>Coming Soon</h1>
+          </div>
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '48px'}}>
+            <h6 className='inter-500-16px'>This page is a work in progress. We'll let you know once this page is published. </h6>
+          </div>
+          <ComingSoon/>
+        </div>
       </div>
-      <div>
-          
-      </div>
-      </Col>
-      
       </>
     );
 }
@@ -34,6 +39,7 @@ Dashboard.propTypes = {
   setsidebarState: PropTypes.func.isRequired,
   subsidebarState: PropTypes.string,
   setsubsidebarState: PropTypes.func.isRequired,
+  setpageHeader: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -41,4 +47,4 @@ const mapStateToProps = (state) => ({
   subsidebarState: state.main.subsidebarState,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState})(Dashboard))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader})(Dashboard))
