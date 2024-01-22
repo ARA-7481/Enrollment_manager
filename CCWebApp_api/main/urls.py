@@ -1,6 +1,6 @@
 from rest_framework import routers
-from accounts.views import StudentsViewSet, FacultyViewSet, StaffViewSet
-from .views import DepartmentViewSet, CourseViewSet, SubjectViewSet, RoomViewSet, ClassesViewSet, ClassesListViewSet, CourseViewSetPost
+from accounts.views import StudentsViewSet, FacultyViewSet, StaffViewSet, TeacherViewSet, StudentDataViewSet, CheckerView
+from .views import DepartmentViewSet, CourseViewSet, SubjectViewSet, RoomViewSet, ClassesViewSet, ClassesListViewSet, CourseViewSetPost, PointersViewSet, ActivitiesViewSet, ClassesViewSetForFaculty, ActivityEntryViewSet, AddActivitiesViewSet
 
 router = routers.DefaultRouter()
 router.register('api/students', StudentsViewSet, 'students')
@@ -14,6 +14,15 @@ router.register('api/classes', ClassesViewSet , 'classes')
 router.register('api/classeslist', ClassesListViewSet , 'classeslist')
 
 router.register('api/coursespost', CourseViewSetPost , 'coursespost')
+
+router.register('api/teacher', TeacherViewSet, 'teacher')
+router.register('api/pointers', PointersViewSet, 'pointers')
+router.register('api/activities', ActivitiesViewSet, 'activities')
+router.register('api/addactivities', AddActivitiesViewSet, 'addactivities')
+router.register('api/classesforfaculty', ClassesViewSetForFaculty , 'classesforfaculty')
+
+router.register('api/studentdata', StudentDataViewSet, 'studentdata')
+router.register('api/activityentry', ActivityEntryViewSet, 'activityentry')
 
 
 urlpatterns = router.urls

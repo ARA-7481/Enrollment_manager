@@ -24,7 +24,16 @@ function Signin (props) {
 
   useEffect(() => {
    if (props.isAuthenticated) {
-     navigate('/admins/dashboard');
+      if (props.user.usertype === 'Admin'){
+         navigate('/admins/dashboard');
+         console.log('admin login successful')
+      }else if (props.user.usertype === 'Student'){
+         navigate('/students/dashboard');
+         console.log('student login successful')
+      }else if (props.user.usertype === 'Faculty'){
+         navigate('/teachers/dashboard');
+         console.log('student login successful')
+      }
    }
  }, [props.isAuthenticated]);
  
@@ -100,12 +109,14 @@ Signin.propTypes = {
     setloadingUser: PropTypes.func,
     isloadingUser: PropTypes.bool,
     error: PropTypes.string,
+    user: PropTypes.object,
 }
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
     isloadingUser: state.auth.isloadingUser,
     error: state.auth.error,
+    user: state.auth.user
   });
 
 export default connect(mapStateToProps, { SignIn, setloadingUser })(Signin);

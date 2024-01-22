@@ -1,0 +1,94 @@
+.class-container {
+    background-color: rgba(51, 51, 51, 0);
+    margin-top: 40px;
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding-inline-start: 0px !important;
+    padding-inline-end: 0px !important;
+    gap: 2.7%;
+  }
+
+.ongoing-activity-container {
+    background-color: white;
+    margin-top: 40px;
+    width: 56% !important;
+    padding-inline: 24px;
+    padding-top: 14px;
+    border-radius: 8px;
+    padding-bottom: 24px;
+    /* overflow-y: auto; */
+  }
+
+.finished-activity-container {
+    background-color: white;
+    margin-top: 40px;
+    padding-inline: 24px;
+    padding-top: 14px;
+    border-radius: 8px;
+    overflow-y: auto;
+    padding-bottom: 24px;
+  }
+
+.pointer-container {
+    background-color: rgb(51, 51, 51, 0);
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding-inline-start: 0px !important;
+    padding-inline-end: 0px !important;
+    gap: 2.7%;
+  }
+
+.class-item {
+    /* flex: 1 0 21%; */
+    width: 22.975%;
+    height: 320px;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 0px !important;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    padding-inline: 0px;
+  }
+
+.bg-item {
+    width: 48%;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 0px !important;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    padding-inline: 0px;
+  }
+
+.bg-item:hover {
+    cursor: pointer;
+  }
+
+.activity-item {
+    background-color: white;
+    /* padding-inline: 24px; */
+    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: 24px;
+    padding-top: 24px !important;
+  }
+
+.class-itemheader {
+    height: 160px !important;
+    background-color: rgb(152, 153, 153) !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    padding-inline: 0px !important;
+    background-size:auto !important;
+    background-position: center !important;
+}
+
+.class-itemdata {
+    height: 160px;
+    padding: 24px;
+}
+
+.class-item:hover{
+    cursor: pointer;
+}

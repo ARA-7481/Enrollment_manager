@@ -23,6 +23,8 @@ werkzeug = "*"
 pyopenssl = "*"
 daphne = "*"
 django-cors-headers = "*"
+openai = "*"
+requests = "*"
 
 [dev-packages]
 

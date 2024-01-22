@@ -4,6 +4,8 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_STAFF, SET_CLASS, GET_COURSES, GET_SUBJECT, GET_ROOMS, GET_CLASSES, ADD_CLASS, ADD_SUBJECT, 
          GET_CLASSES_LIST, SET_LOADING, GET_SUBJECTS_LIST, SET_SUBJECT, GET_ROOMS_LIST, SET_ROOM, ADD_ROOM,
          GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE, RESO_UPDATE, AUTO_COLLAPSE,
+         GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_SELECTED_BG, GET_STUDENT_DATA, GET_ACTIVITY, 
+         ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT
         } from "../types/types";
 
 function formatTime(time) {
@@ -94,7 +96,7 @@ export const setcourseState = (coursestate) => dispatch => {
 
 export const getStudents = (queryStatus, queryYrlvl, queryDepartment, queryCourse, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/students?search=${queryStatus} ${queryYrlvl} ${queryDepartment} ${queryCourse} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/students/?search=${queryStatus} ${queryYrlvl} ${queryDepartment} ${queryCourse} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_STUDENTS,
@@ -108,7 +110,7 @@ export const getStudents = (queryStatus, queryYrlvl, queryDepartment, queryCours
 
 export const getFaculty = (queryPosition, queryDepartment, queryCourse, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/faculty?search=${queryPosition} ${queryDepartment} ${queryCourse} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/faculty/?search=${queryPosition} ${queryDepartment} ${queryCourse} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_FACULTY,
@@ -122,7 +124,7 @@ export const getFaculty = (queryPosition, queryDepartment, queryCourse, querySea
 
 export const getStaff = (queryRole, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/staff?search=${queryRole} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/staff/?search=${queryRole} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_STAFF,
@@ -164,7 +166,7 @@ export const getCourses = () => async dispatch => {
 
 export const getCoursesList = (queryDepartment, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/courses?search=${queryDepartment} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/courses/?search=${queryDepartment} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_COURSES_LIST,
@@ -206,7 +208,7 @@ export const getSubject = (subject) => async dispatch => {
 
   export const getClasses = (subject, yearlevel) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/classes?search=${subject} ${yearlevel}`);
+      const res = await instanceAxios.get(`/api/classes/?search=${subject} ${yearlevel}`);
       if(res.status === 200){
         dispatch({
           type: GET_CLASSES,
@@ -220,7 +222,7 @@ export const getSubject = (subject) => async dispatch => {
 
   export const getClassesList = (queryYearlevel, queryDepartment, queryCourse, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/classeslist?search=${queryYearlevel} ${queryDepartment} ${queryCourse} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/classeslist/?search=${queryYearlevel} ${queryDepartment} ${queryCourse} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_CLASSES_LIST,
@@ -278,7 +280,7 @@ export const getSubject = (subject) => async dispatch => {
 
   export const getSubjectsList = (querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/subject?search=${querySearch}`);
+      const res = await instanceAxios.get(`/api/subject/?search=${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_SUBJECTS_LIST,
@@ -316,7 +318,7 @@ export const getSubject = (subject) => async dispatch => {
 
   export const getRoomsList = (querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/rooms?search=${querySearch}`);
+      const res = await instanceAxios.get(`/api/rooms/?search=${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_ROOMS_LIST,
@@ -340,3 +342,250 @@ export const getSubject = (subject) => async dispatch => {
         payload: state
     })
   };
+
+//portal
+
+export const getTeacherdata = (email) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/teacher/?search=${email}`);
+    if(res.status === 200){
+      dispatch({
+        type: GET_TEACHER_DATA,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getStudentdata = (email) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/studentdata/?search=${email}`);
+    if(res.status === 200){
+      dispatch({
+        type: GET_STUDENT_DATA,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const setSelectedclass = (classcode) => dispatch => {
+  dispatch({
+    type: SET_SELECTED_CLASS,
+    payload: classcode,
+  });
+};
+
+export const setSelectedBG = (bg_url) => dispatch => {
+  dispatch({
+    type: SET_SELECTED_BG,
+    payload: bg_url,
+  });
+};
+
+export const getPointers = () => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/pointers`);
+    if(res.status === 200){
+      dispatch({
+        type: GET_POINTERS,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const addActivities = (formData) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+    const adjustedFormData = {
+      ...formData,
+      start: formatDate(new Date(formData.start)),
+      deadline: formatDate(new Date(formData.deadline)),
+    };
+    const res = await instanceAxios.post('/api/activities/', adjustedFormData, config);
+    dispatch({
+      type: ADD_ACTIVITY,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getActivities = (classroom) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/activities/?search=${classroom}`);
+    if(res.status === 200){
+      dispatch({
+        type: GET_ACTIVITIES,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getActivity = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/activities/${id}`);
+    if(res.status === 200){
+      console.log(res.data)
+      dispatch({
+        type: GET_ACTIVITY,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getEntry = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/activityentry/${id}`);
+    if(res.status === 200){
+      dispatch({
+        type: GET_ENTRY,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const setSubmittingStudent = (student) => async dispatch => {
+      dispatch({
+        type: SET_SUBMITTING_STUDENT,
+        payload: student
+      });
+};
+
+export const setClassbackground = (bg_url, classcode) => async dispatch => {
+  const body = {
+    bg_gradient: bg_url
+  };
+  try {
+    const res = await instanceAxios.patch(`/api/classesforfaculty/${classcode}/`, body);
+    if(res.status === 200){
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const addActivityentry = (formData) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+    const res = await instanceAxios.post('/api/activityentry/', formData, config);
+    dispatch({
+      type: ADD_ACTIVITY_ENTRY,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getClassdata = (classcode) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/classesforfaculty/${classcode}/`);
+    if(res.status === 200){
+      dispatch({
+        type: GET_CLASS_DATA,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const checkEntry = (referencefile, entryfile) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const body = JSON.stringify({ referencefile, entryfile });
+  try {
+    const res = await axios.post('/api/checkentry/', body, config);
+    if(res.status === 200){
+      dispatch({
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const analyzeImages = (referencefileUrl, entryfileUrl, prompt, customprompt) => {
+  return async dispatch => {
+    try {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        model: 'gpt-4-vision-preview',
+        messages: [
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: 'Reference image'
+              },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: referencefileUrl
+                }
+              },
+              {
+                type: 'text',
+                text: 'Entry image'
+              },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: entryfileUrl
+                }
+              },
+              {
+                type: 'text',
+                text: `Respond only in JSON. These images are CAD snippets. Reference image is the answer key and entry image is submitted by the student. ${prompt} ${customprompt}`
+              }
+            ]
+          }
+        ],
+        max_tokens: 500
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer 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`
+        }
+      });
+      console.log(response)
+      dispatch({ 
+        type: ANALYZE_IMAGES_SUCCESS, payload: response.data.choices[0].message.content
+        });
+    } catch (error) {
+      dispatch({
+        error 
+        });
+    }
+  };
+};

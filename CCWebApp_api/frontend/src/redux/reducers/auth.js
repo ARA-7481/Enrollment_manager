@@ -43,12 +43,15 @@ export default function(state = initialState, action) {
                 }
         case LOGOUT_SUCCESS:
             localStorage.removeItem('access');
+            localStorage.removeItem('state');
             return {
-                ...state,
                 access: null,
-                user: null,
                 isAuthenticated: false,
                 isloadingUser: false,
+                user: {},
+                users: [],
+                message: null,
+                error: null,
             }
             
         case SET_LOADING_USER:

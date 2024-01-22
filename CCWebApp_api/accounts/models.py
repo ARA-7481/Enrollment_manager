@@ -46,7 +46,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
 
     def __str__(self):
-        return self.id
+        return self.email
     
 
 class StudentProfile(models.Model):
@@ -77,7 +77,6 @@ class StudentProfile(models.Model):
     status = models.CharField(max_length=50, choices=STATUS, null=False, default= 'Draft')
     userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
-
 class FacultyProfile(models.Model):
     POSITION = (
         ('Dean','Dean'),
@@ -91,8 +90,10 @@ class FacultyProfile(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
     courses = models.ManyToManyField('main.Course')
     position = models.CharField(max_length=50, choices=POSITION, null=False, default= 'Teacher')
-    userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='facultyprofile')
 
+    def __str__(self):
+        return self.userprofile.id
 
 class StaffProfile(models.Model):
     ROLE = (     

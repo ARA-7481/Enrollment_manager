@@ -86,6 +86,15 @@
   max-width: 210px !important;
   min-width: 180px;
 }
+.buttonsonnavbars-v2 {
+  border-color: #556BD9 !important;
+  display: flex !important;
+  justify-content: center !important;
+  border-radius: 4px !important;
+  background-color: #556BD9 !important;
+  padding-inline: 0px 15px !important;
+  padding-inline: 12px !important;
+}
 
 /* .scrolling-text {
   overflow: hidden;
@@ -138,4 +147,20 @@
 
 .zooming-icon:hover {
   transform: scale(1.175);
+}
+
+.document-div {
+  color: #8A92A6 !important;
+  border: 1px solid #EEEEEE !important;
+  width: 100%;
+  align-items: center;
+}
+
+.document-remove-button {
+  border-color: red !important;
+  color: red  !important;
+  background-color: white !important;
+  overflow: hidden;
+  white-space: nowrap;
+  max-height: 40px;
 }

@@ -104,7 +104,7 @@ function UsersStudents(props) {
       const data = JSON.parse(event.data);
       console.log(data)
       console.log(data.event.event)
-      if (data.event.event === 'student_model_update') {
+      if (data.event.event === 'model_update') {
         props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
       }
     };

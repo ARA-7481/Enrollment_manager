@@ -70,6 +70,12 @@ class ScheduleInstance(models.Model):
     day = models.CharField(max_length=200, null=True)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
 
+   
+class Pointers(models.Model):
+    code = models.CharField(max_length=20, primary_key=True, null=False, unique=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
+    prompt = models.CharField(max_length=500, null=True, blank=True)
+    
 class Classes(models.Model):
     CLASS_TYPE = (
         ('Face to Face' , 'Face to Face'),
@@ -88,6 +94,29 @@ class Classes(models.Model):
     startdate = models.DateField(null=True)
     enddate = models.DateField(null=True)
     date_created = models.DateTimeField(auto_now_add=True)
+    bg_gradient = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         return self.code
+    
+class Activities(models.Model):
+    ACTIVITY_TYPE = (
+        ('CAD Evaluation' , 'CAD Evaluation'),
+        ('Quiz/Exam' , 'Quiz/Exam'),
+        ('Others' , 'Others'),
+    )
+    id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)
+    start = models.DateField(null=True)
+    deadline = models.DateField(null=True)
+    activity_type = models.CharField(max_length=20, choices=ACTIVITY_TYPE, null=False, default= 'CAD Evaluation')
+    title = models.CharField(max_length=200, null=True)
+    instruction = models.CharField(max_length=5000, null=True)
+    referencefile = models.FileField(null=True, blank=True, upload_to='uploads/')
+    classroom = models.ForeignKey(Classes, on_delete=models.SET_NULL, related_name='related_activities', null=True)
+
+class ActivityEntry(models.Model):
+    id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)
+    file = models.FileField(null=True, blank=True, upload_to='uploads/')
+    activity = models.ForeignKey(Activities, on_delete=models.SET_NULL, related_name='related_entry', null=True)
+    submitted_by = models.ForeignKey(StudentProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    grade = models.FloatField(null=True, blank=True)

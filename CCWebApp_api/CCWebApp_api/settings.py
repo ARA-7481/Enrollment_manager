@@ -30,15 +30,15 @@ import environ
 from django.core.management.utils import get_random_secret_key
 
 SECRET_KEY = get_random_secret_key()
-SECURE_HSTS_SECONDS = 3600
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_PRELOAD = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_SECONDS = 3600
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 import mimetypes
@@ -93,8 +93,8 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'CCWebApp_api.asgi.application'
-# WSGI_APPLICATION = 'CCWebApp_api.wsgi.application'
+# ASGI_APPLICATION = 'CCWebApp_api.asgi.application'
+WSGI_APPLICATION = 'CCWebApp_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -116,10 +116,10 @@ CHANNEL_LAYERS = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=59),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
     'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False,
+    'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
 
     'ALGORITHM': 'HS256',
@@ -208,6 +208,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+ 
+ # MEDIA
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -219,6 +223,8 @@ AUTH_USER_MODEL = 'accounts.User'
 
 AWS_ACCESS_KEY_ID =  os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY_ID =  "AKIA5WBNZMEFMZB7FE3P"
+AWS_SECRET_ACCESS_KEY = "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"
 
 AWS_STORAGE_BUCKET_NAME = "ccwebappbucket"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

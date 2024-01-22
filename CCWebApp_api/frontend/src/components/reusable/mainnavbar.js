@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card, Navbar, Button } from 'react-bootstrap';
@@ -10,6 +10,7 @@ import {SignOut} from '../../redux/actions/auth';
 function MainNavbar(props){
     const handleSignout = () => {
       props.SignOut()
+      return <Navigate to="/auth/admin-signin" />;
     }
 
     const user = JSON.parse(localStorage.getItem('user'))

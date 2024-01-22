@@ -1,6 +1,6 @@
 import axios from "axios";
 import instanceAxios from "../interceptor/interceptor";
-import { LOGIN_SUCCESS, LOGIN_FAIL, SET_LOADING_USER, NULL_ERROR, BAD_REQUEST, LOGOUT_SUCCESS } from "../types/types";
+import { LOGIN_SUCCESS, LOGIN_FAIL, SET_LOADING_USER, NULL_ERROR, BAD_REQUEST, LOGOUT_SUCCESS, CLEAR_STATE } from "../types/types";
 
 
 
@@ -32,13 +32,18 @@ export const SignIn = (email, password) => async dispatch => {
           payload: 'Please Fill Missing Fields'
         });
       }
-      // console.error(error);
+      console.error(error);
     }
   };
 
-export const SignOut = () => dispatch => {
+export const SignOut = () => async dispatch => {
+  const res = await axios.post('/api/logout/');
   dispatch({
     type: LOGOUT_SUCCESS,
+    payload: res.data
+  })
+  dispatch({
+    type: CLEAR_STATE,
   })
 }
 
@@ -54,6 +59,3 @@ export const nullError = () => dispatch => {
       type: NULL_ERROR,
     })
   };
-
-
-  

@@ -1,15 +1,35 @@
 from rest_framework import generics, permissions, viewsets, status
 from rest_framework.response import Response
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer, TeacherDataSerializer, StudentDataSerializer
 from .permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
 from .models import User, StudentProfile, FacultyProfile, StaffProfile
 from rest_framework import filters
+import json
+from django.http import JsonResponse
+from openai import OpenAI
 
+import base64
+import requests
+
+def encode_image(image_path):
+  with open(image_path, "rb") as image_file:
+    return base64.b64encode(image_file.read()).decode('utf-8')
+
+class CheckerView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        referencefile = data.get('referencefile')
+        entryfile = data.get('entryfile')
+
+        print("Reference File:", referencefile)
+        print("Entry File:", entryfile)
+
+        return JsonResponse({'status':'success'}, status=200)
 
 class SuccessView(APIView):
     def get(self, request):
@@ -39,11 +59,20 @@ class LogInView(TokenObtainPairView):
         )
 
         return response
+    
+class LogOutView(APIView):
+    def post(self, request, *args, **kwargs):
+        refresh_token = request.COOKIES.get('refresh_token')
+        token = RefreshToken(refresh_token)
+
+        response = Response(status=status.HTTP_205_RESET_CONTENT)
+        response.delete_cookie('refresh_token')
+        return response
+
 
 class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get('refresh_token')
-        print(refresh_token)
         if not refresh_token:
             return Response({'error': 'Invalid refresh token'})
 
@@ -99,3 +128,22 @@ class StaffViewSet(viewsets.ModelViewSet):
     serializer_class = StaffSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['$userprofile__first_name', '$userprofile__last_name', '=role', '=id']
+
+
+class TeacherViewSet(viewsets.ModelViewSet):
+    queryset = FacultyProfile.objects.all()
+    permission_classes = [
+        IsFaculty
+    ]
+    serializer_class = TeacherDataSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['=userprofile__email']
+
+class StudentDataViewSet(viewsets.ModelViewSet):
+    queryset = StudentProfile.objects.all()
+    permission_classes = [
+        IsStudent
+    ]
+    serializer_class = StudentDataSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['=userprofile__email']

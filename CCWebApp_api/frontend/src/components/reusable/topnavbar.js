@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
@@ -8,10 +8,12 @@ import { AddUser, ColoredClassIcon, ColoredSubjectIcon, ColoredRoomIcon, Colored
 
 
 function TopNavbar(props){
+  useEffect(() => {
+}, [props.selectedBG]);
 
 return(
   <Card style={{ width: '100%', borderTopLeftRadius: '0px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px', borderColorbackgroundColor:'rgba(51, 51, 51, 0.00)'}}>
-      <Card.Body style={{backgroundColor:'#556BD9', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px', height:'200px'}}>
+      <Card.Body style={{backgroundColor:'#556BD9', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px', height:'200px', backgroundImage:`url(${props.selectedBG})`, backgroundSize: '108% 155%', backgroundPosition: 'center'}}>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <div  style={{marginLeft: '30px'}}>
 
@@ -23,7 +25,7 @@ return(
                   {props.pageHeader.pageHeaderMain2}
                 </h1>
             </div>
-              <h1 style={{color:'#8A92A6', fontFamily:'Inter', fontStyle:'normal', fontWeight:'500', fontSize: '23px', color:'white', marginTop:'10px', whiteSpace: 'inherit'}}>
+              <h1 style={{color:'#8A92A6', fontFamily:'Inter', fontStyle:'normal', fontWeight:'500', fontSize: '23px', color:'white', whiteSpace: 'inherit'}}>
                 {props.pageHeader.pageHeaderSub}
               </h1>
                 
@@ -127,6 +129,7 @@ TopNavbar.propTypes = {
   subjectState: PropTypes.string,
   roomState: PropTypes.string,
   courseState: PropTypes.string,
+  selectedBG: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
@@ -137,6 +140,7 @@ const mapStateToProps = (state) => ({
   subjectState: state.main.subjectState,
   roomState: state.main.roomState,
   courseState: state.main.courseState,
+  selectedBG: state.main.selectedBG,
   });
 
 export default connect(mapStateToProps, {})(TopNavbar);

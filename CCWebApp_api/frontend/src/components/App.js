@@ -9,10 +9,14 @@ import '../assets/css/forms.css'
 import '../assets/css/skeleton.css'
 import '../assets/css/popups.css'
 import '../assets/css/sidebar.css'
+import '../assets/css/avatars.css'
+import '../assets/css/portalbody.css'
 
 const Fallback = lazy(() =>  import('./reusable/fallback'))
 const AuthLayout = lazy(() =>  import('./layouts/Authlayout'))
 const MainLayout = lazy(() =>  import('./layouts/Mainlayout'))
+const Studentlayout = lazy(() =>  import('./layouts/Studentlayout'))
+const Teacherlayout = lazy(() =>  import('./layouts/Teacherlayout'))
 const Signin = lazy(() =>  import('./accounts/admin-signin'))
 const Dashboard = lazy(() => import('./pages/admin-dashboard'))
 const Schedules = lazy(() =>  import('./pages/schedules'))
@@ -29,6 +33,16 @@ const ClassCreate = lazy(() =>  import('./pages/class-create'))
 const SubjectCreate = lazy(() =>  import('./pages/subject-create'))
 const RoomCreate = lazy(() =>  import('./pages/room-create'))
 const CourseCreate = lazy(() =>  import('./pages/course-create'))
+
+const Studentdashboard = lazy(() => import('./pages/student-dashboard'))
+const Studentclasspage = lazy(() => import('./pages/student-classpage'))
+const ActivitySubmit = lazy(() => import('./pages/student-activitysubmit'))
+
+const TeacherDashboard = lazy(() => import('./pages/teacher-dashboard'))
+const Teacherclasspage = lazy(() => import('./pages/teacher-classpage'))
+const ActivityCreate = lazy(() => import('./pages/activity-create'))
+const EntryView = lazy(() => import('./pages/teacher-entryview'))
+const VeiwDetail = lazy(() => import('./pages/teacher-viewdetail'))
 
 
 const container = document.getElementById('app');
@@ -67,6 +81,22 @@ function AppContent() {
           <Route path="users-students" element={<UsersStudents />} />
           <Route path="users-teachers" element={<UsersTeachers />} />
           <Route path="users-masterlist" element={<UsersMasterlist />} />
+          </Route>
+
+          <Route path='/students' element={<Studentlayout/>}>
+          <Route index element={<Studentdashboard />} />
+          <Route path="dashboard" element={<Studentdashboard />} />
+          <Route path="classdashboard" element={<Studentclasspage />} />
+          <Route path="activity-submit" element={<ActivitySubmit />} />
+          </Route>
+
+          <Route path='/teachers' element={<Teacherlayout/>}>
+          <Route index element={<TeacherDashboard />} />
+          <Route path="dashboard" element={<TeacherDashboard />} />
+          <Route path="classdashboard" element={<Teacherclasspage />} />
+          <Route path="activity-create" element={<ActivityCreate />} />
+          <Route path="activity-entryview" element={<EntryView />} />
+          <Route path="activity-viewdetail" element={<VeiwDetail />} />
           </Route>
 
         </Routes>

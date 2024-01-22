@@ -552,7 +552,6 @@ function ClassCreate(props) {
                 </div>
                 </Form.Group>
                 
-
                 <Form.Group style={{marginRight: '16px', width: '20%'}}>
                   <Form.Label>Class End Time</Form.Label>
                   <div style={{display: 'flex'}}>
@@ -573,7 +572,6 @@ function ClassCreate(props) {
                 }
                 </div>
                 </Form.Group>
-
                 <Form.Group style={{marginRight: '16px', width: '40%'}}>
                   <Form.Label>Room</Form.Label>
                   <div style={{display: 'flex'}}>
@@ -590,11 +588,9 @@ function ClassCreate(props) {
                   }
                   </div>
                 </Form.Group>
-
                 {/* <Button type="button" style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '18%', height: '48px', marginTop: '25px', alignContent: 'center'}}>
                   <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>Check Conflicts</h1>
                 </Button> */}
-                
                 </div>
                 {conflictMessage && conflictMessage.length > 0 && conflictMessage.map((message, index) => (
                     <div key={index}>

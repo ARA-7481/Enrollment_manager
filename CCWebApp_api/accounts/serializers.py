@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import User, StudentProfile, FacultyProfile, StaffProfile
-from main.models import Course, Department, Subject, Room, Classes, ScheduleInstance
+from main.models import Course, Department, Subject, Room, Classes, ScheduleInstance, Pointers, Activities, ActivityEntry
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -13,12 +13,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number')
+        fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number', 'usertype')
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'date_joined')
+        fields = ('id', 'first_name', 'last_name', 'date_joined')
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -68,7 +68,7 @@ class FacultySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FacultyProfile
-        fields = ('id', 'userprofile', 'courses', 'position' )
+        fields = ('id', 'userprofile', 'courses', 'position')
 
 class StaffSerializer(serializers.ModelSerializer):
     userprofile = UserProfileSerializer(read_only=False)
@@ -89,8 +89,44 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
     
-class ClassesSerializer(serializers.ModelSerializer):
+class ClassesListSerializer(serializers.ModelSerializer):
     schedule = ScheduleInstanceSerializer(many=True)
+    teacher = FacultySerializer(read_only=False)
+    subject = SubjectSerializer(read_only=False)
+    students = StudentSerializer(many=True)
+
+    class Meta:
+        model = Classes
+        fields = '__all__'
+
+class ActivityEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityEntry
+        fields = '__all__'
+
+class PointerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pointers
+        fields = '__all__'
+
+class ActivitiesSerializer(serializers.ModelSerializer):
+    classroom = ClassesListSerializer
+    related_entry = ActivityEntrySerializer(many=True, required=False)
+    
+    class Meta:
+        model = Activities
+        fields = '__all__'
+
+class AddActivitiesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activities
+        fields = '__all__'
+    
+class ClassesSerializer(serializers.ModelSerializer):
+    related_activities = ActivitiesSerializer(many=True)
+    schedule = ScheduleInstanceSerializer(many=True)
+    teacher = FacultySerializer(many=False)
+    students = StudentSerializer(many=True)
     class Meta:
         model = Classes
         fields = '__all__'
@@ -106,12 +142,32 @@ class ClassesSerializer(serializers.ModelSerializer):
         class_instance.schedule.set(schedule_instances)
         return class_instance
     
-class ClassesListSerializer(serializers.ModelSerializer):
+class TeacherDashboardClassesSerializer(serializers.ModelSerializer):
     schedule = ScheduleInstanceSerializer(many=True)
-    teacher = FacultySerializer(read_only=False)
-    subject = SubjectSerializer(read_only=False)
-    students = StudentSerializer(many=True)
-
     class Meta:
         model = Classes
         fields = '__all__'
+
+class StudentDashboardClassesSerializer(serializers.ModelSerializer):
+    related_activities = ActivitiesSerializer(many=True)
+    schedule = ScheduleInstanceSerializer(many=True)
+    teacher = FacultySerializer(many=False)
+    class Meta:
+        model = Classes
+        fields = '__all__'
+
+class TeacherDataSerializer(serializers.ModelSerializer):
+    teacher_related_class = TeacherDashboardClassesSerializer(many=True, read_only=True)
+    userprofile = UserSerializer(read_only=False)
+
+    class Meta:
+        model = FacultyProfile
+        fields = ('position','courses','userprofile','teacher_related_class')
+
+class StudentDataSerializer(serializers.ModelSerializer):
+    student_related_class = StudentDashboardClassesSerializer(many=True, read_only=True)
+    userprofile = UserSerializer(read_only=False)
+
+    class Meta:
+        model = StudentProfile
+        fields = ('id','userprofile','student_related_class')
