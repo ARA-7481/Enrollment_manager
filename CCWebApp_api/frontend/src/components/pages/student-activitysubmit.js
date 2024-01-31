@@ -60,7 +60,7 @@ function ActivitySubmit(props) {
       };
 
     useEffect(() => {
-        console.log(props.studentData[0].id)
+        console.log(props.studentData.id)
         if (props.loadingState === 'isNotLoading' && submissionComplete) {
             navigate('/students/classdashboard');
           }
@@ -76,7 +76,7 @@ function ActivitySubmit(props) {
         setFormData({
             file : referencefile,
             activity : props.activityData.id,
-            submitted_by : props.studentData[0].id,
+            submitted_by : props.studentData.id,
           })
 
     }, [props.loadingState, props.activityData, props.studentData, referencefile]);
@@ -200,7 +200,7 @@ ActivitySubmit.propTypes = {
     loadingState: PropTypes.string,
     activityData: PropTypes.object,
     addActivityentry: PropTypes.func,
-    studentData: PropTypes.array,
+    studentData: PropTypes.object,
     }
 
 const mapStateToProps = (state) => ({

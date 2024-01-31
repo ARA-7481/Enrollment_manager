@@ -82,11 +82,11 @@ class Classes(models.Model):
         ('Virtual' , 'Virtual'),
         ('Hybrid' , 'Hybrid'),
     )
-    code = models.CharField(max_length=20, primary_key=True, null=False, unique=True)
+    code = models.CharField(max_length=200, primary_key=True, null=False, unique=True)
     description = models.CharField(max_length=200, null=True)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     yearlevel = models.CharField(max_length=20, null=True)
-    type = models.CharField(max_length=20, choices=CLASS_TYPE, null=False, default= 'Face to Face')
+    type = models.CharField(max_length=200, choices=CLASS_TYPE, null=False, default= 'Face to Face')
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
     students = models.ManyToManyField(StudentProfile, related_name='student_related_class', blank=True)
     teacher = models.ForeignKey(FacultyProfile, on_delete=models.SET_NULL, null=True, related_name='teacher_related_class')

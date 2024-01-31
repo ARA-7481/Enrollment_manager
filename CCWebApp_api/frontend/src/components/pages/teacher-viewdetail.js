@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, addActivityentry, getClassdata, checkEntry, analyzeImages, getPointers} from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, addActivityentry, getClassdata, checkEntry, analyzeImages, getPointers, setSubGrade, getActivity, clearResponse} from '../../redux/actions/main';
 
 import { Button, Form, InputGroup, Spinner, Table, Dropdown } from 'react-bootstrap';
 import { BlueExclamation, RedExclamation, SimpleCalendar, Document, NoSubmission } from '../../assets/svg/clnsmpl-icon';
@@ -17,7 +17,7 @@ function VeiwDetail(props) {
     const [referencefile, setRefencefile] = useState(null);
     const [prompt, setPrompt] = useState('None');
     const [pointerslist, setPointers] = useState([]);
-    const [grade, setGrade] = useState(null)
+    const [grade, setGrade] = useState('')
 
     const handleCheck = (referencefile, entryfile) => {
         props.setLoading('isLoading')
@@ -28,7 +28,10 @@ function VeiwDetail(props) {
     }
 
     const handleGrade = () => {
-
+        props.getActivity(props.activityData.id)
+        props.setSubGrade(grade, props.entryData.id)
+        props.clearResponse()
+        navigate('/teachers/activity-entryview')
     }
 
     const handlePointers = (pointer, event) => {
@@ -75,8 +78,10 @@ function VeiwDetail(props) {
                         <div style={{width: '50%', paddingTop: '24px'}}>
                             <Form.Group>
                             <Form.Label htmlFor="reference" className='form-label'>Reference File</Form.Label>
-                            <div>
-                            <img href={referencefile} target="_blank" rel="noopener noreferrer" style={{width: '100%'}} src={referencefile} />
+                            <div >
+                            <a className='inter-400-16px-link' href={referencefile} target="_blank" rel="noopener noreferrer">
+                                            <Document/>View File</a>
+                            <img style={{width: '100%'}} src={referencefile} />
                             </div>
                             </Form.Group>
                         </div>
@@ -84,8 +89,10 @@ function VeiwDetail(props) {
                         <div style={{width: '50%', paddingTop: '24px'}}>
                             <Form.Group>
                             <Form.Label htmlFor="reference" className='form-label'>Submitted File</Form.Label>
-                            <div>
-                            <img href={props.entryData.file} target="_blank" rel="noopener noreferrer" style={{width: '100%'}} src={props.entryData.file} />
+                            <div >
+                            <a className='inter-400-16px-link' href={props.entryData.file} target="_blank" rel="noopener noreferrer">
+                                            <Document/>View File</a>
+                            <img style={{width: '100%'}} src={props.entryData.file} />
                             </div>
                             </Form.Group>
                         </div>
@@ -121,12 +128,14 @@ function VeiwDetail(props) {
                                 </div>
                             </Form.Group>
                         </div>
+                        <div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
                             <Button disabled={pointerslist.length < 1} onClick={() => handleCheck(referencefile, props.entryData.file)} type="button" style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '250px', height: '48px', alignContent: 'center', marginRight: '24px', marginBottom: '24px'}}>
                                 <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
                                 {props.loadingState == 'isNotLoading'? <>Analyze Submission</> : <div style={{transform: 'translate( 0px, -6px)'}}><Spinner animation="border" variant="light"/></div>}</h1>
                             </Button>
                         </div>
+                        <div>
                         {props.GPTresponse ? (() => {
                             const response = props.GPTresponse;
                             const firstbrace = response.indexOf('{');
@@ -141,20 +150,21 @@ function VeiwDetail(props) {
                                     </div>
                                     );
                                 });
-                            })() : <><h2>no response</h2></>}
-                        <div style={{display: 'flex'}}>
+                            })() : <div><h1 className='inter-400-16px'></h1></div>}
+                        </div>
+                        </div>
+                        <div style={{display: 'flex', width: '100%'}}>
                         <div style={{width: '20%', marginRight: '8px'}}>
                             <Form.Group>
-                                <Form.Label htmlFor="grade" className='form-label'>Class Name</Form.Label>
+                                <Form.Label htmlFor="grade" className='form-label'>Grade</Form.Label>
                                 <div style={{display: 'flex'}}>
-                                <Form.Control type="text" value={grade} placeholder="Grade the student's submission" id="grade" onChange={e => setGrade(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
+                                <Form.Control type="text" value={grade} placeholder="Activity Grade" id="grade" onChange={e => setGrade(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                                 </div>
                             </Form.Group>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
-                            <Button disabled={pointerslist.length < 1} onClick={handleGrade} type="button" style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '100px', height: '32px', alignContent: 'center', marginRight: '24px', marginBottom: '24px'}}>
-                                <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
-                                {props.loadingState == 'isNotLoading'? <>Set Grade</> : <div style={{transform: 'translate( 0px, -6px)'}}><Spinner animation="border" variant="light"/></div>}</h1>
+                            <Button onClick={handleGrade} type="button" style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '100px', height: '36px', alignContent: 'center', marginRight: '24px', marginBottom: '24px'}}>
+                                <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '2px'}}>Set</h1>
                             </Button>
                         </div>
                         </div>
@@ -182,6 +192,9 @@ VeiwDetail.propTypes = {
     pointers: PropTypes.array,
     getPointers: PropTypes.func,
     GPTresponse: PropTypes.string,
+    setSubGrade: PropTypes.func,
+    getActivity: PropTypes.func,
+    clearResponse: PropTypes.func,
     }
 
 const mapStateToProps = (state) => ({
@@ -196,4 +209,4 @@ const mapStateToProps = (state) => ({
     GPTresponse: state.main.GPTresponse,
     });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, setLoading, analyzeImages, getPointers})(VeiwDetail))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, setLoading, analyzeImages, getPointers, setSubGrade, getActivity, clearResponse})(VeiwDetail))

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.forms.models import model_to_dict
 
 
-from accounts.serializers import DepartmentSerializer, CourseSerializer, SubjectSerializer, RoomSerializer, ClassesSerializer, ClassesListSerializer, CourseSerializerPost, PointerSerializer, ActivitiesSerializer, ActivityEntrySerializer, AddActivitiesSerializer
+from accounts.serializers import DepartmentSerializer, CourseSerializer, SubjectSerializer, RoomSerializer, ClassesSerializer, ClassesListSerializer, CourseSerializerPost, PointerSerializer, ActivitiesSerializer, ActivityEntrySerializer, AddActivitiesSerializer, NormalClassesSerializer
 from .models import Department, Course, Classes, Subject, Room, ScheduleInstance, Pointers, Activities, ActivityEntry
 from accounts.permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
 
@@ -49,6 +49,15 @@ class RoomViewSet(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['$code', '$description']
+
+class NormalClassesViewSet(viewsets.ModelViewSet):
+    queryset = Classes.objects.all()
+    permission_classes = [
+        IsSuperAdmin
+    ]
+    serializer_class = NormalClassesSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['yearlevel', 'subject__code']
 
 class ClassesViewSet(viewsets.ModelViewSet):
     queryset = Classes.objects.all()

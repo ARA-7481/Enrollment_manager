@@ -166,11 +166,6 @@ function Course(props) {
           <Placeholder xs={12} />
         </Placeholder>
         </div>
-        <div style={{marginBottom: '35px'}}>
-        <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
-          <Placeholder xs={12} />
-        </Placeholder>
-        </div>
         </div>
       :
 
@@ -179,7 +174,6 @@ function Course(props) {
           <tr>
             <th className='table-head' style={{width: '15%', paddingLeft:'20px'}}>CODE</th>
             <th className='table-head' style={{width: '40%'}}>DESCRIPTION</th>
-            <th className='table-head' style={{width: '15%'}}>UNITS</th>
             <th className='table-head' style={{width: '20%'}}>EFFECTIVE DATE</th>
             <th className='table-head' style={{width: '20%'}}>DEPARTMENT</th>
             <th className='table-head'>ACTION</th>
@@ -211,8 +205,6 @@ function Course(props) {
                     {course.code}</td>
                   <td className='table-body'>
                     {course.description}</td>
-                  <td className='table-body'>
-                    {'-'}</td>
                   <td className='table-body'>
                     {course.date_created}</td>
                   <td className='table-body'>

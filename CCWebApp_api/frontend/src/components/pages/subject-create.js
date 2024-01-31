@@ -1,12 +1,12 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import PropTypes, { func } from 'prop-types';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setsubjectState, setpageHeader, setLoading, getSubjectsList, addSubject } from '../../redux/actions/main';
 
-import { Col, Form, InputGroup, Dropdown, DropdownButton, Table, Card, Button, Spinner } from 'react-bootstrap';
-import { BlueExclamation, RedExclamation, SimpleCalendar, ConnectedAccordionIconOpen } from '../../assets/svg/clnsmpl-icon';
+import { Form, InputGroup, Dropdown, Table, Button, Spinner } from 'react-bootstrap';
+import { RedExclamation, ConnectedAccordionIconOpen } from '../../assets/svg/clnsmpl-icon';
 
 function SubjectCreate(props) {
 
@@ -29,14 +29,21 @@ function SubjectCreate(props) {
     }
 
     useEffect(() => {
-        if (props.loadingState === 'isNotLoading' && submissionComplete) {
-            navigate('/admins/subjects');
-          }
         props.setsidebarState('subjects')
         props.setsubsidebarState(null)
         props.setsubjectState('create-page-one')
         props.setpageHeader('Create a Subject', '', 'Fill Information to Create a Subject')
         props.getSubjectsList('');
+      },[])
+
+    useEffect(() => {
+        if (props.loadingState === 'isNotLoading' && submissionComplete) {
+          if(props.error){
+            setSubmission(false)
+          }else if(props.success){
+            navigate('/admins/subjects');
+          }
+          }
         setFormData({
           code : subjectcode,
           description : description,
@@ -46,8 +53,7 @@ function SubjectCreate(props) {
           prerequisite: prerequisite,
           corequisite: corequisite,
         })
-    
-      }, [subjectcode, description, units, lecture, laboratory, prerequisite, corequisite, props.loadingState]);
+      }, [subjectcode, description, units, lecture, laboratory, prerequisite, corequisite, props.loadingState, props.error, props.success]);
 
     return (
         <>
@@ -57,7 +63,7 @@ function SubjectCreate(props) {
             <InputGroup>
               <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                   <div className="form-group text-left"style={{width: '50%', marginRight: '8px'}}>
-                  <Form.Group>
+                <Form.Group>
                 <Form.Label htmlFor="subjectcode" className='form-label'>Subject Code</Form.Label>
                 <div style={{display: 'flex'}}>
                 <Form.Control type="text" value={subjectcode} placeholder="Enter Subject Code" id="subjectcode" onChange={e => setSubjectcode(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
@@ -234,6 +240,8 @@ SubjectCreate.propTypes = {
     subjectsListForTable: PropTypes.array,
     getSubjectsList: PropTypes.func,
     addSubject: PropTypes.func,
+    error: PropTypes.string,
+    success: PropTypes.string,
   }
   
   const mapStateToProps = (state) => ({
@@ -243,6 +251,8 @@ SubjectCreate.propTypes = {
     pageHeader: state.main.pageHeader,
     loadingState: state.main.loadingState,
     subjectsListForTable: state.main.subjectsListForTable,
+    error: state.main.error,
+    success: state.main.success,
     });
 
 

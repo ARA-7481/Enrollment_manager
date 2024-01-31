@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, addActivityentry, getClassdata, getEntry, setSubmittingStudent} from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, addActivityentry, getClassdata, getEntry, setSubmittingStudent, getActivity} from '../../redux/actions/main';
 
-import { Button, Form, InputGroup, Spinner, Table, Dropdown } from 'react-bootstrap';
+import { Button, Form, InputGroup, Spinner, Table, Dropdown, Placeholder } from 'react-bootstrap';
 import { Document, NoSubmission } from '../../assets/svg/clnsmpl-icon';
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -177,7 +177,7 @@ function ActivitySubmit(props) {
                                             <Document/>View File</a> : <NoSubmission/>}
                                             </td>
                                         <td className='table-body'>
-                                            NG</td>
+                                        {entry? entry.grade? entry.grade:'No Grade' : 'No Grade'}</td>
                                         <td className='table-body'>
                                             <Dropdown>
                                             <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: '#e9ecef', color: 'rgba(51, 51, 51, 0.00)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'center', marginLeft: '10px'}}>
@@ -191,7 +191,35 @@ function ActivitySubmit(props) {
                                             </Dropdown>
                                             </td>
                                         </tr>
-                                    )}) : <></>}
+                                    )}) : 
+                                    <tr style={{border: 'none'}}>
+                                    <td className='table-body'>
+                                    <Placeholder animation="glow" style={{width: '100%', color: 'rgba(51, 51, 51, 0.20)'}}>
+                                      <Placeholder xs={12} />
+                                    </Placeholder>
+                                    </td>
+                                    <td className='table-body'>
+                                    <Placeholder animation="glow" style={{width: '100%', color: 'rgba(51, 51, 51, 0.20)'}}>
+                                      <Placeholder xs={12} />
+                                    </Placeholder>
+                                    </td>
+                                    <td className='table-body'>
+                                    <Placeholder animation="glow" style={{width: '100%', color: 'rgba(51, 51, 51, 0.20)'}}>
+                                      <Placeholder xs={12} />
+                                    </Placeholder>
+                                    </td>
+                                    <td className='table-body'>
+                                    <Placeholder animation="glow" style={{width: '100%', color: 'rgba(51, 51, 51, 0.20)'}}>
+                                      <Placeholder xs={12} />
+                                    </Placeholder>
+                                    </td>
+                                    <td className='table-body'>
+                                    <Placeholder animation="glow" style={{width: '100%', color: 'rgba(51, 51, 51, 0.20)'}}>
+                                      <Placeholder xs={12} />
+                                    </Placeholder>
+                                    </td>
+                                    </tr>
+                                    }
                                 </tbody>
                             </Table>
                     </div>
@@ -217,6 +245,7 @@ ActivitySubmit.propTypes = {
     getClassdata: PropTypes.func,
     getEntry: PropTypes.func,
     setSubmittingStudent: PropTypes.func,
+    getActivity: PropTypes.func,
     }
 
 const mapStateToProps = (state) => ({
@@ -229,4 +258,4 @@ const mapStateToProps = (state) => ({
     classData: state.main.classData,
     });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, setLoading, addActivityentry, getClassdata, getEntry, setSubmittingStudent})(ActivitySubmit))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, setLoading, addActivityentry, getClassdata, getEntry, setSubmittingStudent, getActivity})(ActivitySubmit))

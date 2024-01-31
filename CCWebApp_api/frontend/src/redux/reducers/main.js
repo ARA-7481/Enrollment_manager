@@ -3,7 +3,8 @@ import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMEN
         ADD_CLASS, ADD_SUBJECT, GET_CLASSES_LIST, SET_LOADING, GET_SUBJECTS_LIST, SET_SUBJECT, GET_ROOMS_LIST, SET_ROOM, ADD_ROOM,
         GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE, RESO_UPDATE, AUTO_COLLAPSE,
         GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_BG, SET_SELECTED_BG, CLEAR_STATE,
-        GET_STUDENT_DATA, GET_ACTIVITY, ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT
+        GET_STUDENT_DATA, GET_ACTIVITY, ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT,
+        CLEAR_RESPONSE, REGISTER_STUDENT, REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
         } from "../types/types";
 
 const initialState = {
@@ -19,6 +20,9 @@ const initialState = {
     selectedBG: null,
     GPTresponse: null,
     submittingStudent: null,
+    error: null,
+    success: null,
+    newAvatar: null,
     subject: {},
     pageHeader: {},
     subjectFormdata: {},
@@ -26,8 +30,9 @@ const initialState = {
     activityData: {},
     classData: {},
     entryData: {},
+    newUserdata: {},
+    studentData: {},
     teacherData: [],
-    studentData: [],
     studentsList: [],
     facultyList: [],
     staffList: [],
@@ -171,22 +176,26 @@ export default function(state = initialState, action) {
         case ADD_CLASS:
             return{
                 ...state,
-                loadingState: 'isNotLoading'
+                loadingState: 'isNotLoading',
+                success: 'Successfully Added A Class'
                 }
         case ADD_SUBJECT:
             return{
                 ...state,
-                loadingState: 'isNotLoading'
+                loadingState: 'isNotLoading',
+                success: 'Successfully Added A Subject'
                 }
         case ADD_ROOM:
             return{
                 ...state,
-                loadingState: 'isNotLoading'
+                loadingState: 'isNotLoading',
+                success: 'Successfully Added A Room'
                 }
         case ADD_COURSE:
             return{
                 ...state,
-                loadingState: 'isNotLoading'
+                loadingState: 'isNotLoading',
+                success: 'Successfully Added A Course'
                 }
         case RESO_UPDATE:
             return{
@@ -198,7 +207,52 @@ export default function(state = initialState, action) {
                 ...state,
                 isLess800: action.payload
             }
+        case REGISTER_STUDENT:
+            return{
+                ...state,
+                success: 'Successfully Added a Student',
+                loadingState: 'isNotLoading'
+            }
+        case REGISTER_TEACHER:
+            return{
+                ...state,
+                success: 'Successfully Added a Faculty Member',
+                loadingState: 'isNotLoading'
+            }
+        case FILL_ERROR:
+            return{
+                ...state,
+                error: action.payload,
+                loadingState: 'isNotLoading'
+            }
+        case EMPTY_ERROR:
+            return{
+                ...state,
+                error: null
+            }
+        case EMPTY_SUCCESS:
+            return{
+                ...state,
+                success: null
+            }
 //portal
+        case SET_USER_PW:
+            return{
+                ...state,
+                success: 'Successfully Updated User Password'
+            }
+        case SET_USER_DATA:
+        localStorage.setItem('user',JSON.stringify(action.payload))
+            return{
+                ...state,
+                newUserdata: action.payload,
+                success: 'Successfully Updated User Information'
+            }
+        case SET_USER_AVATAR:
+            return{
+                ...state,
+                newAvatar: action.payload
+            }
         case GET_TEACHER_DATA:
             return{
                 ...state,
@@ -269,6 +323,11 @@ export default function(state = initialState, action) {
                 GPTresponse: action.payload,
                 loadingState: 'isNotLoading'
             }
+        case CLEAR_RESPONSE:
+            return{
+                ...state,
+                GPTresponse: null,
+            }
         case CLEAR_STATE:
             return{
                 loadingState: 'isNotLoading',
@@ -283,6 +342,9 @@ export default function(state = initialState, action) {
                 selectedBG: null,
                 GPTresponse: null,
                 submittingStudent: null,
+                error: null,
+                success: null,
+                newAvatar: null,
                 subject: {},
                 pageHeader: {},
                 subjectFormdata: {},
@@ -290,8 +352,9 @@ export default function(state = initialState, action) {
                 activityData: {},
                 classData: {},
                 entryData: {},
+                newUserdata: {},
+                studentData: {},
                 teacherData: [],
-                studentData: [],
                 studentsList: [],
                 facultyList: [],
                 staffList: [],

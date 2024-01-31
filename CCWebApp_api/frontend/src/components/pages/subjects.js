@@ -35,7 +35,6 @@ function Subjects(props) {
     props.setsubjectState('list');
     props.setpageHeader('Manage Subjects', '', 'View, add and update subjects.');
     props.getSubjectsList('');
-    // console.log(subjectsListForTable)
     props.getDepartments();
   }, []);
 

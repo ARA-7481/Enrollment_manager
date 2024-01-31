@@ -5,7 +5,8 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_CLASSES_LIST, SET_LOADING, GET_SUBJECTS_LIST, SET_SUBJECT, GET_ROOMS_LIST, SET_ROOM, ADD_ROOM,
          GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE, RESO_UPDATE, AUTO_COLLAPSE,
          GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_SELECTED_BG, GET_STUDENT_DATA, GET_ACTIVITY, 
-         ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT
+         ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT, CLEAR_RESPONSE, REGISTER_STUDENT,
+         REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
         } from "../types/types";
 
 function formatTime(time) {
@@ -236,7 +237,6 @@ export const getSubject = (subject) => async dispatch => {
 
   export const addClass = (formData) => async dispatch => {
     try {
-
       const adjustedSchedule = formData.schedule.map(schedule => ({
         ...schedule,
         time_in: formatTime(schedule.time_in),
@@ -249,13 +249,23 @@ export const getSubject = (subject) => async dispatch => {
         enddate: formatDate(new Date(formData.enddate)),
         schedule: adjustedSchedule,
       };  
-      const res = await instanceAxios.post('/api/classes/', adjustedFormData);
+      const res = await instanceAxios.post('/api/normalclasses/', adjustedFormData);
       dispatch({
         type: ADD_CLASS,
         payload: res.data,
       });
     } catch (error) {
-      console.error(error);
+      if(error.response.data.code){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "A Class With the Same Code Already Exists"
+        })
+      }else{
+      dispatch({
+        type: FILL_ERROR,
+        payload: 'An Error Occured During Submission.Please Check Your Field Inputs.'
+      })
+    }
     }
   };
 
@@ -267,7 +277,17 @@ export const getSubject = (subject) => async dispatch => {
         payload: res.data,
       });
     } catch (error) {
-      console.error(error);
+      if(error.response.data.code){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "A Subject With the Same Code Already Exists"
+        })
+      }else{
+      dispatch({
+        type: FILL_ERROR,
+        payload: 'An Error Occured During Submission.Please Check Your Field Inputs.'
+      })
+    }
     }
   };
 
@@ -300,7 +320,17 @@ export const getSubject = (subject) => async dispatch => {
         payload: res.data,
       });
     } catch (error) {
-      console.error(error);
+      if(error.response.data.code){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "A Room With the Same Code Already Exists"
+        })
+      }else{
+      dispatch({
+        type: FILL_ERROR,
+        payload: 'An Error Occured During Submission.Please Check Your Field Inputs.'
+      })
+    }
     }
   };
 
@@ -312,7 +342,17 @@ export const getSubject = (subject) => async dispatch => {
         payload: res.data,
       });
     } catch (error) {
-      console.error(error);
+      if(error.response.data.code){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "A Course With the Same Code Already Exists"
+        })
+      }else{
+      dispatch({
+        type: FILL_ERROR,
+        payload: 'An Error Occured During Submission.Please Check Your Field Inputs.'
+      })
+    }
     }
   };
 
@@ -343,8 +383,187 @@ export const getSubject = (subject) => async dispatch => {
     })
   };
 
+
+  export const registerStudent = (formData, studentFormdata) => async dispatch => {
+    try {
+      const res = await instanceAxios.post('/api/register/', formData);
+      if(res.status === 200){
+        const adjustedStudentformdata = {
+          ...studentFormdata,
+          userprofile : res.data.ID,
+        }
+        try{
+          const res2 = await instanceAxios.post('api/addstudent/', adjustedStudentformdata);
+          if(res2.status === 201){
+            dispatch({
+              type: REGISTER_STUDENT,
+              payload: res.data
+            })
+          }
+        }catch (error2) {
+          console.error(error2);
+        }
+      }
+    } catch (error) {
+      if(error.response.data.email && error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "Email and Mobile Number Already Exists"
+        })
+      }else if(error.response.data.email && !error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: error.response.data.email[0]
+        })
+      }else if(!error.response.data.email && error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: error.response.data.mobile_number[0]
+        })
+      }else{
+        dispatch({
+          type: FILL_ERROR,
+          payload: "An Error Occured During Submission.Please Check Your Field Inputs."
+        })
+      }
+    }
+  };
+
+  export const registerTeacher = (formData, teacherFormdata) => async dispatch => {
+    try {
+      const res = await instanceAxios.post('/api/register/', formData);
+      if(res.status === 200){
+        const adjustedTeacherformdata = {
+          ...teacherFormdata,
+          userprofile : res.data.ID,
+        }
+        try{
+          const res2 = await instanceAxios.post('api/addfaculty/', adjustedTeacherformdata);
+          if(res2.status === 201){
+            dispatch({
+              type: REGISTER_TEACHER,
+              payload: res.data
+            })
+          }
+        }catch (error2) {
+          console.error(error2);
+        }
+      }
+    } catch (error) {
+      if(error.response.data.email && error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "Email and Mobile Number Already Exist"
+        })
+      }else if(error.response.data.email && !error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: error.response.data.email[0]
+        })
+      }else if(!error.response.data.email && error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: error.response.data.mobile_number[0]
+        })
+      }else{
+        dispatch({
+          type: FILL_ERROR,
+          payload: "An Error Occured During Submission.Please Check Your Field Inputs."
+        })
+      }
+    }
+  };
+
+  export const emptyError = () => dispatch => {
+    dispatch({
+      type: EMPTY_ERROR,
+    })
+  };
+
+  export const emptySuccess = () => dispatch => {
+    dispatch({
+      type: EMPTY_SUCCESS,
+    })
+  };
+
 //portal
 
+export const setPassword = (oldpw, newpw) => async dispatch => {
+  const body = {
+    old_password : oldpw,
+    new_password : newpw
+  }
+  try{
+    const res = await instanceAxios.patch('/api/register/', body)
+    if(res.status === 200){
+      dispatch({
+        type: SET_USER_PW,
+      })
+    }
+  } catch (error){
+    console.error(error);
+  }
+}
+
+export const setUseremail = (contact, email, userID) => async dispatch => {
+  const body = {
+    email: email,
+    mobile_number: contact
+  };
+  try{
+    const res = await instanceAxios.patch(`/api/users/${userID}/`, body)
+    if(res.status === 200){
+      dispatch({
+        type: SET_USER_DATA,
+        payload: res.data
+      })
+    }
+  } catch (error) {
+    if(error.response.data.email && error.response.data.mobile_number){
+      dispatch({
+        type: FILL_ERROR,
+        payload: "An Error Occured on Email and Contact Number Fields."
+      })
+    }else if(error.response.data.email && !error.response.data.mobile_number){
+      dispatch({
+        type: FILL_ERROR,
+        payload: error.response.data.email[0]
+      })
+    }else if(!error.response.data.email && error.response.data.mobile_number){
+      dispatch({
+        type: FILL_ERROR,
+        payload: error.response.data.mobile_number[0]
+      })
+    }else{
+      dispatch({
+        type: FILL_ERROR,
+        payload: "An Error Occured During Submission.Please Check Your Field Inputs."
+      })
+    }
+  }
+}
+
+export const setUseravatar = (avatar, userID) => async dispatch => {
+  const body = {
+    avatar: avatar
+  };
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  };
+  try{
+    const res = await instanceAxios.patch(`/api/users/${userID}/`, body, config);
+    if(res.status === 200){
+      dispatch({
+        type: SET_USER_AVATAR,
+        payload: res.data.avatar
+      })
+    }
+  } catch (error) {
+      console.error(error);
+  }
+}
 export const getTeacherdata = (email) => async dispatch => {
   try {
     const res = await instanceAxios.get(`/api/teacher/?search=${email}`);
@@ -359,10 +578,11 @@ export const getTeacherdata = (email) => async dispatch => {
   }
 };
 
-export const getStudentdata = (email) => async dispatch => {
+export const getStudentdata = (id) => async dispatch => {
   try {
-    const res = await instanceAxios.get(`/api/studentdata/?search=${email}`);
+    const res = await instanceAxios.get(`/api/studentdata/${id}`);
     if(res.status === 200){
+      console.log(res.data)
       dispatch({
         type: GET_STUDENT_DATA,
         payload: res.data
@@ -473,12 +693,31 @@ export const setSubmittingStudent = (student) => async dispatch => {
       });
 };
 
+export const clearResponse = () => dispatch => {
+  dispatch({
+    type: CLEAR_RESPONSE,
+  })
+};
+
 export const setClassbackground = (bg_url, classcode) => async dispatch => {
   const body = {
     bg_gradient: bg_url
   };
   try {
     const res = await instanceAxios.patch(`/api/classesforfaculty/${classcode}/`, body);
+    if(res.status === 200){
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const setSubGrade = (grade, ID) => async dispatch => {
+  const body = {
+    grade: grade
+  };
+  try {
+    const res = await instanceAxios.patch(`/api/activityentry/${ID}/`, body);
     if(res.status === 200){
     }
   } catch (error) {

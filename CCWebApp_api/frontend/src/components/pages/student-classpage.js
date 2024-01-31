@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setpageHeader, getActivities, setSelectedBG, setClassbackground, getActivity } from '../../redux/actions/main';
 
-import avatar2 from '../../assets/images/avatars/avatar.webp'
-
 import { Button } from 'react-bootstrap';
-import { Document, CloseButton } from '../../assets/svg/clnsmpl-icon';
+import { Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed } from '../../assets/svg/clnsmpl-icon';
+
 
 function Studentclasspage(props) {
+    const [avatar, setAvatar] = useState(JSON.parse(localStorage.getItem('user')).avatar);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+
     const navigate = useNavigate();
 
     const handleSubmitactivity = (id) => {
@@ -18,25 +20,83 @@ function Studentclasspage(props) {
         navigate('/students/activity-submit');
     }
 
-    const user = JSON.parse(localStorage.getItem('user'))
     useEffect(() => {
         props.setsidebarState('dashboard');
         props.setsubsidebarState('inclass');
         props.setpageHeader(props.selectedClass, '', '');
+    }, []);
+
+    useEffect(() => {
+        if(props.newAvatar){
+            setAvatar(props.newAvatar)
+        }
         props.getActivities(props.selectedClass);
-    }, [props.selectedClass]);
+    }, [props.newAvatar, props.selectedClass]);
 
     return (
         <>
             <div style={{backgroundColor:'#e9ecef', borderTopLeftRadius:'8px', borderTopRightRadius:'8px', width: '100%'}}> 
                 <div style={{backgroundColor:'#ffffff', height: '124px', borderRadius:'8px', display: 'flex', alignItems: 'center', padding: '24px'}}>
                         <div style={{transform: 'translate( 0px, -60px)', display:'flex'}}>
-                            <img className="circular-avatar" src={avatar2} alt="description" />
+                            <img className="circular-avatar" src={avatar} alt="description" />
                         </div>
                     <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-                    <div style={{display: 'flex', alignItems: 'center'}}>
+                    
+
+                    <div style={{marginLeft: '24px'}}>
+                        <div style={{display: 'flex'}}>
                         <h1 className='inter-700-28px'>{user.first_name} {user.last_name}</h1>
+                        <div style={{marginLeft: '8px', marginTop: '3px'}}>
+                            {props.studentData.id && (() => {
+                                    switch(props.studentData.status){
+                                        case 'Draft':
+                                            return <Draft/>
+                                        case 'For Evaluation':
+                                            return <ForEvaluation/>
+                                        case 'Evaluation In Progress':
+                                            return <EvaluationInProgress/>
+                                        case 'Evaluation Complete':
+                                            return <EvaluationComplete/>
+                                        case 'Pending Payment':
+                                            return <PendingPayment/>
+                                        case 'Payment Received':
+                                            return <PaymentReceived/>
+                                        case 'Enrolled':
+                                            return <Enrolled/>
+                                        case 'Verification Failed':
+                                            return <VerificationFailed/>
+                                        default: 
+                                            return <></>
+                                    }
+                                })()}
+                        </div>
+                        </div>
+                        {props.studentData.id && (() => {
+                                switch(props.studentData.yearlevel){
+                                    case '1st':
+                                        return <h1 className='inter-500-16px-dark'>First Year</h1>
+                                    case '2nd':
+                                        return <h1 className='inter-500-16px-dark'>Second Year</h1>
+                                    case '3rd':
+                                        return <h1 className='inter-500-16px-dark'>Third Year</h1>
+                                    case '4th':
+                                        return <h1 className='inter-500-16px-dark'>Fourth Year</h1>
+                                    case '5th':
+                                        return <h1 className='inter-500-16px-dark'>Fifth Year</h1>
+                                    case 'Irregular':
+                                        return <h1 className='inter-500-16px-dark'>Irregular</h1>
+                                    default: 
+                                        return <h1 className='inter-500-16px-dark'>-</h1>
+                                }
+                            })()}
+
+                        <div style={{display: 'flex'}}>
+                            {props.studentData.id && <h1 className='inter-400-16px' style={{marginRight: '8px'}}>{props.studentData.course}</h1> }
+                        </div>
                     </div>
+
+
+
                     <div style={{display: 'flex', gap: '16px', maxHeight: '36px'}}>
                     </div>
                     </div>
@@ -52,7 +112,7 @@ function Studentclasspage(props) {
                             if (currentDate <= deadlineDate) {
                                 if (activity.related_entry.length > 0){
                                 const hasSubmitted = activity.related_entry.some(entry => 
-                                    entry.submitted_by === props.studentData[0].id)
+                                    entry.submitted_by === props.studentData.id)
                                     if (!hasSubmitted){
                                         return (
                                             <div key={activity.id} className='activity-item'>
@@ -100,7 +160,7 @@ function Studentclasspage(props) {
                         if (currentDate <= deadlineDate) {
                             if (activity.related_entry.length > 0){
                                 const hasSubmitted = activity.related_entry.some(entry => 
-                                    entry.submitted_by == props.studentData[0].id)
+                                    entry.submitted_by == props.studentData.id)
                                     if (hasSubmitted){
                                         return (
                                             <div key={activity.id} className='activity-item'>
@@ -128,7 +188,7 @@ function Studentclasspage(props) {
                             if (currentDate > deadlineDate) {
                                 if (activity.related_entry.length > 0){
                                     const hasSubmitted = activity.related_entry.some(entry => 
-                                        entry.submitted_by === props.studentData[0].id)
+                                        entry.submitted_by === props.studentData.id)
                                         if (!hasSubmitted){
                                             return (
                                                 <div key={activity.id} className='activity-item'>
@@ -188,7 +248,8 @@ function Studentclasspage(props) {
     setSelectedBG: PropTypes.func,
     setClassbackground: PropTypes.func,
     getActivity: PropTypes.func,
-    studentData: PropTypes.array,
+    studentData: PropTypes.object,
+    newAvatar: PropTypes.string,
     }
 
     const mapStateToProps = (state) => ({
@@ -198,6 +259,7 @@ function Studentclasspage(props) {
     selectedBG: state.main.selectedBG,
     activitiesOnclass: state.main.activitiesOnclass,
     studentData: state.main.studentData,
+    newAvatar: state.main.newAvatar,
     });
 
     export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getActivities, setSelectedBG, setClassbackground, getActivity})(Studentclasspage))

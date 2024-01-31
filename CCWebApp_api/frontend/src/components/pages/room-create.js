@@ -28,15 +28,20 @@ function RoomCreate(props) {
     const handleType = (roomtype) => {
         setType(roomtype);
       }
-
     useEffect(() => {
-        if (props.loadingState === 'isNotLoading' && submissionComplete) {
-            navigate('/admins/rooms');
-          }
         props.setsidebarState('rooms')
         props.setsubsidebarState(null)
         props.setroomState('create-page-one')
         props.setpageHeader('Create a Room', '', 'Fill Information to Create a Room')
+    },[])
+    useEffect(() => {
+        if (props.loadingState === 'isNotLoading' && submissionComplete) {
+          if(props.error){
+            setSubmission(false)
+          }else if(props.success){
+            navigate('/admins/rooms');
+          }
+          }
         setFormData({
           code : roomcode,
           description : description,
@@ -44,7 +49,7 @@ function RoomCreate(props) {
           capacity: capacity,
         })
     
-      }, [roomcode, description, type, capacity, props.loadingState]);
+      }, [roomcode, description, type, capacity, props.loadingState, props.success, props.error]);
 
     return (
         <>
@@ -158,6 +163,8 @@ RoomCreate.propTypes = {
     loadingState: PropTypes.string,
     addRoom: PropTypes.func,
     setroomState: PropTypes.func,
+    error: PropTypes.string,
+    success: PropTypes.string,
   }
   
   const mapStateToProps = (state) => ({
@@ -166,6 +173,8 @@ RoomCreate.propTypes = {
     subjectState: state.main.classState,
     pageHeader: state.main.pageHeader,
     loadingState: state.main.loadingState,
+    error: state.main.error,
+    success: state.main.success,
     });
 
 

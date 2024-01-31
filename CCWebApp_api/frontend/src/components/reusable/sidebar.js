@@ -39,9 +39,9 @@ function Sidebar(props){
     else if (props.subsidebarState === 'teachers'){
       navigate('/admins/users-teachers');
       }
-    else if (props.subsidebarState === 'masterlist'){
-      navigate('/admins/users-masterlist');
-      }
+    // else if (props.subsidebarState === 'masterlist'){
+    //   navigate('/admins/users-masterlist');
+    //   }
     else if(props.subsidebarState === null){
       navigate('/admins/users-students');
       }
@@ -180,7 +180,7 @@ function Sidebar(props){
               </div>
               </Nav.Link>
 
-              <Nav.Link href="/#/admins/users-masterlist" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              {/* <Nav.Link href="/#/admins/users-masterlist" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
               <div title={isCollapsed ? 'Masterlist':''} className='zooming-icon' style={{color: props.subsidebarState === 'masterlist' ? 'white' : '', backgroundColor: props.subsidebarState === 'masterlist' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
               {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>M</h6>}
               {!isCollapsed && (
@@ -192,7 +192,7 @@ function Sidebar(props){
               {!isCollapsed && 'Masterlist'}
               </div>
               </div>
-              </Nav.Link>
+              </Nav.Link> */}
               </>
 
 
@@ -202,7 +202,7 @@ function Sidebar(props){
            
             
 
-            <Nav.Link href="/#/admins/schedules" style={{paddingBottom: '8px'}}>
+            {/* <Nav.Link href="/#/admins/schedules" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Schedules':''} className='zooming-icon' style={{color: props.sidebarState === 'schedules' ? 'white' : '', backgroundColor: props.sidebarState === 'schedules' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedSchedulesIcon/>
@@ -211,7 +211,7 @@ function Sidebar(props){
             {!isCollapsed && 'Schedules'}
             </div>
             </div>
-            </Nav.Link>
+            </Nav.Link> */}
 
             <Nav.Link href="/#/admins/class" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Class':''} className='zooming-icon' style={{color: props.sidebarState === 'class' ? 'white' : '', backgroundColor: props.sidebarState === 'class' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
@@ -257,7 +257,7 @@ function Sidebar(props){
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/#/admins/settings" style={{paddingBottom: '8px'}}>
+            {/* <Nav.Link href="/#/admins/settings" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Settings':''} className='zooming-icon' style={{color: props.sidebarState === 'settings' ? 'white' : '', backgroundColor: props.sidebarState === 'settings' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedSettingsIcon/>
@@ -266,7 +266,7 @@ function Sidebar(props){
             {!isCollapsed && 'Settings'}
             </div>
             </div>
-            </Nav.Link>
+            </Nav.Link> */}
 
           </CDBSidebarMenu>
         </CDBSidebarContent>

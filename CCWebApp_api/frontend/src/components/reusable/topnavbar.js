@@ -33,7 +33,7 @@ return(
 
           {props.sidebarState === 'users' && props.subsidebarState === 'students' &&
             <div style={{marginRight: '24px', marginTop: '12px'}}>
-              <Button className='buttonsonnavbars' type="button">
+              <Button className='buttonsonnavbars' type="button" href="/#/admins/register-studentuser">
                 <div style={{minHeight: '20px', minWidth: '20px', paddingBottom: '5px', paddingLeft: '12px'}}>
                   <AddUser/>
                 </div>
@@ -45,7 +45,7 @@ return(
 
           {props.sidebarState === 'users' && props.subsidebarState === 'teachers' &&
             <div style={{marginRight: '24px', marginTop: '12px'}}>
-            <Button className='buttonsonnavbars' type="button">
+            <Button className='buttonsonnavbars' type="button" href="/#/admins/register-teacheruser">
               <div style={{minHeight: '20px', minWidth: '20px', paddingBottom: '5px', paddingLeft: '12px'}}>
                 <AddUser/>
               </div>

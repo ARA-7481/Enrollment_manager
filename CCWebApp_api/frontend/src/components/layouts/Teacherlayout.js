@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
-import ErrorPopupmain from '../reusable/error-main';
+import ErrorPopupMain from '../reusable/error-main';
+import SuccessPopupMain from '../reusable/success';
 import { setResolution, setCollapseState } from '../../redux/actions/main';
 import Teachersidebar from '../reusable/teachersidebar';
 
@@ -45,17 +46,21 @@ const Teacherlayout = (props) => {
   
   return (
     <>
-    
+    { props.error  &&
+         <div style={{position: 'fixed', transform: 'translateX(-50%)', left: '50%', zIndex: 9999}}>
+            <ErrorPopupMain errorMessage={props.error}/>
+          </div>         
+            }
+    { props.success  &&
+         <div style={{position: 'fixed', transform: 'translateX(-50%)', left: '50%', zIndex: 9999}}>
+            <SuccessPopupMain />
+          </div>          
+            }
     <div style={{display: 'flex', backgroundColor: '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '720px'}} > 
             <div style={{zIndex: 9999}}>
             <Teachersidebar/>
             </div>
             <div style={{width: windowWidth, position: 'relative', minWidth: '1px'}}>
-              {props.errorMessage && 
-              <div style={{position: 'fixed', left: '56%', transform: 'translateX(-50%)', zIndex: 9999}}>
-              <ErrorPopupmain/>
-              </div>
-              }
               <div style={{maxHeight:windowHeight, overflowY: 'auto', zIndex: 9999}}>
 
               <div style={{position: 'sticky', top:0, zIndex: 9998}}>
@@ -86,11 +91,15 @@ Teacherlayout.propTypes = {
     setResolution: PropTypes.func,
     isLess800: PropTypes.bool,
     setCollapseState: PropTypes.func,
+    error: PropTypes.string,
+    success: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
     errorMessage: state.main.errorMessage,
-    isLess800: state.main.isLess800
+    isLess800: state.main.isLess800,
+    error: state.main.error,
+    success: state.main.success,
   });
 
   

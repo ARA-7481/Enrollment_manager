@@ -7,17 +7,19 @@ import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, get
 import Modal from 'react-modal'
 Modal.setAppElement('#app');
 
-import avatar2 from '../../assets/images/avatars/avatar.webp'
 
 import { Button } from 'react-bootstrap';
 import { Document, CloseButton } from '../../assets/svg/clnsmpl-icon';
 
 function Teacherclasspage(props) {
+    const [avatar, setAvatar] = useState(JSON.parse(localStorage.getItem('user')).avatar);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+
     const navigate = useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    const bg_options = ['http://localhost:8000/media/bg1.png','http://localhost:8000/media/bg2.png','http://localhost:8000/media/bg3.png','http://localhost:8000/media/bg4.png','http://localhost:8000/media/bg5.png',
-                        'http://localhost:8000/media/bg6.png','http://localhost:8000/media/bg7.png','http://localhost:8000/media/bg8.png','http://localhost:8000/media/bg9.png','http://localhost:8000/media/bg10.png',]
+    const bg_options = ['https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg1.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg2.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg3.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg4.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg5.png',
+                        'https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg6.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg7.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg8.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg9.png','https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg10.png',]
     const handleSetBG = (option) => {
         props.setSelectedBG(option)
         props.setClassbackground(option,props.selectedClass)
@@ -33,20 +35,25 @@ function Teacherclasspage(props) {
         navigate('/teachers/activity-entryview');
 
     }
-    const user = JSON.parse(localStorage.getItem('user'))
     useEffect(() => {
         props.setsidebarState('dashboard');
         props.setsubsidebarState('inclass');
         props.setpageHeader(props.selectedClass, '', '');
+    }, []);
+
+    useEffect(() => {
+        if(props.newAvatar){
+            setAvatar(props.newAvatar)
+        }
         props.getActivities(props.selectedClass);
-    }, [props.selectedClass]);
+    }, [props.newAvatar, props.selectedClass]);
 
     return (
         <>
             <div style={{backgroundColor:'#e9ecef', borderTopLeftRadius:'8px', borderTopRightRadius:'8px', width: '100%'}}> 
                 <div style={{backgroundColor:'#ffffff', height: '124px', borderRadius:'8px', display: 'flex', alignItems: 'center', padding: '24px'}}>
                         <div style={{transform: 'translate( 0px, -60px)', display:'flex'}}>
-                            <img className="circular-avatar" src={avatar2} alt="description" />
+                            <img className="circular-avatar" src={avatar} alt="description" />
                         </div>
                     <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                     <div style={{display: 'flex', alignItems: 'center'}}>
@@ -177,6 +184,7 @@ Teacherclasspage.propTypes = {
     teacherData: PropTypes.array,
     getActivity: PropTypes.func,
     getClassdata: PropTypes.func,
+    newAvatar: PropTypes.string,
     }
 
 const mapStateToProps = (state) => ({
@@ -186,6 +194,7 @@ const mapStateToProps = (state) => ({
     selectedBG: state.main.selectedBG,
     activitiesOnclass: state.main.activitiesOnclass,
     teacherData: state.main.teacherData,
+    newAvatar: state.main.newAvatar
     });
 
     export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getActivities, setSelectedBG, setClassbackground, getActivity, getClassdata})(Teacherclasspage))

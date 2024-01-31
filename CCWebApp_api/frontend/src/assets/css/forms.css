@@ -164,3 +164,10 @@
   white-space: nowrap;
   max-height: 40px;
 }
+
+.tag-container {
+  border: 1px solid #293DA2 !important;
+  border-radius: 4px;
+  background-color: #858fc0;
+  margin-right: 4px;
+}

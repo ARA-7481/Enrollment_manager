@@ -6,20 +6,19 @@ import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setpageHeader, getStudentdata, setSelectedclass, setSelectedBG } from '../../redux/actions/main';
 
 import { Placeholder } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
-import avatar2 from '../../assets/images/avatars/avatar.webp'
+import { Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed } from '../../assets/svg/clnsmpl-icon';
 
-import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 
 function Studentdashboard(props) {
+
+  const [avatar, setAvatar] = useState(JSON.parse(localStorage.getItem('user')).avatar);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
   const navigate = useNavigate();
   const date = new Date();
   const currentDay = date.getDay();
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-
-  const user = JSON.parse(localStorage.getItem('user'))
     if (!user){
       navigate('/auth/admin-signin');
     }
@@ -34,21 +33,80 @@ function Studentdashboard(props) {
     props.setsidebarState('dashboard');
     props.setsubsidebarState(null);
     props.setpageHeader(`Hello ${user.first_name}`, '', 'Welcome to your dashboard');
-    props.getStudentdata(user.email)
+    props.getStudentdata(user.studentprofile)
     props.setSelectedBG('');
   }, []);
+
+  useEffect(() => {
+    if(props.newAvatar){
+        setAvatar(props.newAvatar)
+    }
+}, [props.newAvatar]);
 
   return (
       <>
             <div style={{backgroundColor:'#e9ecef', borderTopLeftRadius:'8px', borderTopRightRadius:'8px', width: '100%'}}> 
                 <div style={{backgroundColor:'#ffffff', height: '124px', borderRadius:'8px', display: 'flex', alignItems: 'center', padding: '24px'}}>
                     <div style={{transform: 'translate( 0px, -60px)'}}>
-                        <img className="circular-avatar" src={avatar2} alt="description" />
+                        <img className="circular-avatar" src={avatar} alt="description" />
                     </div>
-                    <h1 className='inter-700-28px'>{user.first_name} {user.last_name}</h1>
+
+                    <div style={{marginLeft: '24px'}}>
+                        <div style={{display: 'flex'}}>
+                        <h1 className='inter-700-28px'>{user.first_name} {user.last_name}</h1>
+                        <div style={{marginLeft: '8px', marginTop: '3px'}}>
+                            {props.studentData.id && (() => {
+                                    switch(props.studentData.status){
+                                        case 'Draft':
+                                            return <Draft/>
+                                        case 'For Evaluation':
+                                            return <ForEvaluation/>
+                                        case 'Evaluation In Progress':
+                                            return <EvaluationInProgress/>
+                                        case 'Evaluation Complete':
+                                            return <EvaluationComplete/>
+                                        case 'Pending Payment':
+                                            return <PendingPayment/>
+                                        case 'Payment Received':
+                                            return <PaymentReceived/>
+                                        case 'Enrolled':
+                                            return <Enrolled/>
+                                        case 'Verification Failed':
+                                            return <VerificationFailed/>
+                                        default: 
+                                            return <></>
+                                    }
+                                })()}
+                        </div>
+                        </div>
+                        {props.studentData.id && (() => {
+                                switch(props.studentData.yearlevel){
+                                    case '1st':
+                                        return <h1 className='inter-500-16px-dark'>First Year</h1>
+                                    case '2nd':
+                                        return <h1 className='inter-500-16px-dark'>Second Year</h1>
+                                    case '3rd':
+                                        return <h1 className='inter-500-16px-dark'>Third Year</h1>
+                                    case '4th':
+                                        return <h1 className='inter-500-16px-dark'>Fourth Year</h1>
+                                    case '5th':
+                                        return <h1 className='inter-500-16px-dark'>Fifth Year</h1>
+                                    case 'Irregular':
+                                        return <h1 className='inter-500-16px-dark'>Irregular</h1>
+                                    default: 
+                                        return <h1 className='inter-500-16px-dark'>-</h1>
+                                }
+                            })()}
+
+                        <div style={{display: 'flex'}}>
+                            {props.studentData.id && <h1 className='inter-400-16px' style={{marginRight: '8px'}}>{props.studentData.course}</h1> }
+                        </div>
+                    </div>
+
+               
                 </div>
                 <div className='class-container'>
-                    { props.studentData && props.studentData.length !== 0? [...props.studentData[0].student_related_class].sort((a, b) => a.code.localeCompare(b.code)).map(item => (
+                    { props.studentData.id? [...props.studentData.student_related_class].sort((a, b) => a.code.localeCompare(b.code)).map(item => (
                         <div key={item.code} className="class-item" onClick={() => handleClassSelection(item.code, item.bg_gradient)}>
                             <div className="class-itemheader" style={{backgroundImage: `url(${item.bg_gradient})`}}>
                             </div>
@@ -165,15 +223,17 @@ Studentdashboard.propTypes = {
   setsubsidebarState: PropTypes.func.isRequired,
   setpageHeader: PropTypes.func,
   getStudentdata: PropTypes.func,
-  studentData: PropTypes.array,
+  studentData: PropTypes.object,
   setSelectedclass: PropTypes.func,
   setSelectedBG: PropTypes.func,
+  newAvatar: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
   sidebarState: state.main.sidebarState,
   subsidebarState: state.main.subsidebarState,
   studentData: state.main.studentData,
+  newAvatar: state.main.newAvatar
   });
 
 export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getStudentdata, setSelectedclass, setSelectedBG})(Studentdashboard))

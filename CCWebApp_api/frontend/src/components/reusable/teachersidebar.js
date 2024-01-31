@@ -103,7 +103,7 @@ function Teachersidebar(props){
             </Nav.Link> */}
 
 
-            <Nav.Link href="/#/" style={{paddingBottom: '8px'}}>
+            <Nav.Link href="/#/teachers/profile" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'My Profile':''} className='zooming-icon' style={{color: props.sidebarState === 'settings' ? 'white' : '', backgroundColor: props.sidebarState === 'settings' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedSettingsIcon/>

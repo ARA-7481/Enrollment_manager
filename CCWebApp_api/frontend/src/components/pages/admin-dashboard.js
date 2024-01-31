@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setpageHeader } from '../../redux/actions/main';
 
-import { Col } from 'react-bootstrap';
-
 import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 
 function Dashboard(props) {

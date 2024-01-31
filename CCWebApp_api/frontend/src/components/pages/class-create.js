@@ -195,11 +195,7 @@ function ClassCreate(props) {
   const handleType = (classtype) => {
     setType(classtype);
   }
-
   useEffect(() => {
-    if (props.loadingState === 'isNotLoading' && submissionComplete) {
-      navigate('/admins/class');
-    }
     props.setsidebarState('class')
     props.setsubsidebarState(null)
     props.setclassState('create-page-one')
@@ -208,6 +204,16 @@ function ClassCreate(props) {
     props.getRooms()
     props.getFaculty('','','','')
     props.getClassesList('','','','')
+  },[])
+
+  useEffect(() => {
+    if (props.loadingState === 'isNotLoading' && submissionComplete) {
+      if(props.error){
+        setSubmission(false)
+      }else if(props.success){
+        navigate('/admins/class');
+      }
+    }
     setClasshours(calculateTotalHours())
     setFormData({
       code : classname,
@@ -222,7 +228,7 @@ function ClassCreate(props) {
       enddate: endDate,
     })
 
-  }, [schedule, classname, description, yearlevel, type, subject, instructor, startDate, endDate, props.loadingState, submissionComplete, conflictMessage]);
+  }, [schedule, classname, description, yearlevel, type, subject, instructor, startDate, endDate, props.loadingState, submissionComplete, conflictMessage, props.error, props.success]);
 
   return (
       <>
@@ -636,6 +642,8 @@ ClassCreate.propTypes = {
   loadingState: PropTypes.string,
   classesListForTable: PropTypes.array,
   getClassesList: PropTypes.func,
+  error: PropTypes.string,
+  success: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
@@ -650,6 +658,8 @@ const mapStateToProps = (state) => ({
   classesList: state.main.classesList,
   loadingState: state.main.loadingState,
   classesListForTable: state.main.classesListForTable,
+  error: state.main.error,
+  success: state.main.success,
   });
 
 export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setclassState, setpageHeader, getCourses, getSubject, getFaculty, getRooms, getClasses, addClass, setLoading, getClassesList})(ClassCreate))

@@ -227,22 +227,28 @@ function CourseCreate(props) {
     }
 
     useEffect(() => {
-        if (props.loadingState === 'isNotLoading' && subjectSubmissioncomplete) {
-          handleSubject(props.subjectFormdata.code, clickedyearondiv)
-          setSubjectsubmission(false)
-          setModalIsOpen(false)
-          props.setSubjectformdata({})
-        }
-
-        if (props.loadingState === 'isNotLoading' && submissionComplete) {
-            navigate('/admins/course');
-          }
         props.setsidebarState('course')
         props.setsubsidebarState(null)
         props.setcourseState('create-page-one')
         props.setpageHeader('Create a Course', '', 'Fill Information to Create a Course')
         props.getDepartments();
         props.getSubjectsList('');
+    },[])
+
+    useEffect(() => {
+        if (props.loadingState === 'isNotLoading' && subjectSubmissioncomplete) {
+          handleSubject(props.subjectFormdata.code, clickedyearondiv)
+          setSubjectsubmission(false)
+          setModalIsOpen(false)
+          props.setSubjectformdata({})
+        }
+        if (props.loadingState === 'isNotLoading' && submissionComplete) {
+          if(props.error){
+            setSubmission(false)
+          }else if(props.success){
+            navigate('/admins/course');
+          }
+          }
         setFormData({
           code : coursecode,
           description : description,
@@ -258,7 +264,7 @@ function CourseCreate(props) {
           subjects_51 : semesterarray.length>0?semesterarray.find((obj) => obj.year ===5)?semesterarray.find((obj) => obj.year ===5).firstsemester:[]:[],
           subjects_52 : semesterarray.length>0?semesterarray.find((obj) => obj.year ===5)?semesterarray.find((obj) => obj.year ===5).secondsemester:[]:[],
         })
-      }, [props.loadingState, subjectSubmissioncomplete, subjectCreatedyear, coursecode, description, department, semesterarray]);
+      }, [props.loadingState, subjectSubmissioncomplete, subjectCreatedyear, coursecode, description, department, semesterarray, props.error, props.success]);
 
     return (
         <>
@@ -454,10 +460,10 @@ function CourseCreate(props) {
                           onClick={()=>handleAddsubject(year.year)}
                           type="button" 
                           style={{minWidth: '100%', minHeight: '40px', marginRight: '24px', marginTop: '30px'}}>
-                  <h1 className='inter-500-18px' style={{color:'white'}}>
-                  Add
-                  </h1>
-              </Button>
+                    <h1 className='inter-500-18px' style={{color:'white'}}>
+                    Add
+                    </h1>
+                  </Button>
                   </div>
                   </div>
                 
@@ -591,7 +597,7 @@ function CourseCreate(props) {
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px', marginTop: duration? '0px':'200px' }}>
         <Button className='buttonsonforms' disabled={!coursecode || !description || !department || !duration } type="button" onClick={handleSubmit} style={{ minWidth: '15%', minHeight: '48px', marginRight: '24px', }}>
             <h1 className='inter-500-18px' style={{color:'white'}}>
-            {props.loadingState == 'isNotLoading'? <>Create Course</> : <div style={{transform: 'translate( 0px, -6px)'}}><Spinner animation="border" variant="light"/></div>}</h1>
+            {props.loadingState == 'isNotLoading'? <>Create Course</> : <div style={{transform: 'translate( 0px, 1px)'}}><Spinner animation="border" variant="light"/></div>}</h1>
         </Button>
         </div>
         </div>
@@ -618,6 +624,8 @@ CourseCreate.propTypes = {
     subjectFormdata: PropTypes.object,
     setSubjectformdata: PropTypes.func,
     addCourse: PropTypes.func,
+    error: PropTypes.string,
+    success: PropTypes.string,
   }
   
   const mapStateToProps = (state) => ({
@@ -630,6 +638,8 @@ CourseCreate.propTypes = {
     subjectsListForTable: state.main.subjectsListForTable,
     errorMessage: state.main.errorMessage,
     subjectFormdata: state.main.subjectFormdata,
+    error: state.main.error,
+    success: state.main.success,
     });
 
 

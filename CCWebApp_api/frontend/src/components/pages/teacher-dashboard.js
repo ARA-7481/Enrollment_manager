@@ -5,20 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedclass, setSelectedBG } from '../../redux/actions/main';
 
-import avatar from '../../assets/images/avatars/avatar.webp'
-import avatar2 from '../../assets/images/avatars/avatar.webp'
-
-import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 import { Card, Placeholder } from 'react-bootstrap';
 
 function Teacherdashboard(props) {
+
+    const [avatar, setAvatar] = useState(JSON.parse(localStorage.getItem('user')).avatar);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
     const navigate = useNavigate();
     const date = new Date();
     const currentDay = date.getDay();
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    const user = JSON.parse(localStorage.getItem('user'))
     if (!user){
       navigate('/auth/admin-signin');
     }
@@ -37,12 +35,20 @@ function Teacherdashboard(props) {
         props.setSelectedBG('');
     }, []);
 
+    useEffect(() => {
+        if(props.newAvatar){
+            setAvatar(props.newAvatar)
+        }
+    }, [props.newAvatar]);
+
+    
+
     return (
         <>
             <div style={{backgroundColor:'#e9ecef', borderTopLeftRadius:'8px', borderTopRightRadius:'8px', width: '100%'}}> 
                 <div style={{backgroundColor:'#ffffff', height: '124px', borderRadius:'8px', display: 'flex', alignItems: 'center', padding: '24px'}}>
                     <div style={{transform: 'translate( 0px, -60px)'}}>
-                        <img className="circular-avatar" src={avatar2} alt="description" />
+                        <img className="circular-avatar" src={avatar} alt="description" />
                     </div>
                     <h1 className='inter-700-28px'>{user.first_name} {user.last_name}</h1>
                     <h1 className='inter-400-16px' style={{marginLeft: '15px'}}>{props.teacherData.length != 0 && props.teacherData[0].position }</h1>
@@ -167,12 +173,14 @@ function Teacherdashboard(props) {
     teacherData: PropTypes.array,
     setSelectedclass: PropTypes.func,
     setSelectedBG: PropTypes.func,
+    newAvatar: PropTypes.string,
     }
 
     const mapStateToProps = (state) => ({
     sidebarState: state.main.sidebarState,
     subsidebarState: state.main.subsidebarState,
     teacherData: state.main.teacherData,
+    newAvatar: state.main.newAvatar
     });
 
     export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedclass, setSelectedBG})(Teacherdashboard))

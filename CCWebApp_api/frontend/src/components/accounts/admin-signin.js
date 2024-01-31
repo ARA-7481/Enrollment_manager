@@ -26,13 +26,10 @@ function Signin (props) {
    if (props.isAuthenticated) {
       if (props.user.usertype === 'Admin'){
          navigate('/admins/dashboard');
-         console.log('admin login successful')
       }else if (props.user.usertype === 'Student'){
          navigate('/students/dashboard');
-         console.log('student login successful')
       }else if (props.user.usertype === 'Faculty'){
          navigate('/teachers/dashboard');
-         console.log('student login successful')
       }
    }
  }, [props.isAuthenticated]);

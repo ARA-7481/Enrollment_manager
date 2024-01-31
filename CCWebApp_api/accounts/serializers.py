@@ -10,10 +10,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['email'] = user.email
         return token
     
+class PasswordChangeSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number', 'usertype')
+        fields = ('id', 'first_name', 'last_name', 'email', 'mobile_number', 'usertype', 'avatar', 'facultyprofile', 'studentprofile')
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,6 +66,16 @@ class StudentSerializer(serializers.ModelSerializer):
         model = StudentProfile
         fields = ('id', 'userprofile', 'course', 'yearlevel', 'status' )
 
+class AddStudentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = StudentProfile
+        fields = ('userprofile', 'course', 'yearlevel', 'status' )
+
+class CoursesField(serializers.StringRelatedField):
+    def to_internal_value(self, data):
+        return Course.objects.get(code=data)
+
 class FacultySerializer(serializers.ModelSerializer):
     userprofile = UserProfileSerializer(read_only=False)
     courses = CourseSerializer(many=True, read_only=True)
@@ -69,6 +83,13 @@ class FacultySerializer(serializers.ModelSerializer):
     class Meta:
         model = FacultyProfile
         fields = ('id', 'userprofile', 'courses', 'position')
+
+class AddFacultySerializer(serializers.ModelSerializer):
+    courses = CoursesField(many=True)
+
+    class Meta:
+        model = FacultyProfile
+        fields = ('userprofile', 'courses', 'position')
 
 class StaffSerializer(serializers.ModelSerializer):
     userprofile = UserProfileSerializer(read_only=False)
@@ -80,7 +101,7 @@ class StaffSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'usertype', 'first_name', 'last_name', 'email', 'mobile_number', 'password')
+        fields = ('id', 'usertype', 'first_name', 'last_name', 'email', 'mobile_number', 'password', 'address_value')
         extra_kwargs = {'password':{'write_only': True},}
 
     def create(self, validated_data):
@@ -93,11 +114,11 @@ class ClassesListSerializer(serializers.ModelSerializer):
     schedule = ScheduleInstanceSerializer(many=True)
     teacher = FacultySerializer(read_only=False)
     subject = SubjectSerializer(read_only=False)
-    students = StudentSerializer(many=True)
+    # students = StudentSerializer(many=True)
 
     class Meta:
         model = Classes
-        fields = '__all__'
+        fields = ('code', 'subject', 'course', 'teacher', 'date_created', 'students', 'yearlevel', 'schedule')
 
 class ActivityEntrySerializer(serializers.ModelSerializer):
     class Meta:
@@ -121,15 +142,15 @@ class AddActivitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activities
         fields = '__all__'
-    
-class ClassesSerializer(serializers.ModelSerializer):
-    related_activities = ActivitiesSerializer(many=True)
+
+class NormalClassesSerializer(serializers.ModelSerializer):
+    # related_activities = ActivitiesSerializer(many=True, required=False)
     schedule = ScheduleInstanceSerializer(many=True)
-    teacher = FacultySerializer(many=False)
-    students = StudentSerializer(many=True)
+    # teacher = FacultySerializer(many=False)
+    # students = StudentSerializer(many=True, required=False)
     class Meta:
         model = Classes
-        fields = '__all__'
+        fields = ('code', 'yearlevel', 'subject', 'course', 'teacher', 'description', 'schedule', 'startdate', 'enddate', 'date_created')
     
     def create(self, validated_data):
         schedule_data = validated_data.pop('schedule')
@@ -141,6 +162,15 @@ class ClassesSerializer(serializers.ModelSerializer):
         
         class_instance.schedule.set(schedule_instances)
         return class_instance
+
+class ClassesSerializer(serializers.ModelSerializer):
+    related_activities = ActivitiesSerializer(many=True)
+    schedule = ScheduleInstanceSerializer(many=True)
+    teacher = FacultySerializer(many=False)
+    students = StudentSerializer(many=True)
+    class Meta:
+        model = Classes
+        fields = '__all__'
     
 class TeacherDashboardClassesSerializer(serializers.ModelSerializer):
     schedule = ScheduleInstanceSerializer(many=True)
@@ -162,12 +192,12 @@ class TeacherDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FacultyProfile
-        fields = ('position','courses','userprofile','teacher_related_class')
+        fields = ('id','position','courses','userprofile','teacher_related_class')
 
 class StudentDataSerializer(serializers.ModelSerializer):
     student_related_class = StudentDashboardClassesSerializer(many=True, read_only=True)
-    userprofile = UserSerializer(read_only=False)
+    # userprofile = UserSerializer(read_only=False)
 
     class Meta:
         model = StudentProfile
-        fields = ('id','userprofile','student_related_class')
+        fields = ('id','student_related_class', 'course', 'yearlevel', 'status')

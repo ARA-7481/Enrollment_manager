@@ -41,6 +41,7 @@ class User(AbstractUser):
     state = models.CharField(max_length=20, choices=STATE, default='Pending')
     usertype = models.CharField(max_length=20, choices=USERTYPE, null=True)
     registration_datetime = models.DateTimeField(auto_now_add=True)
+    avatar = models.FileField(upload_to='uploads/', default='avatar.webp')
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
@@ -75,7 +76,7 @@ class StudentProfile(models.Model):
     course = models.ForeignKey('main.Course', on_delete=models.SET_NULL, null=True)
     yearlevel = models.CharField(max_length=20, choices=YEARLEVEL, null=False, default='1st')
     status = models.CharField(max_length=50, choices=STATUS, null=False, default= 'Draft')
-    userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='studentprofile')
 
 class FacultyProfile(models.Model):
     POSITION = (

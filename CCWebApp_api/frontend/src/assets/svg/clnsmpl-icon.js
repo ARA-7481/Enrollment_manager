@@ -341,10 +341,30 @@ const CloseButton = () => (
    </svg>
 )
 
+const CloseButtonSmall = () => (
+   <svg width="12" height="12" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M16.4899 1.50195L1.50244 16.4863" stroke="#232D42" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+   <path d="M16.5 16.5L1.5 1.5" stroke="#232D42" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+   </svg>
+)
+
 const Document = () => (
    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
    <path d="M17.083 8.48906H14.6747C12.6997 8.48906 11.0913 6.88073 11.0913 4.90573V2.4974C11.0913 2.03906 10.7163 1.66406 10.258 1.66406H6.72467C4.15801 1.66406 2.08301 3.33073 2.08301 6.30573V13.6891C2.08301 16.6641 4.15801 18.3307 6.72467 18.3307H13.2747C15.8413 18.3307 17.9163 16.6641 17.9163 13.6891V9.3224C17.9163 8.86406 17.5413 8.48906 17.083 8.48906Z" fill="#087AEB"/>
    <path d="M13.1658 1.84207C12.8241 1.5004 12.2324 1.73373 12.2324 2.20873V5.11707C12.2324 6.33373 13.2658 7.34207 14.5241 7.34207C15.3158 7.3504 16.4158 7.3504 17.3574 7.3504C17.8324 7.3504 18.0824 6.79207 17.7491 6.45873C16.5491 5.2504 14.3991 3.0754 13.1658 1.84207Z" fill="#087AEB"/>
+   </svg>
+)
+
+const GreenCheck = () => (
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22.5264 11.2617C22.5264 16.7857 18.0494 21.2617 12.5264 21.2617C7.00337 21.2617 2.52637 16.7857 2.52637 11.2617C2.52637 5.73972 7.00337 1.26172 12.5264 1.26172C18.0494 1.26172 22.5264 5.73972 22.5264 11.2617Z" fill="#12703A"/>
+   <path d="M10.761 17C10.4328 17 10.1045 16.8692 9.85383 16.6059L6.37593 12.9532C5.87469 12.4268 5.87469 11.574 6.37593 11.0491C6.87717 10.5227 7.68765 10.5211 8.1889 11.0476L10.761 13.749L16.8111 7.39483C17.3123 6.86839 18.1228 6.86839 18.6241 7.39483C19.1253 7.92127 19.1253 8.77403 18.6241 9.30047L11.6683 16.6059C11.4176 16.8692 11.0893 17 10.761 17Z" fill="white"/>
+   </svg>
+)
+
+const AlertLogo = () => (
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path fillRule="evenodd" clipRule="evenodd" d="M14.4773 4.44209L21.746 17.0572C21.906 17.4338 21.976 17.7399 21.996 18.058C22.036 18.8012 21.776 19.5236 21.2661 20.0795C20.7562 20.6334 20.0663 20.9604 19.3164 21H4.6789C4.36896 20.9812 4.05901 20.9108 3.76906 20.8018C2.3193 20.2172 1.61942 18.5723 2.20932 17.1464L9.52809 4.43317C9.77804 3.98628 10.158 3.60082 10.6279 3.35309C11.9877 2.59902 13.7174 3.09447 14.4773 4.44209ZM12.8675 12.7557C12.8675 13.2314 12.4776 13.6287 11.9977 13.6287C11.5178 13.6287 11.1178 13.2314 11.1178 12.7557V9.95248C11.1178 9.47585 11.5178 9.09039 11.9977 9.09039C12.4776 9.09039 12.8675 9.47585 12.8675 9.95248V12.7557ZM11.9977 17.0176C11.5178 17.0176 11.1178 16.6202 11.1178 16.1456C11.1178 15.669 11.5178 15.2726 11.9977 15.2726C12.4776 15.2726 12.8675 15.6601 12.8675 16.1347C12.8675 16.6202 12.4776 17.0176 11.9977 17.0176Z" fill="#FF0000"/>
    </svg>
 )
 
@@ -482,4 +502,4 @@ const ConnectedDotIconMasterlist = connect(mapStateToProps)(DotIconMasterlist);
 const ConnectedAccordionIconClose = connect(mapStateToProps)(AccordionIconClose);
 const ConnectedAccordionIconOpen = connect(mapStateToProps)(AccordionIconOpen);
 
-export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon, ColoredClassIcon, ColoredSubjectIcon, ColoredRoomIcon, ColoredCourseIcon, BlueExclamation, RedExclamation, SimpleCalendar, RedX, CloseButton, ComingSoon, Document, NoSubmission};
+export {AddUser, Magnifier, New, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, ToogleIcon, ColoredHat, ToogleIconOn, MainIcon, ColoredClassIcon, ColoredSubjectIcon, ColoredRoomIcon, ColoredCourseIcon, BlueExclamation, RedExclamation, SimpleCalendar, RedX, CloseButton, ComingSoon, Document, NoSubmission, CloseButtonSmall, GreenCheck, AlertLogo};
