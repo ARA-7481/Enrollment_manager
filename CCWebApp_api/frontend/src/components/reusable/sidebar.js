@@ -14,6 +14,7 @@ import {
 import Nav from 'react-bootstrap/Nav';
 import { Card, Container, Accordion } from 'react-bootstrap';
 import { setsidebarState, setsubsidebarState} from '../../redux/actions/main';
+import logo from '../../assets/images/backgrounds/logo.png'
 
 import {ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
 
@@ -74,13 +75,13 @@ function Sidebar(props){
 
             <div style={{transform: 'translate( 0px, 6px)'}}>
             {isCollapsed && 
-             <Nav.Link href="/#/admins/dashboard" onClick={handleCollapse}>
+             <Nav.Link href="/#/admins/users-students" onClick={handleCollapse}>
               <ColoredHat />
             </Nav.Link>
             }
             </div>
           {(window.innerWidth >= 1140) &&
-          <Card onClick={handleCollapse} style={{backgroundColor:'rgba(51, 51, 51, 0.00)', transform: 'translate(86px, 6px)', position:'fixed', width:'10px'}}>
+          <Card onClick={handleCollapse} style={{backgroundColor:'rgba(51, 51, 51, 0.00)', transform: 'translate(68px, 6px)', position:'fixed', width:'10px'}}>
           {!isCollapsed && 
               <ToogleIcon />
             }
@@ -92,11 +93,15 @@ function Sidebar(props){
           </div>
                                   }
 
-         style={{display: 'flex', height: '78px'}} 
+         style={{display: 'flex', height: '170px'}} 
         >
             {!isCollapsed && 
-            <Nav.Link href="/#/admins/dashboard" style={{transform: 'translate( 0px, -12px)'}}>
-              <MainIcon />
+            <Nav.Link href="/#/admins/users-students" style={{transform: 'translate( 0px, -12px)'}}>
+              <div style={{transform: 'translate( 35px, 0px)'}}>
+                    <img className="circular-avatar" src={logo} alt="description" />
+              
+              </div>
+              <h1 className='inter-500-16px-dark' style={{ marginTop: '8px'}}>SCHOOL MANAGEMENT</h1>
             </Nav.Link>
             }
         </CDBSidebarHeader>
@@ -104,7 +109,7 @@ function Sidebar(props){
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu style={{  display:'flex', justifyContent: 'start', paddingLeft:'24px'}}>
 
-            <Nav.Link href="/#/admins/dashboard" style={{paddingBottom: '8px'}}>
+            {/* <Nav.Link href="/#/admins/dashboard" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Dashboard':''} className='zooming-icon' style={{color: props.sidebarState === 'dashboard' ? 'white' : '', backgroundColor: props.sidebarState === 'dashboard' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedDashboardIcon/>
@@ -113,7 +118,7 @@ function Sidebar(props){
             {!isCollapsed && 'Dashboard'}
             </div>
             </div>
-            </Nav.Link>
+            </Nav.Link> */}
 
            
            
@@ -235,7 +240,7 @@ function Sidebar(props){
             </div>
             </Nav.Link>
 
-            <Nav.Link href="/#/admins/course" style={{paddingBottom: '8px'}}>
+            {/* <Nav.Link href="/#/admins/course" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Course':''} className='zooming-icon' style={{color: props.sidebarState === 'course' ? 'white' : '', backgroundColor: props.sidebarState === 'course' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedCourseIcon/>
@@ -244,7 +249,7 @@ function Sidebar(props){
             {!isCollapsed && 'Course'}
             </div>
             </div>
-            </Nav.Link>
+            </Nav.Link> */}
             
             <Nav.Link href="/#/admins/rooms" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Rooms':''} className='zooming-icon' style={{color: props.sidebarState === 'rooms' ? 'white' : '', backgroundColor: props.sidebarState === 'rooms' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>

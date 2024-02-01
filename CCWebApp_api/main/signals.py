@@ -1,9 +1,9 @@
-from django.db.models.signals import post_save, post_delete, pre_save
-from django.dispatch import receiver
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
-from accounts.models import StudentProfile, FacultyProfile, StaffProfile
-from .models import Department, Subject, Course, Room, Classes, ScheduleInstance
+# from django.db.models.signals import post_save, post_delete, pre_save
+# from django.dispatch import receiver
+# from channels.layers import get_channel_layer
+# from asgiref.sync import async_to_sync
+# from accounts.models import StudentProfile, FacultyProfile, StaffProfile
+# from .models import Department, Subject, Course, Room, Classes, ScheduleInstance
 
 # @receiver(post_save, sender=StudentProfile)
 # @receiver(post_save, sender=FacultyProfile)

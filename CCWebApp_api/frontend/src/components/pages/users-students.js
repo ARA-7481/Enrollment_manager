@@ -17,10 +17,6 @@ function UsersStudents(props) {
 
   const [sortStatus, setsortStatus] = useState ('Newest-Oldest')
   const [statusStatus, setstatusStatus] = useState('All Status');
-  const [yearlevelStatus, setyearlevelStatus] = useState('All Year Levels');
-  const [departmentStatus, setdepartmentStatus] = useState('All Departments');
-  const [courseStatus, setcourseStatus] = useState('All Courses');
-  
   const [value, setValue] = useState('');
 
   const handleChange = (event) => {
@@ -48,45 +44,6 @@ function UsersStudents(props) {
     }
   };
 
-  const handleYearlevel = (yearlevel) => {
-    setyearlevelStatus(yearlevel)
-    if (yearlevel === 'All Year Levels'){
-      setQueryYearlevel('')
-      props.getStudents(queryStatus,'',queryDepartment,queryCourse,'')
-    }
-    else{
-      setQueryYearlevel(yearlevel)
-      props.getStudents(queryStatus,yearlevel,queryDepartment,queryCourse,'')
-    }
-  };
-
-  const handleDepartment = (departmentcode) => {
-    setdepartmentStatus(departmentcode);
-    setcourseStatus('All Courses');
-    setQueryCourse('');
-    if (departmentcode === 'All Departments'){
-      setQueryDepartment('')
-      props.getStudents(queryStatus,queryYearlevel,'','','')
-    }
-    else{
-      setQueryDepartment(departmentcode)
-      props.getStudents(queryStatus,queryYearlevel,departmentcode,'','')
-    }
-  };
-
-  const handleCourse = (course) => {
-    setcourseStatus(course);
-    if (course === 'All Courses'){
-      setQueryCourse('')
-      props.getStudents(queryStatus,queryYearlevel,queryDepartment,'','')
-    }
-    else{
-      setQueryCourse(course)
-      props.getStudents(queryStatus,queryYearlevel,queryDepartment,course,'')
-    }
-  };
-
-  const websocket = useRef(null);
 
   useEffect(() => {
     if (props.studentsList.length == 0){
@@ -96,23 +53,7 @@ function UsersStudents(props) {
     props.setsubsidebarState('students');
     props.setpageHeader('Manage Students', '', 'Manage students here. Enroll, Update, Evaluate etc.');
 
-    props.getStudents('','','','','');
-    props.getDepartments();
-
-    websocket.current = new WebSocket(`wss://${window.location.host}/ws/dbupdatetrigger/`);
-    websocket.current.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log(data)
-      console.log(data.event.event)
-      if (data.event.event === 'model_update') {
-        props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, '');
-      }
-    };
-    return () => {
-      if (websocket.current) {
-        websocket.current.close();
-      }
-    }
+    props.getStudents();
 
    
     }, []);
@@ -155,71 +96,6 @@ function UsersStudents(props) {
             <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
               Filter: 
             </h1>
-            <Dropdown style={{width: '50%', minWidth: '1px'}}>
-                <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-                  <div style={{overflow: 'hidden'}}>{statusStatus}</div>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
-                  {statusStatus !== 'All Status'  && <Dropdown.Item onClick={() => handleStatus('All Status')}><div className="zooming-text">All Status</div></Dropdown.Item>}
-                  {statusStatus !== 'Verification Failed'  && <Dropdown.Item onClick={() => handleStatus('Verification Failed')}><div className="zooming-text">Verifications Failed</div></Dropdown.Item> }
-                  {statusStatus !== 'For Evaluation'  && <Dropdown.Item onClick={() => handleStatus('For Evaluation')}><div className="zooming-text">For Evaluation</div></Dropdown.Item>}
-                  {statusStatus !== 'Evaluation In Progress'  && <Dropdown.Item onClick={() => handleStatus('Evaluation In Progress')}><div className="zooming-text">Evaluation In Progress</div></Dropdown.Item>}
-                  {statusStatus !== 'Evaluation Complete'  && <Dropdown.Item onClick={() => handleStatus('Evaluation Complete')}><div className="zooming-text">Evaluation Complete</div></Dropdown.Item>}
-                  {statusStatus !== 'Pending Payment'  && <Dropdown.Item onClick={() => handleStatus('Pending Payment')}><div className="zooming-text">Pending Payment</div></Dropdown.Item>}
-                  {statusStatus !== 'Payment Received'  && <Dropdown.Item onClick={() => handleStatus('Payment Received')}><div className="zooming-text">Payment Received</div></Dropdown.Item>}
-                  {statusStatus !== 'Enrolled'  && <Dropdown.Item onClick={() => handleStatus('Enrolled')}><div className="zooming-text">Enrolled</div></Dropdown.Item>}
-                  {statusStatus !== 'Draft'  && <Dropdown.Item onClick={() => handleStatus('Draft')}><div className="zooming-text">Draft</div></Dropdown.Item>}
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown style={{width: '50%', minWidth: '1px'}}>
-                <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-                  <div style={{overflow: 'hidden'}}>{yearlevelStatus}</div>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
-                  {yearlevelStatus !== 'All Year Levels'  && <Dropdown.Item onClick={() => handleYearlevel('All Year Levels')}>All Year Levels</Dropdown.Item>}
-                  {yearlevelStatus !== '1st'  && <Dropdown.Item onClick={() => handleYearlevel('1st')}><div className="zooming-text">1st</div></Dropdown.Item>}
-                  {yearlevelStatus !== '2nd'  && <Dropdown.Item onClick={() => handleYearlevel('2nd')}><div className="zooming-text">2nd</div></Dropdown.Item>}
-                  {yearlevelStatus !== '3rd'  && <Dropdown.Item onClick={() => handleYearlevel('3rd')}><div className="zooming-text">3rd</div></Dropdown.Item>}
-                  {yearlevelStatus !== '4th'  && <Dropdown.Item onClick={() => handleYearlevel('4th')}><div className="zooming-text">4th</div></Dropdown.Item>}
-                  {yearlevelStatus !== '5th'  && <Dropdown.Item onClick={() => handleYearlevel('5th')}><div className="zooming-text">5th</div></Dropdown.Item>}
-                  {yearlevelStatus !== 'Irregular'  && <Dropdown.Item onClick={() => handleYearlevel('Irregular')}><div className="zooming-text">Irregular</div></Dropdown.Item>}
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown style={{width: '50%', minWidth: '1px'}}>
-                <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-                  <div style={{overflow: 'hidden'}}>{departmentStatus}</div>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
-                  {departmentStatus !== 'All Departments'  && <Dropdown.Item onClick={() => handleDepartment('All Departments')}><div className="zooming-text">All Departments</div></Dropdown.Item>}
-                  {props.departmentsList.filter(dept => dept.code !== departmentStatus).map((department) => (
-                    <Dropdown.Item key={department.code} onClick={() => handleDepartment(department.code)}><div className="zooming-text">{department.code}</div></Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown style={{width: '50%', minWidth: '1px'}}>
-                <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-                  <div style={{overflow: 'hidden'}}>{courseStatus}</div>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu style={{minWidth: '1px', width: '100%'}}>
-                    {courseStatus !== 'All Courses'  && <Dropdown.Item onClick={() => handleCourse('All Courses')}><div className="zooming-text">All Courses</div></Dropdown.Item>}
-                    {departmentStatus === 'All Departments' ? 
-                      props.departmentsList.flatMap(dept => dept.related_course).filter(course => course !== courseStatus).map((course, index) => (
-                        <Dropdown.Item key={index} onClick={() => handleCourse(course)}><div className="zooming-text">{course}</div></Dropdown.Item>
-                      ))
-                    :
-                      props.departmentsList.filter(dept => dept.code === departmentStatus)[0]?.related_course.filter(course => course !== courseStatus).map((course) => (
-                        <Dropdown.Item key={course} onClick={() => handleCourse(course)}><div className="zooming-text">{course}</div></Dropdown.Item>
-                      ))
-                    }
-                </Dropdown.Menu>
-              </Dropdown>
             
           </div>
         </div>
@@ -295,10 +171,10 @@ function UsersStudents(props) {
             <tr>
             <th className='table-head' style={{width: '15%', paddingLeft:'20px'}}>IDs</th>
               <th className='table-head' style={{width: '23%'}}>FULL NAME</th>
-              <th className='table-head' style={{width: '13%'}}>COURSE</th>
-              <th className='table-head' style={{width: '13%'}}>DEPARTMENT</th>
-              <th className='table-head' style={{width: '10%'}}>YEAR</th>
-              <th className='table-head' style={{width: '20%'}}>STATUS</th>
+              <th className='table-head' style={{width: '13%'}}>GRADE LEVEL</th>
+              <th className='table-head' style={{width: '15%'}}>SECTION</th>
+              <th className='table-head' style={{width: '15%'}}>DATE ENROLLED</th>
+              <th className='table-head' style={{width: '13%'}}>STATUS</th>
               <th className='table-head'>ACTION</th>
             </tr>
           </thead>
@@ -326,11 +202,11 @@ function UsersStudents(props) {
                   <td className='table-body'>
                     {student.userprofile.first_name} {student.userprofile.last_name} {new Date() - new Date(student.userprofile.date_joined) <= 3 * 24 * 60 * 60 * 1000 && <New/>}</td>
                   <td className='table-body'>
-                    {student.course.code}</td>
+                    {student.gradelevel}</td>
                   <td className='table-body'>
-                    {student.course.department.code}</td>
+                    {student.section}</td>
                   <td className='table-body'>
-                    {student.yearlevel}</td>
+                    {student.userprofile.date_joined}</td>
                   <td className='table-body'>
                     
                     {(() => {

@@ -147,15 +147,16 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=3),
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'CCWebApp',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Asdfghjkl748123',
-#         'HOST': 'localhost'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'enrolment_management',
+        'USER': 'postgres',
+        'PASSWORD': 'Asdfghjkl748123',
+        'HOST': 'localhost',
+        'PORT': 5432
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -168,9 +169,9 @@ SIMPLE_JWT = {
 # }
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.parse("postgres://ccwebapp_postgres_user:RcBl5SNNixYGKgehCOkiTmxwnIi1Z8oA@dpg-claetnpm6hds739pd5lg-a.singapore-postgres.render.com/ccwebapp_postgres")
-}
+# DATABASES = {
+#     'default': dj_database_url.parse("postgres://ccwebapp_postgres_user:RcBl5SNNixYGKgehCOkiTmxwnIi1Z8oA@dpg-claetnpm6hds739pd5lg-a.singapore-postgres.render.com/ccwebapp_postgres")
+# }
 
 
 # Password validation

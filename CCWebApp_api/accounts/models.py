@@ -18,11 +18,6 @@ def student_code_generator():
     return f'{current_date}{student_count_str}{in_between}{student_unique_code}'
 
 class User(AbstractUser):
-    STATE = (
-        ('Verified','Verified'),
-        ('Pending', 'Pending'),
-        ('Not Verified', 'Not Verified'),
-    )
     USERTYPE = (
         ('Admin','Admin'),
         ('Faculty', 'Faculty'),
@@ -30,18 +25,31 @@ class User(AbstractUser):
         ('Sub-admin', 'Sub-admin'),
     )
 
+    GENDER = (
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    )
+
     id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)
     username = models.CharField(max_length=200, null=True, unique=False, blank=True)
     first_name = models.CharField(max_length=200, null=True)
+    middle_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
+    extension_name = models.CharField(max_length=200, null=True)
     email = models.EmailField(blank=False, max_length=254, verbose_name='email address', unique=True)
-    address_value = models.CharField(max_length=200, null=True)
     mobile_number = models.CharField(max_length=200, unique=True, null=True)
-    suspended = models.BooleanField(default=False)
-    state = models.CharField(max_length=20, choices=STATE, default='Pending')
     usertype = models.CharField(max_length=20, choices=USERTYPE, null=True)
     registration_datetime = models.DateTimeField(auto_now_add=True)
     avatar = models.FileField(upload_to='uploads/', default='avatar.webp')
+
+    gender = models.CharField(max_length=20, choices=GENDER, null=False, default='Unspecified')
+    birthdate = models.DateField(null=True)
+    birthplace = models.CharField(max_length=200, null=True, blank=True)
+    nationality = models.CharField(max_length=200, null=True, blank=True)
+    address_value1 = models.CharField(max_length=200, null=True)
+    address_value2 = models.CharField(max_length=200, null=True)
+    address_value3 = models.CharField(max_length=200, null=True)
+    addressketch = models.FileField(upload_to='uploads/', null=True, blank=True)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
@@ -51,46 +59,100 @@ class User(AbstractUser):
     
 
 class StudentProfile(models.Model):
-    YEARLEVEL = (
-        ('1st','1st'),
-        ('2nd', '2nd'),
-        ('3rd', '3rd'),
-        ('4th', '4th'),
-        ('5th', '5th'),
-        ('Irregular', 'Irregular')
+    GRADELEVEL = (
+        ('Grade 7','Grade 7'),
+        ('Grade 8', 'Grade 8'),
+        ('Grade 9', 'Grade 9'),
+        ('Grade 10', 'Grade 10'),
+        ('Grade 11', 'Grade 11'),
+        ('Grade 12', 'Grade 12')
     )
 
     STATUS = (
-        ('Draft','Draft'),
         ('For Evaluation', 'For Evaluation'),
         ('Evaluation In Progress', 'Evaluation In Progress'),
-        ('Evaluation Complete', 'Evaluation Complete'),
         ('Pending Payment', 'Pending Payment'),
-        ('Payment Received', 'Payment Received'),
-        ('Enrolled', 'Enrolled'),
-        ('Verification Failed','Verification Failed'),
-        
-        
+        ('Enrolled', 'Enrolled'), 
     )
+
     id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
-    course = models.ForeignKey('main.Course', on_delete=models.SET_NULL, null=True)
-    yearlevel = models.CharField(max_length=20, choices=YEARLEVEL, null=False, default='1st')
-    status = models.CharField(max_length=50, choices=STATUS, null=False, default= 'Draft')
+    description = models.CharField(max_length=500, null=True, blank=True)
+    gradelevel = models.CharField(max_length=20, choices=GRADELEVEL, null=False, default='Grade 7')
+    status = models.CharField(max_length=50, choices=STATUS, null=False, default= 'For Evaluation')
     userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='studentprofile')
+    facebook_url = models.CharField(max_length=200, null=True)
+
+    guardian_name = models.CharField(max_length=200, null=True, blank=True)
+    guardian_mobile = models.CharField(max_length=200, null=True, blank=True)
+    guardian_relationship = models.CharField(max_length=200, null=True, blank=True)
+
+    father_name = models.CharField(max_length=200, null=True, blank=True)
+    father_mobile = models.CharField(max_length=200, null=True, blank=True)
+
+    mother_name = models.CharField(max_length=200, null=True, blank=True)
+    mother_mobile = models.CharField(max_length=200, null=True, blank=True)
+
+    elementaryschool = models.CharField(max_length=200, null=True, blank=True)
+    elementarycompletiondate = models.DateField(null=True)
+    elementaryaddress = models.CharField(max_length=200, null=True, blank=True)
+    elementaryregion = models.CharField(max_length=200, null=True, blank=True)
+
+    pept = models.BooleanField(blank=True, null=True)
+    peptcompletion = models.DateField(null=True)
+
+    ae = models.BooleanField(blank=True, null=True)
+    aecompletion = models.DateField(null=True)
+
+    clc = models.CharField(max_length=200, null=True, blank=True)
+    clcaddress = models.CharField(max_length=200, null=True, blank=True)
+
+    jhs = models.CharField(max_length=200, null=True, blank=True)
+    jhsaddress = models.CharField(max_length=200, null=True, blank=True)
+    jhscompletion = models.DateField(null=True)
+    jhsregion = models.CharField(max_length=200, null=True, blank=True)
+    jhsaverage = models.FloatField(null=True, blank=True)
+
+    peptjhs = models.BooleanField(blank=True, null=True)
+    peptcompletionjhs = models.DateField(null=True)
+
+    aejhs = models.BooleanField(blank=True, null=True)
+    aecompletionjhs = models.DateField(null=True)
+
+    clcjhs = models.CharField(max_length=200, null=True, blank=True)
+    clcaddressjhs = models.CharField(max_length=200, null=True, blank=True)
+
+    shs1 = models.CharField(max_length=200, null=True, blank=True)
+    shs1address = models.CharField(max_length=200, null=True, blank=True)
+    shs1track1 = models.CharField(max_length=200, null=True, blank=True)
+    shs1strand1 = models.CharField(max_length=200, null=True, blank=True)
+    shs1track2 = models.CharField(max_length=200, null=True, blank=True)
+    shs1strand2 = models.CharField(max_length=200, null=True, blank=True)
+
+    shs2 = models.CharField(max_length=200, null=True, blank=True)
+    shs2 = models.CharField(max_length=200, null=True, blank=True)
+    shs2track1 = models.CharField(max_length=200, null=True, blank=True)
+    shs2strand1 = models.CharField(max_length=200, null=True, blank=True)
+    shs2track2 = models.CharField(max_length=200, null=True, blank=True)
+    shs2strand2 = models.CharField(max_length=200, null=True, blank=True)
+
+    strand = models.ForeignKey('main.Track', on_delete=models.SET_NULL, null=True, blank=True)
+    specialization = models.CharField(max_length=200, null=True, blank=True)
+
 
 class FacultyProfile(models.Model):
     POSITION = (
-        ('Dean','Dean'),
-        ('Assistant Dean', 'Assistant Dean'),
-        ('Professor', 'Professor'),
+        ('Principal','Principal'),
+        ('Assistant Principal', 'Assistant Principal'),
         ('Part-Time', 'Part-Time'),
-        ('Teacher', 'Teacher'),
+        ('Teacher-1', 'Teacher-1'),
+        ('Teacher-2', 'Teacher-2'),
+        ('Teacher-3', 'Teacher-3'),
         ('Laboratory Attendant', 'Laboratory Attendant'),
+        ('Unspecified', 'Unspecified')
         
     )
     id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
-    courses = models.ManyToManyField('main.Course')
-    position = models.CharField(max_length=50, choices=POSITION, null=False, default= 'Teacher')
+    position = models.CharField(max_length=50, choices=POSITION, null=False, default= 'Unspecified')
     userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='facultyprofile')
 
     def __str__(self):

@@ -69,8 +69,8 @@ function AppContent() {
           </Route>
 
           <Route path='/admins' element={<MainLayout/>}>
-          <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route index element={<UsersStudents />} />
+          <Route path="dashboard" element={<UsersStudents />} />
           <Route path="schedules" element={<Schedules />} />
           <Route path="class" element={<Class />} />
           <Route path="class-create" element={<ClassCreate />} />

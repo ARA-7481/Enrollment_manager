@@ -1,8 +1,6 @@
 from django.urls import path, include
-from .views import LogInView, RegisterView, CustomTokenRefreshView, SuccessView, StudentsViewSet, LogOutView, CheckerView
+from .views import LogInView, RegisterView, CustomTokenRefreshView, SuccessView, LogOutView
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
     TokenVerifyView
 )
 
@@ -13,7 +11,4 @@ urlpatterns = [
     path('api/token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/success/', SuccessView.as_view(), name='success'),
-
-    path('api/checkentry/', CheckerView.as_view(), name='checkentry')
-
 ]

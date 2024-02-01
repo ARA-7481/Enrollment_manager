@@ -5,37 +5,19 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer, TeacherDataSerializer, StudentDataSerializer, AddStudentSerializer, AddFacultySerializer, PasswordChangeSerializer
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer, PasswordChangeSerializer
 from .permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
 from .models import User, StudentProfile, FacultyProfile, StaffProfile
 from rest_framework import filters
 import json
 from django.http import JsonResponse
-from openai import OpenAI
-
-import base64
-import requests
-
-def encode_image(image_path):
-  with open(image_path, "rb") as image_file:
-    return base64.b64encode(image_file.read()).decode('utf-8')
-
-class CheckerView(APIView):
-    def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-        referencefile = data.get('referencefile')
-        entryfile = data.get('entryfile')
-
-        print("Reference File:", referencefile)
-        print("Entry File:", entryfile)
-
-        return JsonResponse({'status':'success'}, status=200)
 
 class SuccessView(APIView):
     def get(self, request):
         return Response(status=200, data={
             "message": "Success",
         })
+    
 class LogInView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
     
@@ -57,7 +39,6 @@ class LogInView(TokenObtainPairView):
             secure=True, 
             samesite='strict'
         )
-
         return response
     
 class LogOutView(APIView):
@@ -116,67 +97,3 @@ class RegisterView(generics.GenericAPIView):
                 "message": "Password updated successfully",
             })
         return Response(serializer.errors, status=400)
-    
-class StudentsViewSet(viewsets.ModelViewSet):
-    queryset = StudentProfile.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
-    serializer_class = StudentSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['yearlevel', 'status', 'course__department__code', 'course__code', '$userprofile__first_name', '$userprofile__last_name', '=id']
-
-class AddStudentsViewSet(viewsets.ModelViewSet):
-    queryset = StudentProfile.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
-    serializer_class = AddStudentSerializer
-
-class FacultyViewSet(viewsets.ModelViewSet):
-    queryset = FacultyProfile.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
-    serializer_class = FacultySerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['position', 'courses__department__code', 'courses__code', '$userprofile__first_name', '$userprofile__last_name', '=id']
-
-class AddFacultyViewSet(viewsets.ModelViewSet):
-    queryset = FacultyProfile.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
-    serializer_class = AddFacultySerializer
-
-class StaffViewSet(viewsets.ModelViewSet):
-    queryset = StaffProfile.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
-    serializer_class = StaffSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['$userprofile__first_name', '$userprofile__last_name', '=role', '=id']
-
-
-class TeacherViewSet(viewsets.ModelViewSet):
-    queryset = FacultyProfile.objects.all()
-    permission_classes = [
-        IsFaculty
-    ]
-    serializer_class = TeacherDataSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['=userprofile__email']
-
-class StudentDataViewSet(viewsets.ModelViewSet):
-    queryset = StudentProfile.objects.all()
-    permission_classes = [
-        IsStudent
-    ]
-    serializer_class = StudentDataSerializer
-    # filter_backends = [filters.SearchFilter]
-    # search_fields = ['=userprofile__email']
-
-class UserViewset(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer

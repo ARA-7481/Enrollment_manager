@@ -95,10 +95,11 @@ export const setcourseState = (coursestate) => dispatch => {
     })
   };
 
-export const getStudents = (queryStatus, queryYrlvl, queryDepartment, queryCourse, querySearch) => async dispatch => {
+export const getStudents = () => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/students/?search=${queryStatus} ${queryYrlvl} ${queryDepartment} ${queryCourse} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/getstudents/`);
       if(res.status === 200){
+        console.log(res)
         dispatch({
           type: GET_STUDENTS,
           payload: res.data
@@ -385,15 +386,24 @@ export const getSubject = (subject) => async dispatch => {
 
 
   export const registerStudent = (formData, studentFormdata) => async dispatch => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }}
+    const adjustedFormData = {
+        ...formData,
+        birthdate: formatDate(new Date(formData.birthdate)),
+      };  
     try {
-      const res = await instanceAxios.post('/api/register/', formData);
+      const res = await instanceAxios.post('/api/register/', adjustedFormData, config);
       if(res.status === 200){
         const adjustedStudentformdata = {
           ...studentFormdata,
+          elementarycompletiondate: formatDate(new Date(studentFormdata.elementarycompletiondate)),
           userprofile : res.data.ID,
         }
         try{
-          const res2 = await instanceAxios.post('api/addstudent/', adjustedStudentformdata);
+          const res2 = await instanceAxios.post('api/students/', adjustedStudentformdata);
           if(res2.status === 201){
             dispatch({
               type: REGISTER_STUDENT,
@@ -421,6 +431,7 @@ export const getSubject = (subject) => async dispatch => {
           payload: error.response.data.mobile_number[0]
         })
       }else{
+        console.error(error)
         dispatch({
           type: FILL_ERROR,
           payload: "An Error Occured During Submission.Please Check Your Field Inputs."

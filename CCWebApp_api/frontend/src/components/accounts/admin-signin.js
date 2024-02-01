@@ -7,6 +7,7 @@ import { SignIn, setloadingUser } from '../../redux/actions/auth'
 import ErrorPopup from '../reusable/error';
 
 import bg1 from '../../assets/images/auth/bg2.webp'
+import logo from '../../assets/images/backgrounds/logo.png'
 import { MainIcon } from '../../assets/svg/clnsmpl-icon';
 
 function Signin (props) {
@@ -25,12 +26,13 @@ function Signin (props) {
   useEffect(() => {
    if (props.isAuthenticated) {
       if (props.user.usertype === 'Admin'){
-         navigate('/admins/dashboard');
-      }else if (props.user.usertype === 'Student'){
-         navigate('/students/dashboard');
-      }else if (props.user.usertype === 'Faculty'){
-         navigate('/teachers/dashboard');
+         navigate('/admins/users-students');
       }
+      // else if (props.user.usertype === 'Student'){
+      //    navigate('/students/dashboard');
+      // }else if (props.user.usertype === 'Faculty'){
+      //    navigate('/teachers/dashboard');
+      // }
    }
  }, [props.isAuthenticated]);
  
@@ -47,10 +49,18 @@ function Signin (props) {
             <Row className="m-0 bg-white vh-100">
                <Col md="6">
                   <Row className='align-items-start' style={{height: '28%'}}> 
-                     <Link to="/" className="navbar-brand d-flex align-items-center" style={{paddingLeft: '80px', paddingTop: '49px'}}>
-                        <MainIcon/>
-                        <h4 className="logo-title ms-3"></h4>
-                     </Link>
+                     <div style={{display: 'flex', paddingTop: '24px'}}>
+                        <div style={{transform: 'translate( 24px, 24px)'}}>
+                              <img className="circular-avatar" src={logo} alt="description" />
+                        </div>
+                        <div style={{justifyContent: 'center', padding: '24px', width: '100%'}}>
+                           <h1 className='inter-700-28px-light' style={{wordWrap: 'normal', textAlign: 'center'}}>Cambagui-Calinginan Norte National High School</h1>
+                           <h1 className='inter-600-20px' style={{wordWrap: 'normal', textAlign: 'center'}}>Calinginan Norte, Sevilla, Bohol</h1>
+                           <h1 className='inter-500-16px' style={{wordWrap: 'normal', textAlign: 'center'}}>302904@deped.gov.ph</h1>
+                        </div>
+                        
+                     </div>
+                        
                   </Row>
                   <Row className="justify-content-center">
                      <Col md="7">

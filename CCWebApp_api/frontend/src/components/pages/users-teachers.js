@@ -121,54 +121,7 @@ function UsersTeachers(props) {
             <h1 className='inter-500-16px ' style={{paddingTop: '10px', marginLeft: '20px'}}>
               Filter: 
             </h1>
-            <Dropdown style={{width: '50%', minWidth: '1px'}}>
-                <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-                  <div style={{overflow: 'hidden'}}>{positionStatus}</div>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu style={{ width: '100%'}}>
-                  {positionStatus !== 'All Positions'  && <Dropdown.Item onClick={() => handlePosition('All Positions')}><div className="zooming-text">All Positions</div></Dropdown.Item>}
-                  {positionStatus !== 'Dean'  && <Dropdown.Item onClick={() => handlePosition('Dean')}><div className="zooming-text">Dean</div></Dropdown.Item>}
-                  {positionStatus !== 'Assistant Dean'  && <Dropdown.Item onClick={() => handlePosition('Assistant Dean')}><div className="zooming-text">Assistant Dean</div></Dropdown.Item>}
-                  {positionStatus !== 'Professor'  && <Dropdown.Item onClick={() => handlePosition('Professor')}><div className="zooming-text">Professor</div></Dropdown.Item>}
-                  {positionStatus !== 'Part-Time'  && <Dropdown.Item onClick={() => handlePosition('Part-Time')}><div className="zooming-text">Part-Time</div></Dropdown.Item>}
-                  {positionStatus !== 'Teacher'  && <Dropdown.Item onClick={() => handlePosition('Teacher')}><div className="zooming-text">Teacher</div></Dropdown.Item>}
-                  {positionStatus !== 'Laboratory Attendant'  && <Dropdown.Item onClick={() => handlePosition('Laboratory Attendant')}><div className="zooming-text">Laboratory Attendant</div></Dropdown.Item>}
-                </Dropdown.Menu>
-            </Dropdown>
-
-
-            <Dropdown style={{width: '50%', minWidth: '1px'}}>
-                  <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-                    <div style={{overflow: 'hidden'}}>{departmentStatus}</div>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: '100%'}}>
-                    {departmentStatus !== 'All Departments'  && <Dropdown.Item onClick={() => handleDepartment('All Departments')}><div className="zooming-text">All Departments</div></Dropdown.Item>}
-                    {props.departmentsList.filter(dept => dept.code !== departmentStatus).map((department) => (
-                      <Dropdown.Item key={department.code} onClick={() => handleDepartment(department.code)}><div className="zooming-text">{department.code}</div></Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-            </Dropdown>
-
-            <Dropdown style={{width: '50%', minWidth: '1px'}}>
-                  <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
-                    <div style={{overflow: 'hidden'}}>{courseStatus}</div>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu style={{ width: '100%'}}>
-                      {courseStatus !== 'All Courses'  && <Dropdown.Item onClick={() => handleCourse('All Courses')}><div className="zooming-text">All Courses</div></Dropdown.Item>}
-                      {departmentStatus === 'All Departments' ? 
-                        props.departmentsList.flatMap(dept => dept.related_course).filter(course => course !== courseStatus).map((course, index) => (
-                          <Dropdown.Item key={index} onClick={() => handleCourse(course)}><div className="zooming-text">{course}</div></Dropdown.Item>
-                        ))
-                      :
-                        props.departmentsList.filter(dept => dept.code === departmentStatus)[0]?.related_course.filter(course => course !== courseStatus).map((course) => (
-                          <Dropdown.Item key={course} onClick={() => handleCourse(course)}><div className="zooming-text">{course}</div></Dropdown.Item>
-                        ))
-                      }
-                  </Dropdown.Menu>
-                </Dropdown>
+            
             </div>
         </div>
       
@@ -239,8 +192,6 @@ function UsersTeachers(props) {
           <tr>
             <th className='table-head' style={{width: '15%', paddingLeft:'20px'}}>IDs</th>
             <th className='table-head' style={{width: '23%'}}>FULL NAME</th>
-            <th className='table-head' style={{width: '20%'}}>COURSE</th>
-            <th className='table-head' style={{width: '20%'}}>DEPARTMENT</th>
             <th className='table-head' style={{width: '16%'}}>POSITION</th>
             <th className='table-head' style={{border: 'none'}}>ACTION</th>
           </tr>
