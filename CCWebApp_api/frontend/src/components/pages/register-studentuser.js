@@ -166,7 +166,7 @@ function RegisterUserstudent(props) {
                   <Form.Group>
                   <Form.Label htmlFor="middlename" className='form-label'>Middle Name</Form.Label>
                   <div style={{display: 'flex'}}>
-                  <Form.Control type="text" value={lastname} placeholder="" id="middlename" onChange={e => setMiddlename(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
+                  <Form.Control type="text" value={middlename} placeholder="" id="middlename" onChange={e => setMiddlename(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                   </div>
                   </Form.Group>
                   </div>
@@ -484,7 +484,7 @@ function RegisterUserstudent(props) {
                         <Form.Group>
                         <Form.Label htmlFor="elementaryschool" className='form-label'>Elementary School</Form.Label>
                         <div style={{display: 'flex'}}>
-                        <Form.Control type="text" value={elementaryschool} placeholder="Enter the Elementary School the student graduated from. Do not abbreviate." id="elementaryschool" onChange={e => setElementaryschool(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
+                        <Form.Control type="text" value={elementaryschool} placeholder="Do not abbreviate." id="elementaryschool" onChange={e => setElementaryschool(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                         {!elementaryschool &&
                             <div style={{transform: 'translate( -33px, 5px)', width: '0px', pointerEvents: 'none'}}>
                             <RedExclamation/>

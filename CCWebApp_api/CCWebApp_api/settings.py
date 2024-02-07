@@ -150,32 +150,16 @@ SIMPLE_JWT = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'enrolment_management',
+        'NAME': 'Enrollment_manager',
         'USER': 'postgres',
-        'PASSWORD': 'Asdfghjkl748123',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': 5432
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.environ.get("DB_NAME"),
-#         'USER': os.environ.get("DB_USER"),
-#         'PASSWORD': os.environ.get("DB_PASSWORD"),
-#         'HOST': os.environ.get("DB_HOST"),
-#         'PORT': os.environ.get("DB_PORT", "5432"),
-#     }
-# }
+
 import dj_database_url
 
-# DATABASES = {
-#     'default': dj_database_url.parse("postgres://ccwebapp_postgres_user:RcBl5SNNixYGKgehCOkiTmxwnIi1Z8oA@dpg-claetnpm6hds739pd5lg-a.singapore-postgres.render.com/ccwebapp_postgres")
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -220,14 +204,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
-
-
-# AWS_ACCESS_KEY_ID =  os.environ.get("AWS_ACCESS_KEY_ID")
-# AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-# AWS_ACCESS_KEY_ID =  "AKIA5WBNZMEFMZB7FE3P"
-# AWS_SECRET_ACCESS_KEY = "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"
-
-# AWS_STORAGE_BUCKET_NAME = "ccwebappbucket"
-# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
