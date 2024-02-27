@@ -697,7 +697,7 @@ export const getTeacherdata = (email) => async dispatch => {
 
 export const getStudentdata = (id) => async dispatch => {
   try {
-    const res = await instanceAxios.get(`/api/studentdata/${id}`);
+    const res = await instanceAxios.get(`/api/getstudents/${id}`);
     if(res.status === 200){
       console.log(res.data)
       dispatch({

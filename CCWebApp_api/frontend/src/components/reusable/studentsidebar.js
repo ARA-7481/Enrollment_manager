@@ -79,12 +79,12 @@ function Studentsidebar(props){
           <CDBSidebarMenu style={{  display:'flex', justifyContent: 'start', paddingLeft:'24px'}}>
 
             <Nav.Link href="/#/students/dashboard" style={{paddingBottom: '8px'}}>
-            <div title={isCollapsed ? 'Activities':''} className='zooming-icon' style={{color: props.sidebarState === 'dashboard' ? 'white' : '', backgroundColor: props.sidebarState === 'dashboard' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div title={isCollapsed ? 'Grades':''} className='zooming-icon' style={{color: props.sidebarState === 'dashboard' ? 'white' : '', backgroundColor: props.sidebarState === 'dashboard' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedDashboardIcon/>
             </div>
             <div style={{paddingLeft: '20px'}}>
-            {!isCollapsed && 'Activities'}
+            {!isCollapsed && 'Grades'}
             </div>
             </div>
             </Nav.Link>

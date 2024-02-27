@@ -33,6 +33,9 @@ const RegisterUserteacher = lazy(() =>  import('./pages/register-teacheruser'))
 
 const SchoolYear = lazy(() =>  import('./pages/schoolyear.js'))
 
+const Studentdashboard = lazy(() =>  import('./pages/dashboard-student.js'))
+const StudentProfile = lazy(() =>  import('./pages/student-profile.js'))
+
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
@@ -72,7 +75,9 @@ function AppContent() {
           </Route>
 
           <Route path='/students' element={<Studentlayout/>}>
-          <Route index element={<UsersStudents />} />
+          <Route index element={<Studentdashboard />} />
+          <Route path="dashboard" element={<Studentdashboard />} />
+          <Route path="profile" element={<StudentProfile />} />
           </Route>
 
           <Route path='/faculty' element={<Teacherlayout/>}>

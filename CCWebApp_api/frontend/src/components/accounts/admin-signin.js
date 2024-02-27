@@ -28,8 +28,8 @@ function Signin (props) {
       if (props.user.usertype === 'Admin'){
          navigate('/admins/users-students');
       }
-      // else if (props.user.usertype === 'Student'){
-      //    navigate('/students/dashboard');
+      else if (props.user.usertype === 'Student'){
+         navigate('/students/dashboard');}
       // }else if (props.user.usertype === 'Faculty'){
       //    navigate('/teachers/dashboard');
       // }

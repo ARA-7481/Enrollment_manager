@@ -38,9 +38,6 @@ class StudentsViewSet(viewsets.ModelViewSet):
 
 class GetStudentsViewSet(viewsets.ModelViewSet):
     queryset = StudentProfile.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
     serializer_class = GetStudentSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['status', '$userprofile__first_name', '$userprofile__last_name', '=id']
