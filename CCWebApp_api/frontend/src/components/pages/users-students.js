@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getStudents, getDepartments, setLoading } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getStudents, setLoading } from '../../redux/actions/main';
 
 import { Card, Col, Table, Form, Dropdown, Button, Placeholder } from 'react-bootstrap';
 import { Magnifier, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, New} from '../../assets/svg/clnsmpl-icon';
@@ -52,7 +52,6 @@ function UsersStudents(props) {
     props.setsidebarState('users');
     props.setsubsidebarState('students');
     props.setpageHeader('Manage Students', '', 'Manage students here. Enroll, Update, Evaluate etc.');
-
     props.getStudents();
 
    
@@ -292,13 +291,11 @@ UsersStudents.propTypes = {
   sidebarState: PropTypes.string,
   subsidebarState: PropTypes.string,
   pageHeader: PropTypes.object,
-  studentsList: PropTypes.array.isRequired,
-  departmentsList: PropTypes.array.isRequired,
-  setsidebarState: PropTypes.func.isRequired,
-  setsubsidebarState: PropTypes.func.isRequired,
-  setpageHeader: PropTypes.func.isRequired,
-  getStudents: PropTypes.func.isRequired,
-  getDepartments: PropTypes.func.isRequired,
+  studentsList: PropTypes.array,
+  setsidebarState: PropTypes.func,
+  setsubsidebarState: PropTypes.func,
+  setpageHeader: PropTypes.func,
+  getStudents: PropTypes.func,
   setLoading: PropTypes.func,
   loadingState: PropTypes.string,
   isLess800: PropTypes.bool,
@@ -309,9 +306,8 @@ const mapStateToProps = (state) => ({
   subsidebarState: state.main.subsidebarState,
   pageHeader: state.main.pageHeader,
   studentsList: state.main.studentsList,
-  departmentsList: state.main.departmentsList,
   loadingState: state.main.loadingState,
   isLess800: state.main.isLess800,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getStudents, getDepartments, setLoading})(UsersStudents))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getStudents, setLoading})(UsersStudents))

@@ -55,7 +55,19 @@ return(
             </Button>
           </div>}
 
-          {props.sidebarState === 'users' && props.subsidebarState === 'admin' &&
+          {props.sidebarState === 'sections' && props.sectionState === 'list' &&
+            <div style={{marginRight: '24px', marginTop: '12px'}}>
+              <Button className='buttonsonnavbars' type="button" href="/">
+                <div style={{minHeight: '20px', minWidth: '20px', paddingBottom: '5px', paddingLeft: '12px'}}>
+                  <AddUser/>
+                </div>
+                <div style={{maxHeight: '20px'}}>
+                  <h1 className='buttons-font'>Create Section</h1>
+                </div>
+              </Button>
+            </div>}
+
+          {/* {props.sidebarState === 'users' && props.subsidebarState === 'admin' &&
             <div style={{marginRight: '24px', marginTop: '12px'}}>
             <Button className='buttonsonnavbars' type="button" style={{minWidth: '1px'}}>
               <div style={{minHeight: '20px', minWidth: '20px', paddingBottom: '5px', paddingLeft: '12px'}}>
@@ -65,7 +77,7 @@ return(
                 <h1 className='buttons-font' style={{whiteSpace: 'initial'}}>Add Staff</h1>
               </div>
             </Button>
-          </div>}
+          </div>} */}
 
           {props.sidebarState === 'class' && props.classState === 'list' &&
             <div style={{marginRight: '24px', marginTop: '12px'}}>
@@ -129,6 +141,7 @@ TopNavbar.propTypes = {
   subjectState: PropTypes.string,
   roomState: PropTypes.string,
   courseState: PropTypes.string,
+  sectionState: PropTypes.string,
   selectedBG: PropTypes.string,
 }
 
@@ -141,6 +154,7 @@ const mapStateToProps = (state) => ({
   roomState: state.main.roomState,
   courseState: state.main.courseState,
   selectedBG: state.main.selectedBG,
+  sectionState: state.main.sectionState,
   });
 
 export default connect(mapStateToProps, {})(TopNavbar);

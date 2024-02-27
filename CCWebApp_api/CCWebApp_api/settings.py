@@ -13,13 +13,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-import environ
+# import environ
 # env = environ.Env()
 # environ.Env.read_env()
 # Quick-start development settings - unsuitable for production
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'storages',
     'channels',
     'corsheaders',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -93,8 +94,8 @@ TEMPLATES = [
     },
 ]
 
-# ASGI_APPLICATION = 'CCWebApp_api.asgi.application'
-WSGI_APPLICATION = 'CCWebApp_api.wsgi.application'
+ASGI_APPLICATION = 'CCWebApp_api.asgi.application'
+# WSGI_APPLICATION = 'CCWebApp_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -147,12 +148,23 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=3),
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'Enrollment_manager',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': 5432
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Enrollment_manager',
+        'NAME': 'enrollmentmanager',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'Asdfghjkl748123',
         'HOST': 'localhost',
         'PORT': 5432
     }
@@ -193,6 +205,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
  
  # MEDIA
 MEDIA_URL = '/media/'

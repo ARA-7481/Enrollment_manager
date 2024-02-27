@@ -5,6 +5,8 @@ import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMEN
         GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_BG, SET_SELECTED_BG, CLEAR_STATE,
         GET_STUDENT_DATA, GET_ACTIVITY, ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT,
         CLEAR_RESPONSE, REGISTER_STUDENT, REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
+        GET_SCHOOLYEAR,
+        SET_SECTION,
         } from "../types/types";
 
 const initialState = {
@@ -16,6 +18,7 @@ const initialState = {
     subjectState: null,
     roomState: null,
     courseState: null,
+    sectionState: null,
     selectedClass: null,
     selectedBG: null,
     GPTresponse: null,
@@ -47,6 +50,10 @@ const initialState = {
     pointers: [],
     activitiesOnclass: [],
     isLess800: false,
+
+    //new
+
+    schoolyearList: [],
 }
 
 export default function(state = initialState, action) {
@@ -105,6 +112,11 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 courseState: action.payload,
+            }
+        case SET_SECTION:
+            return{
+                ...state,
+                sectionState: action.payload,
             }
         case GET_STUDENTS:
             return{
@@ -328,6 +340,15 @@ export default function(state = initialState, action) {
                 ...state,
                 GPTresponse: null,
             }
+            
+        //new
+
+        case GET_SCHOOLYEAR:
+            return{
+                ...state,
+                schoolyearList: action.payload,
+                loadingState: 'isNotLoading'
+            }
         case CLEAR_STATE:
             return{
                 loadingState: 'isNotLoading',
@@ -338,6 +359,7 @@ export default function(state = initialState, action) {
                 subjectState: null,
                 roomState: null,
                 courseState: null,
+                sectionState: null,
                 selectedClass: null,
                 selectedBG: null,
                 GPTresponse: null,
@@ -369,6 +391,10 @@ export default function(state = initialState, action) {
                 pointers: [],
                 activitiesOnclass: [],
                 isLess800: false,
+     
+                //new
+
+                schoolyearList: [],
             }
         default:
             return state;

@@ -131,7 +131,7 @@ const DashboardIcon = (props) => {
 
 
 const SchedulesIcon = (props) => {
-   const fillColor = props.sidebarState === 'schedules' ? 'white' : '#8A92A6';
+   const fillColor = props.sidebarState === 'schoolyear' ? 'white' : '#8A92A6';
    return(
    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
    <path d="M2 7C2 5.89543 2.89543 5 4 5H5.75V3.75C5.75 3.05964 6.30964 2.5 7 2.5C7.69036 2.5 8.25 3.05964 8.25 3.75V5H15.75V3.75C15.75 3.05964 16.3096 2.5 17 2.5C17.6904 2.5 18.25 3.05964 18.25 3.75V5H20C21.1046 5 22 5.89543 22 7V9H2V7Z" fill={fillColor}/>
@@ -171,7 +171,7 @@ const CourseIcon = (props) => {
 };
 
 const RoomsIcon = (props) => {
-   const fillColor = props.sidebarState === 'rooms' ? 'white' : '#8A92A6';
+   const fillColor = props.sidebarState === 'sections' ? 'white' : '#8A92A6';
    return(
    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
    <path d="M9.25 3C10.0784 3 10.75 3.67157 10.75 4.5V9.25C10.75 10.0784 10.0784 10.75 9.25 10.75H4.5C3.67157 10.75 3 10.0784 3 9.25V4.5C3 3.67157 3.67157 3 4.5 3H9.25Z" fill={fillColor}/>

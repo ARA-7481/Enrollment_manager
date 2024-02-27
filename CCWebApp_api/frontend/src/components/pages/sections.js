@@ -1,27 +1,24 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getFaculty, setLoading } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, getRoomsList, setsectionState } from '../../redux/actions/main';
 
-import { Card, Col, Table, Form, Dropdown, Button, Placeholder } from 'react-bootstrap';
-import { Magnifier, New } from '../../assets/svg/clnsmpl-icon';
+import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 
-function UsersTeachers(props) {
+import { Col, Table, Dropdown, Form, Placeholder } from 'react-bootstrap';
+import { Magnifier } from '../../assets/svg/clnsmpl-icon';
 
-  const [queryPosition, setQueryPosition] = useState('');
+function Sections(props) {
   const [sortStatus, setsortStatus] = useState ('Newest-Oldest')
-  const [positionStatus, setpositionStatus] = useState ('All Positions')
   const [value, setValue] = useState('');
-
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
 
   const handleSearch = (query) => {
-    props.getFaculty(queryPosition, query)
+    props.getRoomsList(query)
     props.setLoading('isLoading')
   };
 
@@ -29,49 +26,38 @@ function UsersTeachers(props) {
     setsortStatus(sort)
   };
 
-  const handlePosition = (position) => {
-    setpositionStatus(position)
-    if (position === 'All Positions'){
-      setQueryPosition('')
-      props.getFaculty('','')
-    }
-    else{
-      setQueryPosition(position)
-      props.getFaculty(position,'')
-    }
-  };
 
   useEffect(() => {
-    if (props.facultyList.length == 0){
+    if (props.roomsListForTable.length == 0){
       props.setLoading('isLoading');
     }
-    props.setsidebarState('users');
-    props.setsubsidebarState('teachers');
-    props.setpageHeader('Manage Faculty', '', 'Manage faculty here. Add, Update, etc.');
-    props.getFaculty('','');
+    props.setsidebarState('sections');
+    props.setsubsidebarState(null);
+    props.setsectionState('list');
+    props.setpageHeader('Manage Sections', '', 'Add and Update Sections');
   }, []);
 
   return (
     <>
-      <div style={{backgroundColor:'#e9ecef', borderTopLeftRadius:'8px', borderTopRightRadius:'8px'}}>                           
-        <div style={{backgroundColor:'#ffffff', height: !props.isLess800? '72px': '120px', borderRadius:'8px', display: !props.isLess800? 'flex': '', alignItems: 'center', padding: '24px'}}>
-
+      <div style={{backgroundColor:'#e9ecef', borderTopLeftRadius:'8px', borderTopRightRadius:'8px'}}>
+      <div style={{backgroundColor:'#ffffff', height: !props.isLess800? '72px': '120px', borderRadius:'8px', display: !props.isLess800? 'flex': '', alignItems: 'center', padding: '24px'}}>
+          
           <div style={{display: 'flex', width: !props.isLess800? '40%': '100%'}}>
             <div onClick={() => handleSearch(value)} style={{cursor: 'pointer', marginTop: '7px'}}>
               <Magnifier/>
             </div>
             <Form style={{width: '62.5%'}}>
               <Form.Group controlId="searchbar">
-                <Form.Control type='search' placeholder="Search faculty name or faculty id..." value={value} onChange={handleChange} style={{border: 'none', width:'100%', minWidth: '145px'}}/>
+                <Form.Control type='search' placeholder="Search section name..." value={value} onChange={handleChange} style={{border: 'none', width:'100%', minWidth: '145px'}}/>
               </Form.Group>
             </Form>
-          
-            <h1 className='inter-500-16px ' style={{paddingTop: '10px'}}>
+        
+            <h1 className='inter-500-16px' style={{paddingTop: '10px'}}>
               Sort: 
             </h1>
             <Dropdown style={{width: '37.5%', minWidth: '1px'}}>
                 <Dropdown.Toggle id="dropdown-basic" 
-                                 style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%',
+                                style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', 
                                         display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
                   <div style={{overflow: 'hidden'}}>{sortStatus}</div>
                 </Dropdown.Toggle>
@@ -83,22 +69,23 @@ function UsersTeachers(props) {
                   {sortStatus !== 'Z-A'  && <Dropdown.Item onClick={() => handleSort('Z-A')}><div className="zooming-text">Z-A</div></Dropdown.Item>}
                 </Dropdown.Menu>
             </Dropdown>
-            </div>
+          </div>
+        
           <div style={{display: 'flex', width: !props.isLess800? '60%': '100%'}}>
-            <h1 className='inter-500-16px ' style={{paddingTop: '10px', marginLeft: '20px'}}>
+            <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
               Filter: 
             </h1>
             
-            </div>
+          </div>
         </div>
       
 
-      <div style={{height: '40px', backgroundColor:'rgba(51, 51, 51, 0.00)', margin: '0px'}}>
-      </div>
+        <div style={{height: '40px', backgroundColor:'rgba(51, 51, 51, 0.00)', margin: '0px'}}>
+        </div>
 
       <div style={{backgroundColor:'#ffffff', borderRadius:'8px'}}>
         <div style={{height: '81px', display: 'flex'}}>
-          <h1 className='table-title'>List of Faculty</h1>
+          <h1 className='table-title'>Section List</h1>
         </div>
         {props.loadingState == 'isLoading' ?  
           <div style={{marginLeft: '20px', marginRight: '40px', marginTop: '7px'}}>
@@ -157,54 +144,43 @@ function UsersTeachers(props) {
         <Table hover style={{border: 'none'}}>
         <thead >
           <tr>
-            <th className='table-head' style={{width: '30%', paddingLeft:'20px'}}>IDs</th>
-            <th className='table-head' style={{width: '30%'}}>FULL NAME</th>
-            <th className='table-head' style={{width: '30%'}}>POSITION</th>
+            <th className='table-head' style={{width: '30%', paddingLeft:'20px'}}>NAME</th>
+            <th className='table-head' style={{width: '30%'}}>ADVISER</th>
+            <th className='table-head' style={{width: '30%'}}>GRADE LEVEL</th>
+            <th className='table-head' style={{width: '30%'}}>TRACK</th>
+            <th className='table-head' style={{width: '30%'}}>STUDENTS</th>
             <th className='table-head' style={{border: 'none'}}>ACTION</th>
           </tr>
         </thead>
         <tbody style={{cursor: 'pointer', }}>
-          {[...props.facultyList]
-              .sort((a, b) => {
-                switch (sortStatus) {
-                  case 'Newest-Oldest':
-                    return new Date(b.userprofile.date_joined) - new Date(a.userprofile.date_joined);
-                  case 'Oldest-Newest':
-                    return new Date(a.userprofile.date_joined) - new Date(b.userprofile.date_joined);
-                  case 'A-Z':
-                    return a.userprofile.last_name.localeCompare(b.userprofile.last_name);
-                  case 'Z-A':
-                    return b.userprofile.last_name.localeCompare(a.userprofile.last_name);
-                  default:
-                    return 0;
-                }
-              })
-              ?.map((faculty) =>(
-              <tr key={faculty.id} style={{border: 'none'}}>
+        {/* {[...props.schoolyearList].sort((a, b) => a.code.localeCompare(b.code)).map((schoolyear) =>(
+              <tr key={schoolyear.code} style={{border: 'none'}}>
                 <td className='table-body' style={{paddingLeft:'20px'}}>
-                  {faculty.id}</td>
+                    {schoolyear.code}
+                  </td>
                 <td className='table-body'>
-                  {faculty.userprofile.first_name} {faculty.userprofile.last_name} {new Date() - new Date(faculty.userprofile.date_joined) <= 3 * 24 * 60 * 60 * 1000 && <New/>}</td>
+                    {schoolyear.principal.userprofile.last_name}, {schoolyear.principal.userprofile.first_name} {schoolyear.principal.userprofile.middle_name}
+                  </td>
                 <td className='table-body'>
-                  {faculty.position}</td>
+                {schoolyear.assistantprincipal.userprofile.last_name}, {schoolyear.assistantprincipal.userprofile.first_name} {schoolyear.assistantprincipal.userprofile.middle_name}
+                 </td>
+                 <td className='table-body'>
+                {schoolyear.description}
+                 </td>
                 <td className='table-body'>
                 
                 <Dropdown>
                     <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: '#e9ecef', color: 'rgba(51, 51, 51, 0.00)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'center', marginLeft: '10px'}}>
                       <h2 style={{color: '#8A92A6', marginLeft: '12px', marginBottom: '15px'}}>...</h2>
                     </Dropdown.Toggle>
-
                     <Dropdown.Menu>
                           <Dropdown.Item><h1 className='dropdown-item'>Update Info</h1></Dropdown.Item>
-                          <Dropdown.Item><h1 className='dropdown-item'>Delete</h1></Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-
                 </td>
               </tr>
-          ))}
+          ))} */}
         </tbody>
-
         </Table>
         }
       <div style={{height: '10px'}}>
@@ -214,30 +190,30 @@ function UsersTeachers(props) {
       </div>
     
     </>
-    );
+  );
 }
 
-UsersTeachers.propTypes = {
+Sections.propTypes = {
   sidebarState: PropTypes.string,
+  setsidebarState: PropTypes.func.isRequired,
   subsidebarState: PropTypes.string,
+  setsubsidebarState: PropTypes.func.isRequired,
   pageHeader: PropTypes.object,
-  facultyList: PropTypes.array,
-  departmentsList: PropTypes.array,
-  setsidebarState: PropTypes.func,
-  setsubsidebarState: PropTypes.func,
-  getFaculty: PropTypes.func,
+  setpageHeader: PropTypes.func.isRequired,
+  roomsListForTable: PropTypes.array,
+  getRoomsList: PropTypes.func,
   setLoading: PropTypes.func,
   loadingState: PropTypes.string,
-  isLess800: PropTypes.bool,
+  setsectionState: PropTypes.func,
+  
 }
 
 const mapStateToProps = (state) => ({
   sidebarState: state.main.sidebarState,
   subsidebarState: state.main.subsidebarState,
   pageHeader: state.main.pageHeader,
-  facultyList: state.main.facultyList,
+  roomsListForTable: state.main.roomsListForTable,
   loadingState: state.main.loadingState,
-  isLess800: state.main.isLess800,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getFaculty, setLoading})(UsersTeachers))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getRoomsList, setLoading, setsectionState})(Sections))

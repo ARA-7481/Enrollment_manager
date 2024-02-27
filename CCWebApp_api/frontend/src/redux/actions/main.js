@@ -6,7 +6,7 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_COURSES_LIST, SET_COURSE, ERROR_MAIN, NULL_ERROR_MAIN, SET_SUBJECT_FORMDATA, ADD_COURSE, RESO_UPDATE, AUTO_COLLAPSE,
          GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_SELECTED_BG, GET_STUDENT_DATA, GET_ACTIVITY, 
          ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT, CLEAR_RESPONSE, REGISTER_STUDENT,
-         REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
+         REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW, GET_SCHOOLYEAR, SET_SECTION,
         } from "../types/types";
 
 function formatTime(time) {
@@ -88,6 +88,13 @@ export const setroomState = (roomState) => dispatch => {
     })
   };
 
+export const setsectionState = (sectionState) => dispatch => {
+    dispatch({
+      type: SET_SECTION,
+      payload: sectionState
+    })
+  };
+
 export const setcourseState = (coursestate) => dispatch => {
     dispatch({
       type: SET_COURSE,
@@ -110,9 +117,9 @@ export const getStudents = () => async dispatch => {
     }
   };
 
-export const getFaculty = (queryPosition, queryDepartment, queryCourse, querySearch) => async dispatch => {
+export const getFaculty = (queryPosition, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/faculty/?search=${queryPosition} ${queryDepartment} ${queryCourse} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/getfaculty/?search=${queryPosition} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_FACULTY,
@@ -371,6 +378,20 @@ export const getSubject = (subject) => async dispatch => {
     }
   };
 
+  export const getSchoolYearList = () => async dispatch => {
+    try {
+      const res = await instanceAxios.get(`/api/schoolyear/`);
+      if(res.status === 200){
+        dispatch({
+          type: GET_SCHOOLYEAR,
+          payload: res.data
+        });
+      }
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
   export const setResolution = (dimensions) => dispatch => {
     dispatch({
       type: RESO_UPDATE,
@@ -440,16 +461,86 @@ export const getSubject = (subject) => async dispatch => {
     }
   };
 
-  export const registerTeacher = (formData, teacherFormdata) => async dispatch => {
+
+  export const registerStudentSHS = (formData, studentFormdata) => async dispatch => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }}
+    const adjustedFormData = {
+        ...formData,
+        birthdate: formatDate(new Date(formData.birthdate)),
+      };  
     try {
-      const res = await instanceAxios.post('/api/register/', formData);
+      const res = await instanceAxios.post('/api/register/', adjustedFormData, config);
+      if(res.status === 200){
+        const adjustedStudentformdata = {
+          ...studentFormdata,
+          elementarycompletiondate: formatDate(new Date(studentFormdata.elementarycompletiondate)),
+          jhscompletion: formatDate(new Date(studentFormdata.jhscompletion)),
+          ...(studentFormdata.peptcompletion ? {peptcompletion: formatDate(new Date(studentFormdata.peptcompletion))}: {}),
+          ...(studentFormdata.aecompletion ? {aecompletion: formatDate(new Date(studentFormdata.aecompletion))}: {}),
+          ...(studentFormdata.aecompletionjhs ? {aecompletionjhs: formatDate(new Date(aecompletionjhs.aecompletionjhs))}: {}),
+          ...(studentFormdata.peptcompletionjhs ? {peptcompletionjhs: formatDate(new Date(peptcompletionjhs.peptcompletionjhs))}: {}),
+          userprofile : res.data.ID,
+        }
+        console.log(adjustedStudentformdata)
+        try{
+          const res2 = await instanceAxios.post('api/students/', adjustedStudentformdata);
+          if(res2.status === 201){
+            dispatch({
+              type: REGISTER_STUDENT,
+              payload: res.data
+            })
+          }
+        }catch (error2) {
+          console.error(error2);
+        }
+      }
+    } catch (error) {
+      if(error.response.data.email && error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "Email and Mobile Number Already Exists"
+        })
+      }else if(error.response.data.email && !error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: error.response.data.email[0]
+        })
+      }else if(!error.response.data.email && error.response.data.mobile_number){
+        dispatch({
+          type: FILL_ERROR,
+          payload: error.response.data.mobile_number[0]
+        })
+      }else{
+        console.error(error)
+        dispatch({
+          type: FILL_ERROR,
+          payload: "An Error Occured During Submission.Please Check Your Field Inputs."
+        })
+      }
+    }
+  };
+
+  export const registerTeacher = (formData, teacherFormdata) => async dispatch => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }}
+    const adjustedFormData = {
+        ...formData,
+        birthdate: formatDate(new Date(formData.birthdate)),
+      };  
+    try {
+      const res = await instanceAxios.post('/api/register/', adjustedFormData, config);
       if(res.status === 200){
         const adjustedTeacherformdata = {
           ...teacherFormdata,
           userprofile : res.data.ID,
         }
         try{
-          const res2 = await instanceAxios.post('api/addfaculty/', adjustedTeacherformdata);
+          const res2 = await instanceAxios.post('api/faculty/', adjustedTeacherformdata);
           if(res2.status === 201){
             dispatch({
               type: REGISTER_TEACHER,

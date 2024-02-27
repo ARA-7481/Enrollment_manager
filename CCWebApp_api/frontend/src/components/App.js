@@ -20,7 +20,7 @@ const Teacherlayout = lazy(() =>  import('./layouts/Teacherlayout'))
 const Signin = lazy(() =>  import('./accounts/admin-signin'))
 const Class = lazy(() =>  import('./pages/class'))
 const Subjects = lazy(() =>  import('./pages/subjects'))
-const Rooms = lazy(() =>  import('./pages/rooms'))
+const Sections = lazy(() =>  import('./pages/sections'))
 const UsersAdmin = lazy(() =>  import('./pages/users-admin'))
 const UsersStudents = lazy(() =>  import('./pages/users-students'))
 const UsersTeachers = lazy(() =>  import('./pages/users-teachers'))
@@ -30,6 +30,8 @@ const SubjectCreate = lazy(() =>  import('./pages/subject-create'))
 const RoomCreate = lazy(() =>  import('./pages/room-create'))
 const RegisterUserstudent = lazy(() =>  import('./pages/register-studentuser'))
 const RegisterUserteacher = lazy(() =>  import('./pages/register-teacheruser'))
+
+const SchoolYear = lazy(() =>  import('./pages/schoolyear.js'))
 
 
 const container = document.getElementById('app');
@@ -58,7 +60,7 @@ function AppContent() {
           <Route path="class-create" element={<ClassCreate />} />
           <Route path="subjects" element={<Subjects />} />
           <Route path="subjects-create" element={<SubjectCreate />} />
-          <Route path="rooms" element={<Rooms />} />
+          <Route path="sections" element={<Sections />} />
           <Route path="rooms-create" element={<RoomCreate />} />
           <Route path="users-admin" element={<UsersAdmin />} />
           <Route path="users-students" element={<UsersStudents />} />
@@ -66,6 +68,15 @@ function AppContent() {
           <Route path="users-masterlist" element={<UsersMasterlist />} />
           <Route path="register-studentuser" element={<RegisterUserstudent />} />
           <Route path="register-teacheruser" element={<RegisterUserteacher />} />
+          <Route path="schoolyear" element={<SchoolYear />} />
+          </Route>
+
+          <Route path='/students' element={<Studentlayout/>}>
+          <Route index element={<UsersStudents />} />
+          </Route>
+
+          <Route path='/faculty' element={<Teacherlayout/>}>
+          <Route index element={<UsersStudents />} />
           </Route>
 
         </Routes>

@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import User, StudentProfile, FacultyProfile, StaffProfile
-from main.models import Subject, Room, ScheduleInstance
+from main.models import Subject, Room, SchoolYear, Section
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -32,10 +32,21 @@ class StudentSerializer(serializers.ModelSerializer):
 
 class GetStudentSerializer(serializers.ModelSerializer):
     userprofile = UserSerializer(read_only=False)
-    student_related_section = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
    
     class Meta:
         model = StudentProfile
+        fields = '__all__'
+
+class FacultySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FacultyProfile
+        fields = '__all__'
+
+class GetFacultySerializer(serializers.ModelSerializer):
+    userprofile = UserSerializer(read_only=False)
+   
+    class Meta:
+        model = FacultyProfile
         fields = '__all__'
 
 class SubjectSerializer(serializers.ModelSerializer):
@@ -50,16 +61,10 @@ class RoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = '__all__'
 
-class ScheduleInstanceSerializer(serializers.ModelSerializer):
+class SectionSerializer(serializers.ModelSerializer):
+    adviser = GetFacultySerializer(read_only=False)
     class Meta:
-        model = ScheduleInstance
-        fields = '__all__'
-
-class FacultySerializer(serializers.ModelSerializer):
-    userprofile = UserProfileSerializer(read_only=False)
-    
-    class Meta:
-        model = FacultyProfile
+        model = Section
         fields = '__all__'
 
 class StaffSerializer(serializers.ModelSerializer):
@@ -67,6 +72,13 @@ class StaffSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StaffProfile
+        fields = '__all__'
+
+class SchoolyearSerializer(serializers.ModelSerializer):
+    principal = GetFacultySerializer(read_only=False)
+    assistantprincipal = GetFacultySerializer(read_only=False)
+    class Meta:
+        model = SchoolYear
         fields = '__all__'
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -80,21 +92,3 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-    
-# class ClassesSerializer(serializers.ModelSerializer):
-#     schedule = ScheduleInstanceSerializer(many=True)
-
-#     class Meta:
-#         model = Classes
-#         fields = '__all__'
-    
-#     def create(self, validated_data):
-#         schedule_data = validated_data.pop('schedule')
-#         class_instance = Classes.objects.create(**validated_data)
-#         schedule_instances = []
-#         for schedule_item in schedule_data:
-#             schedule_instance = ScheduleInstance.objects.create(**schedule_item)
-#             schedule_instances.append(schedule_instance)
-        
-#         class_instance.schedule.set(schedule_instances)
-#         return class_instance

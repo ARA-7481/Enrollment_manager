@@ -97,3 +97,5 @@ class RegisterView(generics.GenericAPIView):
                 "message": "Password updated successfully",
             })
         return Response(serializer.errors, status=400)
+    
+# class ReceiveDropSignal(generics.GenericAPIView):

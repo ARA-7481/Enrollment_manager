@@ -82,6 +82,13 @@
     font-weight: 400;
     font-size: 16px;
   }
+.inter-400-16px-dark {
+    color:#000000;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+  }
 .inter-400-16px-link {
     color:#087AEB;
     font-family: 'Inter', sans-serif;

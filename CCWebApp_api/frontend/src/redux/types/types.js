@@ -24,6 +24,7 @@ export const SET_CLASS = 'SET_CLASS';
 export const SET_SUBJECT = 'SET_SUBJECT';
 export const SET_ROOM = 'SET_ROOM';
 export const SET_COURSE = 'SET_COURSE';
+export const SET_SECTION = 'SET_SECTION';
 
 export const SET_PAGEHEADER = 'SET_PAGEHEADER';
 export const SET_SUBJECT_FORMDATA = 'SET_SUBJECT_FORMDATA';
@@ -79,3 +80,7 @@ export const SET_USER_PW = 'SET_USER_PW'
 export const ANALYZE_IMAGES_SUCCESS = 'ANALYZE_IMAGES_SUCCESS'
 
 export const CLEAR_RESPONSE = 'CLEAR_RESPONSE'
+
+//enrollment
+
+export const GET_SCHOOLYEAR = 'GET_SCHOOLYEAR'

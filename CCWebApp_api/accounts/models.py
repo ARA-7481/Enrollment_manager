@@ -99,6 +99,7 @@ class StudentProfile(models.Model):
 
     pept = models.BooleanField(blank=True, null=True)
     peptcompletion = models.DateField(null=True)
+    petpclc = models.CharField(max_length=200, null=True, blank=True)
 
     ae = models.BooleanField(blank=True, null=True)
     aecompletion = models.DateField(null=True)
@@ -114,6 +115,7 @@ class StudentProfile(models.Model):
 
     peptjhs = models.BooleanField(blank=True, null=True)
     peptcompletionjhs = models.DateField(null=True)
+    petpclcjhs = models.CharField(max_length=200, null=True, blank=True)
 
     aejhs = models.BooleanField(blank=True, null=True)
     aecompletionjhs = models.DateField(null=True)
@@ -129,13 +131,16 @@ class StudentProfile(models.Model):
     shs1strand2 = models.CharField(max_length=200, null=True, blank=True)
 
     shs2 = models.CharField(max_length=200, null=True, blank=True)
-    shs2 = models.CharField(max_length=200, null=True, blank=True)
+    shs2address = models.CharField(max_length=200, null=True, blank=True)
     shs2track1 = models.CharField(max_length=200, null=True, blank=True)
     shs2strand1 = models.CharField(max_length=200, null=True, blank=True)
     shs2track2 = models.CharField(max_length=200, null=True, blank=True)
     shs2strand2 = models.CharField(max_length=200, null=True, blank=True)
 
-    strand = models.ForeignKey('main.Track', on_delete=models.SET_NULL, null=True, blank=True)
+    # track = models.ForeignKey('main.Track', on_delete=models.SET_NULL, null=True, blank=True)
+    # strand = models.ForeignKey('main.Strand', on_delete=models.SET_NULL, null=True, blank=True)
+    track = models.CharField(max_length=200, null=True, blank=True)
+    strand = models.CharField(max_length=200, null=True, blank=True)
     specialization = models.CharField(max_length=200, null=True, blank=True)
 
 
