@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, getRoomsList, setsectionState } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, getRoomsList, setsectionState, getSectionList } from '../../redux/actions/main';
 
 import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 
@@ -18,7 +18,7 @@ function Sections(props) {
   };
 
   const handleSearch = (query) => {
-    props.getRoomsList(query)
+    // props.getRoomsList(query)
     props.setLoading('isLoading')
   };
 
@@ -35,6 +35,7 @@ function Sections(props) {
     props.setsubsidebarState(null);
     props.setsectionState('list');
     props.setpageHeader('Manage Sections', '', 'Add and Update Sections');
+    props.getSectionList();
   }, []);
 
   return (
@@ -144,28 +145,35 @@ function Sections(props) {
         <Table hover style={{border: 'none'}}>
         <thead >
           <tr>
-            <th className='table-head' style={{width: '30%', paddingLeft:'20px'}}>NAME</th>
-            <th className='table-head' style={{width: '30%'}}>ADVISER</th>
-            <th className='table-head' style={{width: '30%'}}>GRADE LEVEL</th>
-            <th className='table-head' style={{width: '30%'}}>TRACK</th>
-            <th className='table-head' style={{width: '30%'}}>STUDENTS</th>
+            <th className='table-head' style={{width: '20%', paddingLeft:'20px'}}>CODE</th>
+            <th className='table-head' style={{width: '20%'}}>SCHOOLYEAR</th>
+            <th className='table-head' style={{width: '20%'}}>ADVISER</th>
+            <th className='table-head' style={{width: '15%'}}>GRADE LEVEL</th>
+            <th className='table-head' style={{width: '15%'}}>TRACK</th>
+            <th className='table-head' style={{width: '15%'}}>STUDENTS</th>
             <th className='table-head' style={{border: 'none'}}>ACTION</th>
           </tr>
         </thead>
         <tbody style={{cursor: 'pointer', }}>
-        {/* {[...props.schoolyearList].sort((a, b) => a.code.localeCompare(b.code)).map((schoolyear) =>(
-              <tr key={schoolyear.code} style={{border: 'none'}}>
+        {[...props.sectionList].sort((a, b) => a.code.localeCompare(b.code)).map((section) =>(
+              <tr key={section.code} style={{border: 'none'}}>
                 <td className='table-body' style={{paddingLeft:'20px'}}>
-                    {schoolyear.code}
+                    {section.code}
+                  </td>
+                  <td className='table-body' style={{paddingLeft:'20px'}}>
+                    {section.schoolyear}
                   </td>
                 <td className='table-body'>
-                    {schoolyear.principal.userprofile.last_name}, {schoolyear.principal.userprofile.first_name} {schoolyear.principal.userprofile.middle_name}
+                    {section.adviser.userprofile.last_name}, {section.adviser.userprofile.first_name} {section.adviser.userprofile.middle_name}
                   </td>
-                <td className='table-body'>
-                {schoolyear.assistantprincipal.userprofile.last_name}, {schoolyear.assistantprincipal.userprofile.first_name} {schoolyear.assistantprincipal.userprofile.middle_name}
+                 <td className='table-body'>
+                {section.gradelevel}
                  </td>
                  <td className='table-body'>
-                {schoolyear.description}
+                {section.track}
+                 </td>
+                 <td className='table-body'>
+                {section.students.length}
                  </td>
                 <td className='table-body'>
                 
@@ -179,7 +187,7 @@ function Sections(props) {
                 </Dropdown>
                 </td>
               </tr>
-          ))} */}
+          ))}
         </tbody>
         </Table>
         }
@@ -205,7 +213,8 @@ Sections.propTypes = {
   setLoading: PropTypes.func,
   loadingState: PropTypes.string,
   setsectionState: PropTypes.func,
-  
+  getSectionList: PropTypes.func,
+  sectionList: PropTypes.array,
 }
 
 const mapStateToProps = (state) => ({
@@ -214,6 +223,7 @@ const mapStateToProps = (state) => ({
   pageHeader: state.main.pageHeader,
   roomsListForTable: state.main.roomsListForTable,
   loadingState: state.main.loadingState,
+  sectionList: state.main.sectionList,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getRoomsList, setLoading, setsectionState})(Sections))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getRoomsList, setLoading, setsectionState, getSectionList})(Sections))

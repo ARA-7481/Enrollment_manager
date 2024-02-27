@@ -41,6 +41,7 @@ export const GET_CLASSES_LIST = 'GET_CLASSES_LIST'
 export const GET_SUBJECTS_LIST = 'GET_SUBJECTS_LIST'
 export const GET_ROOMS_LIST = 'GET_ROOMS_LIST'
 export const GET_COURSES_LIST = 'GET_COURSES_LIST'
+export const GET_SECTION = 'GET_SECTION'
 
 export const ADD_CLASS = 'ADD_CLASS'
 export const ADD_SUBJECT = 'ADD_SUBJECT'

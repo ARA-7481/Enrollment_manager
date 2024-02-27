@@ -5,9 +5,9 @@ from rest_framework.response import Response
 from django.forms.models import model_to_dict
 
 
-from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer
+from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer
 from accounts.models import StudentProfile, FacultyProfile, StaffProfile
-from .models import Subject, Room, SchoolYear
+from .models import Subject, Room, SchoolYear, Section
 from accounts.permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
 
 
@@ -77,3 +77,10 @@ class SchoolYearViewset(viewsets.ModelViewSet):
         IsSuperAdmin
     ]
     serializer_class = SchoolyearSerializer
+
+class SectionViewset(viewsets.ModelViewSet):
+    queryset = Section.objects.all()
+    permission_classes = [
+        IsSuperAdmin
+    ]
+    serializer_class = SectionSerializer

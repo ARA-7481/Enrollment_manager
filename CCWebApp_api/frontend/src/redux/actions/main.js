@@ -7,6 +7,7 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_SELECTED_BG, GET_STUDENT_DATA, GET_ACTIVITY, 
          ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT, CLEAR_RESPONSE, REGISTER_STUDENT,
          REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW, GET_SCHOOLYEAR, SET_SECTION,
+         GET_SECTION,
         } from "../types/types";
 
 function formatTime(time) {
@@ -207,6 +208,20 @@ export const getSubject = (subject) => async dispatch => {
       if(res.status === 200){
         dispatch({
           type: GET_ROOMS,
+          payload: res.data
+        });
+      }
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+  export const getSectionList = () => async dispatch => {
+    try {
+      const res = await instanceAxios.get(`api/section/`);
+      if(res.status === 200){
+        dispatch({
+          type: GET_SECTION,
           payload: res.data
         });
       }
