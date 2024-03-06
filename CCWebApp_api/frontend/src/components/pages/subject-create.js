@@ -14,9 +14,6 @@ function SubjectCreate(props) {
     const [submissionComplete, setSubmission] = useState(false)
     const [subjectcode, setSubjectcode] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const [units, setUnits] = React.useState('');
-    const [lecture, setLecture] = React.useState('');
-    const [laboratory, setLaboratory] = React.useState('');
     const [prerequisite, setPrerequisite] = React.useState('');
     const [corequisite, setCorequisite] = React.useState('');
 
@@ -47,13 +44,10 @@ function SubjectCreate(props) {
         setFormData({
           code : subjectcode,
           description : description,
-          units : units,
-          lecture: lecture,
-          lab: laboratory,
           prerequisite: prerequisite,
           corequisite: corequisite,
         })
-      }, [subjectcode, description, units, lecture, laboratory, prerequisite, corequisite, props.loadingState, props.error, props.success]);
+      }, [subjectcode, description, prerequisite, corequisite, props.loadingState, props.error, props.success]);
 
     return (
         <>
@@ -132,48 +126,6 @@ function SubjectCreate(props) {
 
               </div>
 
-               
-              <div style={{display: 'flex', width: '100%'}}>
-              <div className="form-group text-left"style={{width: '34%', marginRight: '8px'}}>
-                  <Form.Group>
-                <Form.Label htmlFor="units" className='form-label'>Units</Form.Label>
-                <div style={{display: 'flex'}}>
-                <Form.Control type="text" value={units} placeholder="Enter Units" id="units" onChange={e => setUnits(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
-                {!units &&
-                  <div style={{transform: 'translate( -33px, 5px)', width: '0px', pointerEvents: 'none'}}>
-                  <RedExclamation/>
-                  </div>
-                  }
-                </div>
-                </Form.Group>
-                </div>
-                <div className="form-group text-left"style={{width: '33%', marginRight: '8px'}}>
-                  <Form.Group>
-                <Form.Label htmlFor="lecture" className='form-label'>Lecture Hours</Form.Label>
-                <div style={{display: 'flex'}}>
-                <Form.Control type="text" value={lecture} placeholder="Enter Lecture Hours" id="lecture" onChange={e => setLecture(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
-                {!lecture &&
-                  <div style={{transform: 'translate( -33px, 5px)', width: '0px', pointerEvents: 'none'}}>
-                  <RedExclamation/>
-                  </div>
-                  }
-                </div>
-                </Form.Group>
-                </div>
-                <div className="form-group text-left"style={{width: '33%'}}>
-                  <Form.Group>
-                <Form.Label htmlFor="laboratory" className='form-label'>Lab/Internship Hours</Form.Label>
-                <div style={{display: 'flex'}}>
-                <Form.Control type="text" value={laboratory} placeholder="Enter Lab Hours" id="laboratory" onChange={e => setLaboratory(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
-                {!laboratory &&
-                  <div style={{transform: 'translate( -33px, 5px)', width: '0px', pointerEvents: 'none'}}>
-                  <RedExclamation/>
-                  </div>
-                  }
-                </div>
-                </Form.Group>
-                </div>
-              </div>
               <h1 className='inter-500-19px'>Subject Details Preview</h1>
   
               <Table style={{border: 'none'}}>
@@ -181,9 +133,6 @@ function SubjectCreate(props) {
               <tr>
                 <th className='table-head' style={{width: '10%', paddingLeft:'20px'}}>CODE</th>
                 <th className='table-head' style={{width: '23%'}}>SUBJECT</th>
-                <th className='table-head' style={{width: '10%'}}>UNITS</th>
-                <th className='table-head' style={{width: '10%'}}>LEC</th>
-                <th className='table-head' style={{width: '10%'}}>LAB</th>
                 <th className='table-head' style={{width: '10%'}}>COREQUISITE</th>
                 <th className='table-head' style={{width: '10%'}}>PREREQUISITE</th>
               </tr>
@@ -197,15 +146,6 @@ function SubjectCreate(props) {
                     {description? description:'-'}
                   </td>
                   <td className='table-body'>
-                    {units? units:'-'}
-                  </td>
-                  <td className='table-body'>
-                    {lecture? lecture:'-'}
-                  </td>
-                  <td className='table-body'>
-                    {laboratory? laboratory:'-'} 
-                  </td>
-                  <td className='table-body'>
                     {prerequisite? prerequisite:'-'}
                   </td>
                   <td className='table-body'>
@@ -217,7 +157,7 @@ function SubjectCreate(props) {
             </InputGroup>
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
-        <Button disabled={!subjectcode || !description || !units || !lecture || !laboratory } type="button" onClick={handleSubmit} style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '15%', height: '48px', alignContent: 'center', marginRight: '24px'}}>
+        <Button disabled={!subjectcode || !description} type="button" onClick={handleSubmit} style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '15%', height: '48px', alignContent: 'center', marginRight: '24px'}}>
             <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
             {props.loadingState == 'isNotLoading'? <>Create Subject</> : <div style={{transform: 'translate( 0px, -6px)'}}><Spinner animation="border" variant="light"/></div>}</h1>
         </Button>
@@ -247,7 +187,7 @@ SubjectCreate.propTypes = {
   const mapStateToProps = (state) => ({
     sidebarState: state.main.sidebarState,
     subsidebarState: state.main.subsidebarState,
-    subjectState: state.main.classState,
+    subjectState: state.main.subjectState,
     pageHeader: state.main.pageHeader,
     loadingState: state.main.loadingState,
     subjectsListForTable: state.main.subjectsListForTable,

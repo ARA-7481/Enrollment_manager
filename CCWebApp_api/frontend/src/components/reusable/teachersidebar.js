@@ -78,17 +78,16 @@ function Teachersidebar(props){
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu style={{  display:'flex', justifyContent: 'start', paddingLeft:'24px'}}>
 
-            <Nav.Link href="/#/teachers/dashboard" style={{paddingBottom: '8px'}}>
-            <div title={isCollapsed ? 'Activities':''} className='zooming-icon' style={{color: props.sidebarState === 'dashboard' ? 'white' : '', backgroundColor: props.sidebarState === 'dashboard' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <Nav.Link href="/#/faculty/dashboard" style={{paddingBottom: '8px'}}>
+            <div title={isCollapsed ? 'Classes':''} className='zooming-icon' style={{color: props.sidebarState === 'dashboard' ? 'white' : '', backgroundColor: props.sidebarState === 'dashboard' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedDashboardIcon/>
             </div>
             <div style={{paddingLeft: '20px'}}>
-            {!isCollapsed && 'Activities'}
+            {!isCollapsed && 'Classes'}
             </div>
             </div>
             </Nav.Link>
-           
             
 
             {/* <Nav.Link href="/#/" style={{paddingBottom: '8px'}}>
@@ -103,7 +102,7 @@ function Teachersidebar(props){
             </Nav.Link> */}
 
 
-            <Nav.Link href="/#/teachers/profile" style={{paddingBottom: '8px'}}>
+            <Nav.Link href="/#/faculty/profile" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'My Profile':''} className='zooming-icon' style={{color: props.sidebarState === 'settings' ? 'white' : '', backgroundColor: props.sidebarState === 'settings' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedSettingsIcon/>

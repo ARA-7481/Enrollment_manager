@@ -8,6 +8,7 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT, CLEAR_RESPONSE, REGISTER_STUDENT,
          REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW, GET_SCHOOLYEAR, SET_SECTION,
          GET_SECTION,
+         ADD_SECTION,
         } from "../types/types";
 
 function formatTime(time) {
@@ -230,23 +231,45 @@ export const getSubject = (subject) => async dispatch => {
     }
   };
 
-  export const getClasses = (subject, yearlevel) => async dispatch => {
+  export const addSection = (formData) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/classes/?search=${subject} ${yearlevel}`);
-      if(res.status === 200){
-        dispatch({
-          type: GET_CLASSES,
-          payload: res.data
-        });
-      }
+      const res = await instanceAxios.post('/api/addsection/', formData);
+      dispatch({
+        type: ADD_SECTION,
+        payload: res.data,
+      });
     } catch (error) {
-        console.error(error);
+      if(error.response.data.code){
+        dispatch({
+          type: FILL_ERROR,
+          payload: "A Section With the Same Code Already Exists"
+        })
+      }else{
+      dispatch({
+        type: FILL_ERROR,
+        payload: 'An Error Occured During Submission.Please Check Your Field Inputs.'
+      })
+    }
     }
   };
 
-  export const getClassesList = (queryYearlevel, queryDepartment, queryCourse, querySearch) => async dispatch => {
+  // export const getClasses = (subject, yearlevel) => async dispatch => {
+  //   try {
+  //     const res = await instanceAxios.get(`/api/classes/?search=${subject} ${yearlevel}`);
+  //     if(res.status === 200){
+  //       dispatch({
+  //         type: GET_CLASSES,
+  //         payload: res.data
+  //       });
+  //     }
+  //   } catch (error) {
+  //       console.error(error);
+  //   }
+  // };
+
+  export const getClassesList = (queryGradelevel, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/classeslist/?search=${queryYearlevel} ${queryDepartment} ${queryCourse} ${querySearch}`);
+      const res = await instanceAxios.get(`/api/classes/?search=${queryGradelevel} ${querySearch}`);
       if(res.status === 200){
         dispatch({
           type: GET_CLASSES_LIST,
@@ -260,19 +283,7 @@ export const getSubject = (subject) => async dispatch => {
 
   export const addClass = (formData) => async dispatch => {
     try {
-      const adjustedSchedule = formData.schedule.map(schedule => ({
-        ...schedule,
-        time_in: formatTime(schedule.time_in),
-        time_out: formatTime(schedule.time_out),
-      }));
-
-      const adjustedFormData = {
-        ...formData,
-        startdate: formatDate(new Date(formData.startdate)),
-        enddate: formatDate(new Date(formData.enddate)),
-        schedule: adjustedSchedule,
-      };  
-      const res = await instanceAxios.post('/api/normalclasses/', adjustedFormData);
+      const res = await instanceAxios.post('/api/addclass/', formData);
       dispatch({
         type: ADD_CLASS,
         payload: res.data,
@@ -681,10 +692,11 @@ export const setUseravatar = (avatar, userID) => async dispatch => {
       console.error(error);
   }
 }
-export const getTeacherdata = (email) => async dispatch => {
+export const getTeacherdata = (id) => async dispatch => {
   try {
-    const res = await instanceAxios.get(`/api/teacher/?search=${email}`);
+    const res = await instanceAxios.get(`/api/getfaculty/${id}`);
     if(res.status === 200){
+      console.log(res.data)
       dispatch({
         type: GET_TEACHER_DATA,
         payload: res.data
@@ -699,7 +711,6 @@ export const getStudentdata = (id) => async dispatch => {
   try {
     const res = await instanceAxios.get(`/api/getstudents/${id}`);
     if(res.status === 200){
-      console.log(res.data)
       dispatch({
         type: GET_STUDENT_DATA,
         payload: res.data

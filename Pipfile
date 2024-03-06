@@ -25,6 +25,7 @@ daphne = "*"
 django-cors-headers = "*"
 openai = "*"
 requests = "*"
+django-sslserver = "*"
 
 [dev-packages]
 

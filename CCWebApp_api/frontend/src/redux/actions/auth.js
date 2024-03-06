@@ -13,6 +13,7 @@ export const SignIn = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
     try {
       const res = await axios.post('/api/login/', body, config);
+      console.log(res)
       if(res.status === 200){
         dispatch({
           type: LOGIN_SUCCESS,

@@ -57,7 +57,7 @@ return(
 
           {props.sidebarState === 'sections' && props.sectionState === 'list' &&
             <div style={{marginRight: '24px', marginTop: '12px'}}>
-              <Button className='buttonsonnavbars' type="button" href="/">
+              <Button className='buttonsonnavbars' type="button" href="/#/admins/section-create">
                 <div style={{minHeight: '20px', minWidth: '20px', paddingBottom: '5px', paddingLeft: '12px'}}>
                   <AddUser/>
                 </div>
@@ -81,7 +81,7 @@ return(
 
           {props.sidebarState === 'class' && props.classState === 'list' &&
             <div style={{marginRight: '24px', marginTop: '12px'}}>
-                <Button className='buttonsonnavbars' type="button" href="/">
+                <Button className='buttonsonnavbars' type="button" href="/#/admins/class-create/">
                   <div style={{minHeight: '20px', minWidth: '20px', paddingBottom: '5px', paddingLeft: '12px'}}>
                     <AddUser/>
                   </div>
@@ -93,7 +93,7 @@ return(
 
           {props.sidebarState === 'subjects' && props.subjectState === 'list' &&
             <div style={{marginRight: '24px', marginTop: '12px'}}>
-              <Button className='buttonsonnavbars' type="button" href="/">
+              <Button className='buttonsonnavbars' type="button" href="/#/admins/subjects-create">
                 <div style={{minHeight: '20px', minWidth: '20px', paddingBottom: '5px', paddingLeft: '12px'}}>
                   <AddUser/>
                 </div>

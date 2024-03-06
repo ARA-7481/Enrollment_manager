@@ -29,10 +29,10 @@ function Signin (props) {
          navigate('/admins/users-students');
       }
       else if (props.user.usertype === 'Student'){
-         navigate('/students/dashboard');}
-      // }else if (props.user.usertype === 'Faculty'){
-      //    navigate('/teachers/dashboard');
-      // }
+         navigate('/students/dashboard');
+      }else if (props.user.usertype === 'Faculty'){
+         navigate('/faculty/dashboard');
+      }
    }
  }, [props.isAuthenticated]);
  

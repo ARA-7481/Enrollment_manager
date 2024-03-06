@@ -27,6 +27,7 @@ const UsersTeachers = lazy(() =>  import('./pages/users-teachers'))
 const UsersMasterlist = lazy(() =>  import('./pages/users-masterlist'))
 const ClassCreate = lazy(() =>  import('./pages/class-create'))
 const SubjectCreate = lazy(() =>  import('./pages/subject-create'))
+const SectionCreate = lazy(() =>  import('./pages/section-create'))
 const RoomCreate = lazy(() =>  import('./pages/room-create'))
 const RegisterUserstudent = lazy(() =>  import('./pages/register-studentuser'))
 const RegisterUserteacher = lazy(() =>  import('./pages/register-teacheruser'))
@@ -35,6 +36,10 @@ const SchoolYear = lazy(() =>  import('./pages/schoolyear.js'))
 
 const Studentdashboard = lazy(() =>  import('./pages/dashboard-student.js'))
 const StudentProfile = lazy(() =>  import('./pages/student-profile.js'))
+
+const FacultyDashboard = lazy(() =>  import('./pages/dashboard-faculty.js'))
+const FacultyProfile = lazy(() =>  import('./pages/faculty-profile.js'))
+
 
 
 const container = document.getElementById('app');
@@ -64,6 +69,7 @@ function AppContent() {
           <Route path="subjects" element={<Subjects />} />
           <Route path="subjects-create" element={<SubjectCreate />} />
           <Route path="sections" element={<Sections />} />
+          <Route path="section-create" element={<SectionCreate />} />
           <Route path="rooms-create" element={<RoomCreate />} />
           <Route path="users-admin" element={<UsersAdmin />} />
           <Route path="users-students" element={<UsersStudents />} />
@@ -81,7 +87,9 @@ function AppContent() {
           </Route>
 
           <Route path='/faculty' element={<Teacherlayout/>}>
-          <Route index element={<UsersStudents />} />
+          <Route index element={<FacultyDashboard />} />
+          <Route path="dashboard" element={<FacultyDashboard />} />
+          <Route path="profile" element={<FacultyProfile />} />
           </Route>
 
         </Routes>

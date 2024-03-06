@@ -46,6 +46,7 @@ export const GET_SECTION = 'GET_SECTION'
 export const ADD_CLASS = 'ADD_CLASS'
 export const ADD_SUBJECT = 'ADD_SUBJECT'
 export const ADD_ROOM = 'ADD_ROOM'
+export const ADD_SECTION = 'ADD_SECTION'
 export const ADD_COURSE = 'ADD_COURSE'
 
 export const RESO_UPDATE = 'RESO_UPDATE'

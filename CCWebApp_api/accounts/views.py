@@ -18,6 +18,10 @@ class SuccessView(APIView):
             "message": "Success",
         })
     
+class UserViewset(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class LogInView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
     
@@ -97,5 +101,3 @@ class RegisterView(generics.GenericAPIView):
                 "message": "Password updated successfully",
             })
         return Response(serializer.errors, status=400)
-    
-# class ReceiveDropSignal(generics.GenericAPIView):

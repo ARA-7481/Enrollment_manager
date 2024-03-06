@@ -70,23 +70,23 @@ class Section(models.Model):
     adviser = models.ForeignKey(FacultyProfile, on_delete=models.SET_NULL, null=True, blank=True)
     students = models.ManyToManyField(StudentProfile, related_name='student_related_section', blank=True)
     gradelevel = models.CharField(max_length=20, choices=GRADELEVEL, null=False, default='Grade 7')
-    track = models.ForeignKey(Track, on_delete=models.SET_NULL, null=True, blank=True)
+    track = models.CharField(null=True, blank=True)
 
 class Class(models.Model):
     code = models.CharField(max_length=200, primary_key=True, null=False, unique=True)
     description = models.CharField(max_length=200, null=True)
+    
     section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, blank=True)
-    teacher = models.ForeignKey(FacultyProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='teacher_related_class')
-    schedule = models.ManyToManyField(ScheduleInstance, related_name='schedule_related_class', blank=True)
-    room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, blank=True)
 
-    strand = models.ForeignKey(Strand, on_delete=models.SET_NULL, null=True, blank=True)
-    students = models.ManyToManyField(StudentProfile, blank=True, related_name='student_related_class')
+    teacher = models.ForeignKey(FacultyProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='teacher_related_class')
+    span = models.IntegerField(null=True, blank=True)
+    strand = models.CharField(null=True, blank=True)
+
 
 class GradeScoreEntity(models.Model):
     id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)
-    student = models.ForeignKey(StudentProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    student = models.ForeignKey(StudentProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='related_grade_entities')
     quarter1 = models.FloatField(null=True, blank=True)
     quarter2 = models.FloatField(null=True, blank=True)
     quarter3 = models.FloatField(null=True, blank=True)

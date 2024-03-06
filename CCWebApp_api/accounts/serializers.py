@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import User, StudentProfile, FacultyProfile, StaffProfile
-from main.models import Subject, Room, SchoolYear, Section
+from main.models import Subject, Room, SchoolYear, Section, Class
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -67,6 +67,12 @@ class SectionSerializer(serializers.ModelSerializer):
         model = Section
         fields = '__all__'
 
+class SectionAddSerializer(serializers.ModelSerializer):
+    students = serializers.PrimaryKeyRelatedField(many=True, queryset=StudentProfile.objects.all())
+    class Meta:
+        model = Section
+        fields = '__all__'
+
 class StaffSerializer(serializers.ModelSerializer):
     userprofile = UserProfileSerializer(read_only=False)
 
@@ -79,6 +85,18 @@ class SchoolyearSerializer(serializers.ModelSerializer):
     assistantprincipal = GetFacultySerializer(read_only=False)
     class Meta:
         model = SchoolYear
+        fields = '__all__'
+
+class ClassesSerializer(serializers.ModelSerializer):
+    teacher = GetFacultySerializer(read_only=False)
+    section = SectionSerializer(read_only=False)
+    class Meta:
+        model = Class
+        fields = '__all__'
+
+class ClassesAddSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Class
         fields = '__all__'
 
 class RegisterSerializer(serializers.ModelSerializer):
