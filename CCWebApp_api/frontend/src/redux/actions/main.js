@@ -9,6 +9,7 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW, GET_SCHOOLYEAR, SET_SECTION,
          GET_SECTION,
          ADD_SECTION,
+         SET_GRADESHEET,
         } from "../types/types";
 
 function formatTime(time) {
@@ -872,7 +873,7 @@ export const addActivityentry = (formData) => async dispatch => {
 
 export const getClassdata = (classcode) => async dispatch => {
   try {
-    const res = await instanceAxios.get(`/api/classesforfaculty/${classcode}/`);
+    const res = await instanceAxios.get(`/api/getclass/${classcode}/`);
     if(res.status === 200){
       dispatch({
         type: GET_CLASS_DATA,
@@ -883,6 +884,53 @@ export const getClassdata = (classcode) => async dispatch => {
       console.error(error);
   }
 };
+
+export const setGradesheet = (studentid, classcode) => async dispatch => {
+  const formData = {
+    student : studentid,
+    quarter1 : 0,
+    quarter2 : 0,
+    quarter3 : 0,
+    quarter4 : 0,
+    in_class : classcode,
+    remarks : "none"
+  }
+  try{
+    const res = await instanceAxios.post(`/api/grades/`, formData);
+    if(res.status === 201){
+      dispatch({
+        type: SET_GRADESHEET,
+        payload: res.data
+      });
+    }
+  }catch(error){
+    console.error(error)
+  }
+}
+
+export const patchGrades = (id, studentid, q1, q2, q3, q4, remarks, classcode) => async dispatch => {
+  const formData = {
+    student : studentid,
+    quarter1 : q1,
+    quarter2 : q2,
+    quarter3 : q3,
+    quarter4 : q4,
+    in_class : classcode,
+    remarks : remarks
+  }
+  try{
+    console.log(formData)
+    const res = await instanceAxios.patch(`/api/grades/${id}/`, formData);
+    if(res.status === 200){
+      dispatch({
+        type: SET_GRADESHEET,
+        payload: res.data
+      });
+    }
+  }catch(error){
+    console.error(error)
+  }
+}
 
 export const checkEntry = (referencefile, entryfile) => async dispatch => {
   const config = {

@@ -39,6 +39,7 @@ const StudentProfile = lazy(() =>  import('./pages/student-profile.js'))
 
 const FacultyDashboard = lazy(() =>  import('./pages/dashboard-faculty.js'))
 const FacultyProfile = lazy(() =>  import('./pages/faculty-profile.js'))
+const ClassPage = lazy(() =>  import('./pages/dashboard-faculty-classpage.js'))
 
 
 
@@ -90,6 +91,7 @@ function AppContent() {
           <Route index element={<FacultyDashboard />} />
           <Route path="dashboard" element={<FacultyDashboard />} />
           <Route path="profile" element={<FacultyProfile />} />
+          <Route path="classpage" element={<ClassPage />} />
           </Route>
 
         </Routes>

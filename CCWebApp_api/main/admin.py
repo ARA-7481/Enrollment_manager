@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Subject, SchoolYear, Section, Class
+from .models import Subject, SchoolYear, Section, Class, GradeSheet
 from accounts.models import User, StudentProfile, FacultyProfile, StaffProfile
 
 admin.site.register(User)
@@ -12,3 +12,4 @@ admin.site.register(Subject)
 admin.site.register(Section)
 admin.site.register(SchoolYear)
 admin.site.register(Class)
+admin.site.register(GradeSheet)

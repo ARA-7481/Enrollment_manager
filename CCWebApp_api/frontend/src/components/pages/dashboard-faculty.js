@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass } from '../../redux/actions/main';
 
 import { Placeholder } from 'react-bootstrap';
 
@@ -14,20 +14,23 @@ function FacultyDashboard(props) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
   const navigate = useNavigate();
-  const date = new Date();
-  const currentDay = date.getDay();
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    if (!user){
-      navigate('/auth/admin-signin');
-    }
+  if (!user){
+    navigate('/auth/admin-signin');
+  }
+
+  const handleClassSelection = (classcode, bg_url) => {
+      props.setSelectedclass(classcode);
+      props.setSelectedBG(bg_url);
+      navigate('/faculty/classpage');
+  }
 
   useEffect(() => {
     props.setsidebarState('dashboard');
     props.setsubsidebarState(null);
     props.setpageHeader(`Hello ${user.first_name}`, '', 'Welcome to your dashboard');
-    props.getTeacherdata(user.facultyprofile)
-    props.setSelectedBG('https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg0.png')
+    props.getTeacherdata(user.facultyprofile);
+    props.setSelectedBG('https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg0.png');
   }, []);
 
   useEffect(() => {
@@ -54,6 +57,117 @@ function FacultyDashboard(props) {
                         {props.teacherData.id}
                     </div>
                 </div>
+
+                <div className='class-container'>
+                    {props.teacherData.id? [...props.teacherData.teacher_related_class].sort((a, b) => a.code.localeCompare(b.code)).map(item => (
+                        <div key={item.code} className="class-item" onClick={() => handleClassSelection(item.code, item.bg_gradient)}>
+                            <div className="class-itemheader" style={{backgroundImage: `url(${item.bg_gradient})`}}>
+                            </div>
+                            <div className="class-itemdata">
+                                <h1 className='inter-500-19px-nopadding' style={{color: '#3A57E8'}}>{item.code}</h1>
+                                <div style={{display: 'flex', gap: '20px'}}>
+                                  <h1 className='inter-500-19px-nopadding' style={{overflow: 'hidden', whiteSpace: 'nowrap'}}>{item.section.code}</h1>
+                                  <h1 className='inter-600-16px' style={{overflow: 'hidden', whiteSpace: 'nowrap'}}>{item.subject}</h1>
+                                </div>
+                                <div style={{display: 'flex', gap: '16px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
+                                  <h1 className='inter-400-16px'>STUDENTS:</h1>
+                                  <h1 className='inter-400-16px-dark'>{item.section.students.length}</h1>
+                                </div >
+                                <div style={{display: 'flex', gap: '16px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
+                                  <h1 className='inter-400-16px'>QUARTERS:</h1>
+                                  <h1 className='inter-400-16px-dark'>{item.span}</h1>
+                                </div>
+                                <div style={{display: 'flex', gap: '16px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
+                                  <h1 className='inter-400-16px'>STRAND:</h1>
+                                  <h1 className='inter-400-16px-dark'>{item.strand}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    )) : 
+                        <div className='class-container'>
+                            <div className="class-item" >
+                                <div className="class-itemheader">
+                                </div>
+                                <div className="class-itemdata">
+                                <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{ color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={8} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={6} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={8} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={4} />
+                                    </Placeholder>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="class-item" >
+                                <div className="class-itemheader">
+                                </div>
+                                <div className="class-itemdata">
+                                <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{ color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={8} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={6} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={8} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={4} />
+                                    </Placeholder>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="class-item" >
+                                <div className="class-itemheader">
+                                </div>
+                                <div className="class-itemdata">
+                                <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{ color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={8} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={6} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={8} />
+                                    </Placeholder>
+                                    </div>
+                                    <div style={{marginBottom: '8px'}}>
+                                    <Placeholder animation="glow" style={{color: 'rgba(51, 51, 51, 0.20)'}}>
+                                    <Placeholder xs={4} />
+                                    </Placeholder>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+
             </div>
       </>
     );
@@ -69,6 +183,7 @@ FacultyDashboard.propTypes = {
   teacherData: PropTypes.object,
   setSelectedBG: PropTypes.func,
   newAvatar: PropTypes.string,
+  setSelectedclass: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -78,4 +193,4 @@ const mapStateToProps = (state) => ({
   newAvatar: state.main.newAvatar
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG})(FacultyDashboard))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass})(FacultyDashboard))

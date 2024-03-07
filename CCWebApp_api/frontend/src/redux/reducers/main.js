@@ -5,7 +5,7 @@ import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMEN
         GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_BG, SET_SELECTED_BG, CLEAR_STATE,
         GET_STUDENT_DATA, GET_ACTIVITY, ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT,
         CLEAR_RESPONSE, REGISTER_STUDENT, REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
-        GET_SCHOOLYEAR, SET_SECTION, GET_SECTION, ADD_SECTION,
+        GET_SCHOOLYEAR, SET_SECTION, GET_SECTION, ADD_SECTION, SET_GRADESHEET,
         } from "../types/types";
 
 const initialState = {
@@ -34,7 +34,8 @@ const initialState = {
     entryData: {},
     newUserdata: {},
     studentData: {},
-    teacherData: [],
+    teacherData: {},
+    emptygradeSheet: {},
     studentsList: [],
     facultyList: [],
     staffList: [],
@@ -259,6 +260,11 @@ export default function(state = initialState, action) {
                 ...state,
                 success: null
             }
+        case SET_GRADESHEET:
+            return{
+                ...state,
+                emptygradeSheet: action.payload,
+            }
 //portal
         case SET_USER_PW:
             return{
@@ -386,9 +392,10 @@ export default function(state = initialState, action) {
                 activityData: {},
                 classData: {},
                 entryData: {},
+                emptygradeSheet: {},
                 newUserdata: {},
                 studentData: {},
-                teacherData: [],
+                teacherData: {},
                 studentsList: [],
                 facultyList: [],
                 staffList: [],

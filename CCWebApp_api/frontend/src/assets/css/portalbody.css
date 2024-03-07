@@ -50,6 +50,7 @@
     border-radius: 8px;
     margin-bottom: 40px;
     padding-inline: 0px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   }
 
 .bg-item {
@@ -85,8 +86,11 @@
 }
 
 .class-itemdata {
+    background-color: #d1d3dbad;
     height: 160px;
-    padding: 24px;
+    padding-top: 10px;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 .class-item:hover{

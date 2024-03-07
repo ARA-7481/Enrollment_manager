@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import User, StudentProfile, FacultyProfile, StaffProfile
-from main.models import Subject, Room, SchoolYear, Section, Class
+from main.models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -42,12 +42,41 @@ class FacultySerializer(serializers.ModelSerializer):
         model = FacultyProfile
         fields = '__all__'
 
+
+# for dashboard start
+class GradeScoreEntitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GradeSheet
+        fields = '__all__'
+
+class SectionSerializerForDashboard(serializers.ModelSerializer):
+    students = GetStudentSerializer(read_only=False, many=True)
+    class Meta:
+        model = Section
+        fields = '__all__'
+
+class ClassesSerializerForClassPage(serializers.ModelSerializer):
+    class_related_score = GradeScoreEntitySerializer(read_only=False, many=True)
+    section = SectionSerializerForDashboard(read_only=False)
+    class Meta:
+        model = Class
+        fields = '__all__'
+
+class ClassesSerializerForDashboard(serializers.ModelSerializer):
+    section = SectionSerializerForDashboard(read_only=False)
+    class Meta:
+        model = Class
+        fields = '__all__'
+
 class GetFacultySerializer(serializers.ModelSerializer):
     userprofile = UserSerializer(read_only=False)
+    teacher_related_class = ClassesSerializerForDashboard(read_only=False, many=True)
    
     class Meta:
         model = FacultyProfile
         fields = '__all__'
+# for dashboard end
+
 
 class SubjectSerializer(serializers.ModelSerializer):
     postrequisite = serializers.PrimaryKeyRelatedField(many=True, read_only=True)

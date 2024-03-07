@@ -5,9 +5,9 @@ from rest_framework.response import Response
 from django.forms.models import model_to_dict
 
 
-from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer
+from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer, ClassesSerializerForDashboard, ClassesSerializerForClassPage, GradeScoreEntitySerializer
 from accounts.models import StudentProfile, FacultyProfile, StaffProfile
-from .models import Subject, Room, SchoolYear, Section, Class
+from .models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 from accounts.permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
 
 
@@ -55,7 +55,6 @@ class GetFacultyViewset(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['position', '$userprofile__first_name', '$userprofile__last_name', '=id']
 
-
 class StaffViewSet(viewsets.ModelViewSet):
     queryset = StaffProfile.objects.all()
     permission_classes = [
@@ -101,3 +100,12 @@ class ClassesAddViewset(viewsets.ModelViewSet):
         IsSuperAdmin
     ]
     serializer_class = ClassesAddSerializer
+
+#for dashboard
+class GetClassesViewset(viewsets.ModelViewSet):
+    queryset = Class.objects.all()
+    serializer_class = ClassesSerializerForClassPage
+
+class GradesViewset(viewsets.ModelViewSet):
+    queryset = GradeSheet.objects.all()
+    serializer_class = GradeScoreEntitySerializer
