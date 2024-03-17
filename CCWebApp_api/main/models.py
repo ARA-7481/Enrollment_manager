@@ -67,10 +67,12 @@ class Section(models.Model):
     )
     code = models.CharField(max_length=200, primary_key=True, null=False, unique=True)
     schoolyear = models.ForeignKey(SchoolYear, on_delete=models.SET_NULL, null=True, blank=True)
-    adviser = models.ForeignKey(FacultyProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    adviser = models.ForeignKey(FacultyProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='teacher_related_section')
     students = models.ManyToManyField(StudentProfile, related_name='student_related_section', blank=True)
     gradelevel = models.CharField(max_length=20, choices=GRADELEVEL, null=False, default='Grade 7')
     track = models.CharField(null=True, blank=True)
+    bg_gradient = models.CharField(max_length=500, null=True, blank=True, default='https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg3.png')
+
 
 class Class(models.Model):
     code = models.CharField(max_length=200, primary_key=True, null=False, unique=True)
@@ -84,16 +86,6 @@ class Class(models.Model):
     strand = models.CharField(null=True, blank=True)
     bg_gradient = models.CharField(max_length=500, null=True, blank=True, default='https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg1.png')
 
-
-# class GradeScoreEntity(models.Model):
-#     id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)
-#     student = models.ForeignKey(StudentProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='related_grade_entities')
-#     quarter1 = models.FloatField(null=True, blank=True)
-#     quarter2 = models.FloatField(null=True, blank=True)
-#     quarter3 = models.FloatField(null=True, blank=True)
-#     quarter4 = models.FloatField(null=True, blank=True)
-#     in_class = models.ForeignKey(Class, on_delete=models.SET_NULL, null=True, blank=True, related_name='class_related_score')
-#     remarks = models.CharField(max_length=300, null=True, blank=True)
 
 class GradeSheet(models.Model):
     id = models.CharField(max_length=10, primary_key=True, unique=True, default=random_code_generator, editable=False)

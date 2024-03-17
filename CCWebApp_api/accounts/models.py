@@ -175,3 +175,11 @@ class StaffProfile(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
     role = models.CharField(max_length=50, choices=ROLE, null=False, default= 'Not Specified')
     userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+
+
+class DeviceProfile(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
+    name = models.CharField(null=True, blank=True)
+    triggercount = models.IntegerField(null=True, blank=True)
+    hourcount = models.IntegerField(null=True, blank=True, default = 0)
+    rainrate = models.FloatField(null=True, blank=True)

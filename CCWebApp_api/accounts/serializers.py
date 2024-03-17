@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import User, StudentProfile, FacultyProfile, StaffProfile
+from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile
 from main.models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -43,7 +43,7 @@ class FacultySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# for dashboard start
+# for dashboard start teacher
 class GradeScoreEntitySerializer(serializers.ModelSerializer):
     class Meta:
         model = GradeSheet
@@ -71,11 +71,47 @@ class ClassesSerializerForDashboard(serializers.ModelSerializer):
 class GetFacultySerializer(serializers.ModelSerializer):
     userprofile = UserSerializer(read_only=False)
     teacher_related_class = ClassesSerializerForDashboard(read_only=False, many=True)
+    teacher_related_section = SectionSerializerForDashboard(read_only=False, many=True)
    
     class Meta:
         model = FacultyProfile
         fields = '__all__'
-# for dashboard end
+# for dashboard end teacher
+        
+
+# for dashboard start student
+class FacultySerializerForStudent(serializers.ModelSerializer):
+    userprofile = UserSerializer(read_only=False)
+    class Meta:
+        model = FacultyProfile
+        fields = '__all__'
+
+class SectionSerializerForStudent(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = '__all__'
+
+class ClassesSerializerForStudent(serializers.ModelSerializer):
+    section = SectionSerializerForStudent(read_only=False)
+    teacher = FacultySerializerForStudent(read_only=False)
+    class Meta:
+        model = Class
+        fields = '__all__'
+
+class GradeScoreEntitySerializerForStudent(serializers.ModelSerializer):
+    in_class = ClassesSerializerForStudent(read_only=False)
+    class Meta:
+        model = GradeSheet
+        fields = '__all__'
+
+class GetStudentDataSerializer(serializers.ModelSerializer):
+    userprofile = UserSerializer(read_only=False)
+    related_grade_entities = GradeScoreEntitySerializerForStudent(read_only=False, many=True)
+   
+    class Meta:
+        model = StudentProfile
+        fields = '__all__'
+# for dashboard end student
 
 
 class SubjectSerializer(serializers.ModelSerializer):
@@ -139,3 +175,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+    
+#weather
+class DeviceProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DeviceProfile
+        fields = '__all__'

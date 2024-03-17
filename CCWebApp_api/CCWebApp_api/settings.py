@@ -13,32 +13,27 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-# from dotenv import load_dotenv
-# load_dotenv()
+import environ
 
+env = environ.Env(
+    DEBUG=(bool, True)
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# import environ
-# env = environ.Env()
-# environ.Env.read_env()
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get("SECRET_KEY")
 from django.core.management.utils import get_random_secret_key
 
 SECRET_KEY = get_random_secret_key()
-# SECURE_HSTS_SECONDS = 3600
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_HSTS_PRELOAD = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
 import mimetypes
@@ -46,6 +41,7 @@ mimetypes.add_type("application/javascript", ".js", True)
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -110,7 +106,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-           "hosts": [("red-ckvsd56b0mos73cd9ra0",6379)],
+           'hosts': ['redis://127.0.0.1:6379'],
         },
     },
 }
@@ -165,7 +161,7 @@ DATABASES = {
         'NAME': 'enrollmentmanager',
         'USER': 'postgres',
         'PASSWORD': 'Asdfghjkl748123',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': 5432
     }
 }
@@ -218,3 +214,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+# AWS_ACCESS_KEY_ID =  env('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+
+# AWS_STORAGE_BUCKET_NAME = "ccwebappbucket"
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME

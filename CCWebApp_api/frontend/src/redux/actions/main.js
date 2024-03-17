@@ -10,6 +10,9 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_SECTION,
          ADD_SECTION,
          SET_GRADESHEET,
+         GET_DEVICE,
+         SET_SELECTED_SECTION,
+         GET_SECTION_DATA,
         } from "../types/types";
 
 function formatTime(time) {
@@ -710,7 +713,8 @@ export const getTeacherdata = (id) => async dispatch => {
 
 export const getStudentdata = (id) => async dispatch => {
   try {
-    const res = await instanceAxios.get(`/api/getstudents/${id}`);
+    const res = await instanceAxios.get(`/api/studentdata/${id}`);
+    console.log(res.data)
     if(res.status === 200){
       dispatch({
         type: GET_STUDENT_DATA,
@@ -726,6 +730,13 @@ export const setSelectedclass = (classcode) => dispatch => {
   dispatch({
     type: SET_SELECTED_CLASS,
     payload: classcode,
+  });
+};
+
+export const setSelectedsection = (sectioncode) => dispatch => {
+  dispatch({
+    type: SET_SELECTED_SECTION,
+    payload: sectioncode,
   });
 };
 
@@ -876,7 +887,21 @@ export const getClassdata = (classcode) => async dispatch => {
     const res = await instanceAxios.get(`/api/getclass/${classcode}/`);
     if(res.status === 200){
       dispatch({
-        type: GET_CLASS_DATA,
+        type: GET_SECTION_DATA,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getSectiondata = (sectioncode) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/getsection/${sectioncode}/`);
+    if(res.status === 200){
+      dispatch({
+        type: GET_SECTION_DATA,
         payload: res.data
       });
     }
@@ -893,7 +918,7 @@ export const setGradesheet = (studentid, classcode) => async dispatch => {
     quarter3 : 0,
     quarter4 : 0,
     in_class : classcode,
-    remarks : "none"
+    remarks : "Ongoing"
   }
   try{
     const res = await instanceAxios.post(`/api/grades/`, formData);
@@ -1003,4 +1028,20 @@ export const analyzeImages = (referencefileUrl, entryfileUrl, prompt, customprom
         });
     }
   };
+};
+
+
+export const getDevice = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/deviceprofile/${id}`);
+    console.log(res.data)
+    if(res.status === 200){
+      dispatch({
+        type: GET_DEVICE,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
 };

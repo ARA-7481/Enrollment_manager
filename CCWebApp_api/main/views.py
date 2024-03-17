@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.forms.models import model_to_dict
 
 
-from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer, ClassesSerializerForDashboard, ClassesSerializerForClassPage, GradeScoreEntitySerializer
+from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer, ClassesSerializerForDashboard, ClassesSerializerForClassPage, GradeScoreEntitySerializer, GetStudentDataSerializer, SectionSerializerForDashboard
 from accounts.models import StudentProfile, FacultyProfile, StaffProfile
 from .models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 from accounts.permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
@@ -106,6 +106,15 @@ class GetClassesViewset(viewsets.ModelViewSet):
     queryset = Class.objects.all()
     serializer_class = ClassesSerializerForClassPage
 
+class GetSectionsViewset(viewsets.ModelViewSet):
+    queryset = Section.objects.all()
+    serializer_class = SectionSerializerForDashboard
+    
 class GradesViewset(viewsets.ModelViewSet):
     queryset = GradeSheet.objects.all()
     serializer_class = GradeScoreEntitySerializer
+
+#for student portal
+class GetStudentDataViewSet(viewsets.ModelViewSet):
+    queryset = StudentProfile.objects.all()
+    serializer_class = GetStudentDataSerializer

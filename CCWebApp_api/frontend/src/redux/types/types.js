@@ -64,6 +64,7 @@ export const EMPTY_SUCCESS = 'EMPTY_SUCCESS'
 
 export const GET_TEACHER_DATA = 'GET_TEACHER_DATA'
 export const SET_SELECTED_CLASS = 'SET_SELECTED_CLASS'
+export const SET_SELECTED_SECTION = 'SET_SELECTED_SECTION'
 export const GET_POINTERS = 'GET_POINTERS'
 export const ADD_ACTIVITY = 'ADD_ACTIVITY'
 export const GET_ACTIVITIES = 'GET_ACTIVITIES'
@@ -71,6 +72,7 @@ export const GET_ACTIVITY = 'GET_ACTIVITY'
 export const SET_BG = 'SET_BG'
 export const SET_SELECTED_BG = 'SET_SELECTED_BG'
 export const GET_CLASS_DATA = 'GET_CLASS_DATA'
+export const GET_SECTION_DATA = 'GET_SECTION_DATA'
 export const GET_ENTRY = 'GET_ENTRY'
 export const SET_SUBMITTING_STUDENT = 'SET_SUBMITTING_STUDENT'
 export const SET_USER_AVATAR = 'SET_USER_AVATAR'
@@ -88,3 +90,6 @@ export const SET_GRADESHEET = 'SET_GRADESHEET'
 //enrollment
 
 export const GET_SCHOOLYEAR = 'GET_SCHOOLYEAR'
+
+//rainmeter
+export const GET_DEVICE = 'GET_DEVICE'

@@ -88,8 +88,19 @@ function Teachersidebar(props){
             </div>
             </div>
             </Nav.Link>
-            
 
+
+            <Nav.Link href="/#/faculty/advisory" style={{paddingBottom: '8px'}}>
+            <div title={isCollapsed ? 'Advisories':''} className='zooming-icon' style={{color: props.sidebarState === 'sections' ? 'white' : '', backgroundColor: props.sidebarState === 'sections' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
+            <ConnectedRoomsIcon/>
+            </div>
+            <div style={{paddingLeft: '20px'}}>
+            {!isCollapsed && 'Advisories'}
+            </div>
+            </div>
+            </Nav.Link>
+            
             {/* <Nav.Link href="/#/" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'My Schedules':''} className='zooming-icon' style={{color: props.sidebarState === 'schedules' ? 'white' : '', backgroundColor: props.sidebarState === 'schedules' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>

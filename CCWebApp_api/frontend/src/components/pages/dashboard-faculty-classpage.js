@@ -53,14 +53,14 @@ function ClassPage(props) {
       }, [props.emptygradeSheet]);
 
     useEffect(() => {
-        props.setpageHeader(`Class Page -`, `${props.classData.code}`, 'Manage Class Room');
         setClasscode(props.classData.code)
         setDescription(props.classData.description)
         setSubject(props.classData.subject)
         setStrand(props.classData.strand)
         try{
-        setSection(props.classData.section.code)
-        setStudents(props.classData.section.students)
+            props.setpageHeader(`${props.classData.subject}`, `${props.classData.section.code}`, `${props.classData.code}`);
+            setSection(props.classData.section.code)
+            setStudents(props.classData.section.students)
         }catch(error){
         }
       }, [props.classData]);
@@ -147,14 +147,45 @@ function ClassPage(props) {
                             {student.id}
                         </td>
                         <td className='table-body'>
-                            {student.userprofile.first_name} {student.userprofile.last_name} {new Date() - new Date(student.userprofile.date_joined) <= 3 * 24 * 60 * 60 * 1000 && <New />}
+                        {student.userprofile.last_name}, {student.userprofile.first_name} {student.userprofile.middle_name} 
                         </td>
                         <td className='table-body'>{studentScores ? <input disabled={activeinput !== student.id} style={{border: 'none', width: '100%'}} defaultValue={studentScores.quarter1} onChange={e => setQ1(parseFloat(e.target.value))}></input> : ''}</td>
                         <td className='table-body'>{studentScores ? <input disabled={activeinput !== student.id} style={{border: 'none', width: '100%'}} defaultValue={studentScores.quarter2} onChange={e => setQ2(parseFloat(e.target.value))}></input> : ''}</td>
                         <td className='table-body'>{studentScores ? <input disabled={activeinput !== student.id} style={{border: 'none', width: '100%'}} defaultValue={studentScores.quarter3} onChange={e => setQ3(parseFloat(e.target.value))}></input> : ''}</td>
                         <td className='table-body'>{studentScores ? <input disabled={activeinput !== student.id} style={{border: 'none', width: '100%'}} defaultValue={studentScores.quarter4} onChange={e => setQ4(parseFloat(e.target.value))}></input> : ''}</td>
-                        <td className='table-body'>{studentScores ? ((studentScores.quarter1 + studentScores.quarter2 + studentScores.quarter3 + studentScores.quarter4) / 4).toFixed(2) : ''}</td>
-                        <td className='table-body'>{studentScores ? <input disabled={activeinput !== student.id} style={{border: 'none', width: '100%'}} defaultValue={studentScores.remarks} onChange={e => setRemarks(e.target.value)}></input> : 'none'}</td>
+                        <td className='table-body'>
+                            {studentScores ? 
+                                ((studentScores.quarter1 !== 0 ? studentScores.quarter1 : 0) +
+                                (studentScores.quarter2 !== 0 ? studentScores.quarter2 : 0) +
+                                (studentScores.quarter3 !== 0 ? studentScores.quarter3 : 0) +
+                                (studentScores.quarter4 !== 0 ? studentScores.quarter4 : 0)) / 
+                                ((studentScores.quarter1 !== 0 ? 1 : 0) +
+                                (studentScores.quarter2 !== 0 ? 1 : 0) +
+                                (studentScores.quarter3 !== 0 ? 1 : 0) +
+                                (studentScores.quarter4 !== 0 ? 1 : 0)).toFixed(2)
+                                : ''
+                            }
+                            </td>
+                        {/* <td className='table-body'>{studentScores ? <input disabled={activeinput !== student.id} style={{border: 'none', width: '100%'}} defaultValue={studentScores.remarks} onChange={e => setRemarks(e.target.value)}></input> : 'none'}</td> */}
+                        <td className='table-body'>{studentScores ? 
+                        <Dropdown>
+                            <Dropdown.Toggle disabled={activeinput !== student.id} id="dropdown-basic" className='formselect-border drop-noarrow' style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)' , color: 'black' , width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                                <div style={{ margin: '8px'}} ><h1 className='inter-400-16px-dark' style={{color: activeinput == student.id ? 'black':
+                                                                                                                  studentScores.remarks==="Ongoing"?'#0047AB':
+                                                                                                                  studentScores.remarks==="Passed"?'green':
+                                                                                                                  studentScores.remarks==="Failed"?'red':
+                                                                                                                  'black'}}>
+                                                                    {activeinput == student.id ? remarks: studentScores.remarks}
+                                                                </h1>
+                                </div>
+                                <ConnectedAccordionIconOpen/>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu style={{ width: '100%', maxHeight: '200px', overflow: 'auto'}}>
+                                <Dropdown.Item onClick={() => setRemarks('Ongoing')}><h1 className='inter-400-16px-dark' style={{color: '#0047AB'}}>Ongoing</h1></Dropdown.Item>
+                                <Dropdown.Item onClick={() => setRemarks('Passed')}><h1 className='inter-400-16px-dark' style={{color: 'green'}}>Passed</h1></Dropdown.Item>
+                                <Dropdown.Item onClick={() => setRemarks('Failed')}><h1 className='inter-400-16px-dark' style={{color: 'red'}}>Failed</h1></Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown> : 'none'}</td>
                         <td className='table-body'>
                             {studentScores ? (activeinput == student.id ?
                                 <Button type="button" onClick={() => handlePatchgrade(student.id)} style={{ borderColor: '#D0F0C0', borderRadius: '4px', backgroundColor: '#D0F0C0', width: '100%', height: '50px', alignContent: 'center' }}>
@@ -163,11 +194,16 @@ function ClassPage(props) {
                                 </h1>
                                 </Button>
                             :
-                                <Button type="button" onClick={() => handleSetactiveid(student.id)} style={{ borderColor: '#F7F5BC', borderRadius: '4px', backgroundColor: '#F7F5BC', width: '100%', height: '50px', alignContent: 'center' }}>
-                                    <h1 style={{ color: 'black', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '15px', }}>
-                                        Edit
-                                    </h1>
-                                </Button>)
+                            <>
+                            <Dropdown>
+                                <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: '#e9ecef', color: 'rgba(51, 51, 51, 0.00)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'center', marginLeft: '10px'}}>
+                                <h2 style={{color: '#8A92A6', marginLeft: '12px', marginBottom: '15px'}}>...</h2>
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => handleSetactiveid(student.id)}><h1 className='dropdown-item' >Edit</h1></Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                                </>)
                              :
                                 <Button type="button" onClick={() => handleCreategradesheet(student.id)} style={{ borderColor: '#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '100%', height: '50px', alignContent: 'center' }}>
                                     <h1 style={{ color: 'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '15px', }}>

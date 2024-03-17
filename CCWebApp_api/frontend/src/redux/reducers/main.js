@@ -5,7 +5,7 @@ import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMEN
         GET_TEACHER_DATA, SET_SELECTED_CLASS, GET_POINTERS, ADD_ACTIVITY, GET_ACTIVITIES, SET_BG, SET_SELECTED_BG, CLEAR_STATE,
         GET_STUDENT_DATA, GET_ACTIVITY, ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT,
         CLEAR_RESPONSE, REGISTER_STUDENT, REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
-        GET_SCHOOLYEAR, SET_SECTION, GET_SECTION, ADD_SECTION, SET_GRADESHEET,
+        GET_SCHOOLYEAR, SET_SECTION, GET_SECTION, ADD_SECTION, SET_GRADESHEET, GET_DEVICE, GET_SECTION_DATA, SET_SELECTED_SECTION
         } from "../types/types";
 
 const initialState = {
@@ -19,6 +19,7 @@ const initialState = {
     courseState: null,
     sectionState: null,
     selectedClass: null,
+    selectedSection: null,
     selectedBG: null,
     GPTresponse: null,
     submittingStudent: null,
@@ -31,11 +32,13 @@ const initialState = {
     windowDimensions: {},
     activityData: {},
     classData: {},
+    sectionData: {},
     entryData: {},
     newUserdata: {},
     studentData: {},
     teacherData: {},
     emptygradeSheet: {},
+    deviceData: {},
     studentsList: [],
     facultyList: [],
     staffList: [],
@@ -298,6 +301,11 @@ export default function(state = initialState, action) {
                 ...state,
                 selectedClass: action.payload
             }
+        case SET_SELECTED_SECTION:
+            return{
+                ...state,
+                selectedSection: action.payload
+            }
         case GET_POINTERS:
             return{
                 ...state,
@@ -347,6 +355,11 @@ export default function(state = initialState, action) {
                 ...state,
                 classData: action.payload
             }
+        case GET_SECTION_DATA:
+                return{
+                    ...state,
+                    sectionData: action.payload
+                }
         case ANALYZE_IMAGES_SUCCESS:
             return{
                 ...state,
@@ -367,6 +380,12 @@ export default function(state = initialState, action) {
                 schoolyearList: action.payload,
                 loadingState: 'isNotLoading'
             }
+        //rainmeter
+        case GET_DEVICE:
+            return{
+                ...state,
+                deviceData: action.payload,
+            }
         case CLEAR_STATE:
             return{
                 loadingState: 'isNotLoading',
@@ -379,6 +398,7 @@ export default function(state = initialState, action) {
                 courseState: null,
                 sectionState: null,
                 selectedClass: null,
+                selectedSection: null,
                 selectedBG: null,
                 GPTresponse: null,
                 submittingStudent: null,
@@ -391,11 +411,13 @@ export default function(state = initialState, action) {
                 windowDimensions: {},
                 activityData: {},
                 classData: {},
+                sectionData: {},
                 entryData: {},
                 emptygradeSheet: {},
                 newUserdata: {},
                 studentData: {},
                 teacherData: {},
+                deviceData: {},
                 studentsList: [],
                 facultyList: [],
                 staffList: [],

@@ -13,6 +13,7 @@ import '../assets/css/avatars.css'
 import '../assets/css/portalbody.css'
 
 const Fallback = lazy(() =>  import('./reusable/fallback'))
+const WeatherLayout = lazy(() =>  import('./layouts/Weatherlayout'))
 const AuthLayout = lazy(() =>  import('./layouts/Authlayout'))
 const MainLayout = lazy(() =>  import('./layouts/Mainlayout'))
 const Studentlayout = lazy(() =>  import('./layouts/Studentlayout'))
@@ -38,9 +39,13 @@ const Studentdashboard = lazy(() =>  import('./pages/dashboard-student.js'))
 const StudentProfile = lazy(() =>  import('./pages/student-profile.js'))
 
 const FacultyDashboard = lazy(() =>  import('./pages/dashboard-faculty.js'))
+const FacultyDashboardAdvisory = lazy(() =>  import('./pages/dashboard-faculty-advisory.js'))
+const AdvisoryPage = lazy(() =>  import('./pages/dashboard-faculty-sectionpage.js'))
 const FacultyProfile = lazy(() =>  import('./pages/faculty-profile.js'))
 const ClassPage = lazy(() =>  import('./pages/dashboard-faculty-classpage.js'))
 
+const WeatherDashboard = lazy(() =>  import('./rainmeter/weatherdashboard'))
+const GenSignin = lazy(() =>  import('./accounts/general-signin'))
 
 
 const container = document.getElementById('app');
@@ -56,6 +61,9 @@ function AppContent() {
         <Routes>
 
          <Route path="" element={<Signin />} />
+         {/* <Route path="login" element={<GenSignin />} />
+
+         <Route path="signin" element={<Signin />} /> */}
 
           <Route path='/auth' element={<AuthLayout/>}>
           <Route index element={<Signin />} />
@@ -90,8 +98,15 @@ function AppContent() {
           <Route path='/faculty' element={<Teacherlayout/>}>
           <Route index element={<FacultyDashboard />} />
           <Route path="dashboard" element={<FacultyDashboard />} />
+          <Route path="advisory" element={<FacultyDashboardAdvisory />} />
+          <Route path="advisorypage" element={<AdvisoryPage />} />
           <Route path="profile" element={<FacultyProfile />} />
           <Route path="classpage" element={<ClassPage />} />
+          </Route>
+
+          <Route path='/weather' element={<WeatherLayout/>}>
+          <Route index element={<WeatherDashboard />} />
+          <Route path="dashboard" element={<WeatherDashboard />} />
           </Route>
 
         </Routes>

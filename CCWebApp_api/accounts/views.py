@@ -5,9 +5,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer, PasswordChangeSerializer
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer, PasswordChangeSerializer, DeviceProfileSerializer
 from .permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
-from .models import User, StudentProfile, FacultyProfile, StaffProfile
+from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile
 from rest_framework import filters
 import json
 from django.http import JsonResponse
@@ -101,3 +101,28 @@ class RegisterView(generics.GenericAPIView):
                 "message": "Password updated successfully",
             })
         return Response(serializer.errors, status=400)
+
+
+
+#for rainmeter
+class ReceiveRainSignal(generics.GenericAPIView):
+    def post(self, request):
+        data = request.data
+        device_id = (data['id'])
+        print(data)
+        if device_id:
+            try:
+                device_profile = DeviceProfile.objects.get(id=device_id)
+            except DeviceProfile.DoesNotExist:
+                return Response(status=404, data={"message": "DeviceProfile not found"})
+            
+            device_profile.hourcount = (device_profile.hourcount or 0) + 1
+            device_profile.save()
+            return Response(status=200, data={"message": "Sensor Reading Validated!!",})
+            print()
+        else:
+            return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
+
+class DeviceProfileView(viewsets.ModelViewSet):
+    queryset = DeviceProfile.objects.all()
+    serializer_class = DeviceProfileSerializer

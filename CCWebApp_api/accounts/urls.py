@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import LogInView, RegisterView, CustomTokenRefreshView, SuccessView, LogOutView
+from .views import LogInView, RegisterView, CustomTokenRefreshView, SuccessView, LogOutView, ReceiveRainSignal
 from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
@@ -11,4 +11,6 @@ urlpatterns = [
     path('api/token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/success/', SuccessView.as_view(), name='success'),
+
+    path('api/raintrigger/', ReceiveRainSignal.as_view(), name='raintrigger'),
 ]
