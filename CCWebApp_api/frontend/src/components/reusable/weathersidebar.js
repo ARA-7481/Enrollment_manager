@@ -144,7 +144,7 @@ function Weathersidebar(props){
             <Accordion.Collapse eventKey="0">
                
               <>
-              <Nav.Link href="/#/admins/users-students" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
               <div title={isCollapsed ? 'Students':''} className='zooming-icon' style={{color: props.subsidebarState === 'students' ? 'white' : '', backgroundColor: props.subsidebarState === 'students' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
               {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>S</h6>}
               {!isCollapsed && (
@@ -158,7 +158,7 @@ function Weathersidebar(props){
               </div>
               </Nav.Link>
 
-              <Nav.Link href="/#/admins/users-teachers" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
               <div title={isCollapsed ? 'Teachers':''} className='zooming-icon' style={{color: props.subsidebarState === 'teachers' ? 'white' : '', backgroundColor: props.subsidebarState === 'teachers' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
               {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>T</h6>}
               {!isCollapsed && (
@@ -172,7 +172,7 @@ function Weathersidebar(props){
               </div>
               </Nav.Link>
 
-              <Nav.Link href="/#/admins/users-admin" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
               <div title={isCollapsed ? 'Admin & Staff':''} className='zooming-icon' style={{color: props.subsidebarState === 'admin' ? 'white' : '', backgroundColor: props.subsidebarState === 'admin' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
               {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>A</h6>}
               {!isCollapsed && (
@@ -218,7 +218,7 @@ function Weathersidebar(props){
             </div>
             </Nav.Link> */}
 
-            <Nav.Link href="/#/admins/subjects" style={{paddingBottom: '8px'}}>
+            <Nav.Link style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Manual':''} className='zooming-icon' style={{color: props.sidebarState === 'subjects' ? 'white' : '', backgroundColor: props.sidebarState === 'subjects' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedSubjectsIcon/>
@@ -229,7 +229,7 @@ function Weathersidebar(props){
             </div>
             </Nav.Link>
             
-            <Nav.Link href="/#/admins/class" style={{paddingBottom: '8px'}}>
+            <Nav.Link style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Devices':''} className='zooming-icon' style={{color: props.sidebarState === 'class' ? 'white' : '', backgroundColor: props.sidebarState === 'class' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedClassIcon/>

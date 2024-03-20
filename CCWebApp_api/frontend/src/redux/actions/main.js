@@ -13,6 +13,8 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_DEVICE,
          SET_SELECTED_SECTION,
          GET_SECTION_DATA,
+         PROMOTION_SUCCESSFUL,
+         GET_FLOOD_DEVICE,
         } from "../types/types";
 
 function formatTime(time) {
@@ -696,6 +698,22 @@ export const setUseravatar = (avatar, userID) => async dispatch => {
       console.error(error);
   }
 }
+
+export const setStudentPromotion = (gradelevel, status, studentID) => async dispatch => {
+  const body = {
+    gradelevel : gradelevel,
+    status : status
+  }
+  try{
+    const res = await instanceAxios.patch(`/api/getstudents/${studentID}/`, body)
+      // dispatch({
+      //   type: PROMOTION_SUCCESSFUL,
+      // })
+  } catch (error){
+    console.error(error);
+  }
+}
+
 export const getTeacherdata = (id) => async dispatch => {
   try {
     const res = await instanceAxios.get(`/api/getfaculty/${id}`);
@@ -727,6 +745,7 @@ export const getStudentdata = (id) => async dispatch => {
 };
 
 export const setSelectedclass = (classcode) => dispatch => {
+  console.log(classcode)
   dispatch({
     type: SET_SELECTED_CLASS,
     payload: classcode,
@@ -885,9 +904,10 @@ export const addActivityentry = (formData) => async dispatch => {
 export const getClassdata = (classcode) => async dispatch => {
   try {
     const res = await instanceAxios.get(`/api/getclass/${classcode}/`);
+    console.log(res.data)
     if(res.status === 200){
       dispatch({
-        type: GET_SECTION_DATA,
+        type: GET_CLASS_DATA,
         payload: res.data
       });
     }
@@ -1038,6 +1058,21 @@ export const getDevice = (id) => async dispatch => {
     if(res.status === 200){
       dispatch({
         type: GET_DEVICE,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getFlooddevice = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/deviceprofile/${id}`);
+    console.log(res.data)
+    if(res.status === 200){
+      dispatch({
+        type: GET_FLOOD_DEVICE,
         payload: res.data
       });
     }

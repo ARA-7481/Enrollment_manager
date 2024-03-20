@@ -53,16 +53,16 @@ function ClassPage(props) {
       }, [props.emptygradeSheet]);
 
     useEffect(() => {
-        setClasscode(props.classData.code)
-        setDescription(props.classData.description)
-        setSubject(props.classData.subject)
-        setStrand(props.classData.strand)
         try{
             props.setpageHeader(`${props.classData.subject}`, `${props.classData.section.code}`, `${props.classData.code}`);
+            setClasscode(props.classData.code)
+            setDescription(props.classData.description)
+            setSubject(props.classData.subject)
+            setStrand(props.classData.strand)
             setSection(props.classData.section.code)
-            setStudents(props.classData.section.students)
-        }catch(error){
-        }
+            const newStudents = [...props.classData.section.students]
+            setStudents(newStudents)
+        }catch(error){}
       }, [props.classData]);
 
     return(

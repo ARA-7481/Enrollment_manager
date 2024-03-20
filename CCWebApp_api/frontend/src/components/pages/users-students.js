@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getStudents, setLoading } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getStudents, setLoading, getStudentdata, setStudentPromotion } from '../../redux/actions/main';
 
 import { Card, Col, Table, Form, Dropdown, Button, Placeholder } from 'react-bootstrap';
 import { Magnifier, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, New} from '../../assets/svg/clnsmpl-icon';
 
 function UsersStudents(props) {
 
+  const navigate = useNavigate();
   const [queryStatus, setQueryStatus] = useState('');
   const [queryYearlevel, setQueryYearlevel] = useState('');
   const [queryDepartment, setQueryDepartment] = useState('');
@@ -19,9 +20,18 @@ function UsersStudents(props) {
   const [statusStatus, setstatusStatus] = useState('All Status');
   const [value, setValue] = useState('');
 
+  const handleEnrollment = (gradelevel,studentid) => {
+    props.setStudentPromotion(gradelevel,'Enrolled',studentid)
+  }
+
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
+  const handleViewgrade = (studentid) => {
+    props.getStudentdata(studentid)
+    navigate('/admins/studentgrades');
+}
 
   const handleSearch = (query) => {
     props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, query)
@@ -210,7 +220,7 @@ function UsersStudents(props) {
                     
                     {(() => {
                       switch(student.status) {
-                        case 'Verification Failed': return <VerificationFailed/>;
+                        case 'Failed': return <VerificationFailed/>;
                         case 'For Evaluation': return <ForEvaluation/>;
                         case 'Evaluation In Progress': return <EvaluationInProgress/>;
                         case 'Evaluation Complete': return <EvaluationComplete/>;
@@ -236,8 +246,8 @@ function UsersStudents(props) {
                           </>}
                         {student.status === 'For Evaluation'  && 
                           <>
-                            <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
-                            <Dropdown.Item><h1 className='dropdown-item'>Update To Evaluation In Progress</h1></Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleEnrollment(student.gradelevel, student.id)}><h1 className='dropdown-item'>Enroll</h1></Dropdown.Item>
                             <Dropdown.Item><h1 className='dropdown-item'>Reject This Student</h1></Dropdown.Item>
                           </>}
                         {student.status === 'Evaluation In Progress'  && 
@@ -299,6 +309,8 @@ UsersStudents.propTypes = {
   setLoading: PropTypes.func,
   loadingState: PropTypes.string,
   isLess800: PropTypes.bool,
+  getStudentdata: PropTypes.func,
+  setStudentPromotion: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -310,4 +322,4 @@ const mapStateToProps = (state) => ({
   isLess800: state.main.isLess800,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getStudents, setLoading})(UsersStudents))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getStudents, setLoading, getStudentdata, setStudentPromotion})(UsersStudents))

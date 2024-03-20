@@ -90,6 +90,8 @@ export const SET_GRADESHEET = 'SET_GRADESHEET'
 //enrollment
 
 export const GET_SCHOOLYEAR = 'GET_SCHOOLYEAR'
+export const PROMOTION_SUCCESSFUL = 'PROMOTION_SUCCESSFUL'
 
 //rainmeter
 export const GET_DEVICE = 'GET_DEVICE'
+export const GET_FLOOD_DEVICE = 'GET_FLOOD_DEVICE'

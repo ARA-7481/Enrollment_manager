@@ -32,6 +32,7 @@ const SectionCreate = lazy(() =>  import('./pages/section-create'))
 const RoomCreate = lazy(() =>  import('./pages/room-create'))
 const RegisterUserstudent = lazy(() =>  import('./pages/register-studentuser'))
 const RegisterUserteacher = lazy(() =>  import('./pages/register-teacheruser'))
+const Studentgradesadmin = lazy(() =>  import('./pages/dashboard-admin-studentgrade'))
 
 const SchoolYear = lazy(() =>  import('./pages/schoolyear.js'))
 
@@ -43,6 +44,8 @@ const FacultyDashboardAdvisory = lazy(() =>  import('./pages/dashboard-faculty-a
 const AdvisoryPage = lazy(() =>  import('./pages/dashboard-faculty-sectionpage.js'))
 const FacultyProfile = lazy(() =>  import('./pages/faculty-profile.js'))
 const ClassPage = lazy(() =>  import('./pages/dashboard-faculty-classpage.js'))
+const Studentgrades = lazy(() =>  import('./pages/dashboard-faculty-advisorystudentgrade.js'))
+
 
 const WeatherDashboard = lazy(() =>  import('./rainmeter/weatherdashboard'))
 const GenSignin = lazy(() =>  import('./accounts/general-signin'))
@@ -87,6 +90,7 @@ function AppContent() {
           <Route path="register-studentuser" element={<RegisterUserstudent />} />
           <Route path="register-teacheruser" element={<RegisterUserteacher />} />
           <Route path="schoolyear" element={<SchoolYear />} />
+          <Route path="studentgrades" element={<Studentgradesadmin />} />
           </Route>
 
           <Route path='/students' element={<Studentlayout/>}>
@@ -102,6 +106,7 @@ function AppContent() {
           <Route path="advisorypage" element={<AdvisoryPage />} />
           <Route path="profile" element={<FacultyProfile />} />
           <Route path="classpage" element={<ClassPage />} />
+          <Route path="studentgrade" element={<Studentgrades />} />
           </Route>
 
           <Route path='/weather' element={<WeatherLayout/>}>

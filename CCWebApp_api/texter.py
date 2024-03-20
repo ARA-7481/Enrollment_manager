@@ -31,6 +31,7 @@ def send_sms(message, number):
 
 send_sms('Rain-Meter API Started!', '+639095169162,+639561491084,+639994363066,+639319217695,+639303021273,+639616183465,+639105034409')
 while True:
+    # if datetime.now().second
     if datetime.now().minute == 1 or datetime.now().minute == 16 or datetime.now().minute == 31 or datetime.now().minute == 45:
         from accounts.models import DeviceProfile
         key = 'c5Y1An7aOd'

@@ -65,10 +65,12 @@ class StudentProfile(models.Model):
         ('Grade 9', 'Grade 9'),
         ('Grade 10', 'Grade 10'),
         ('Grade 11', 'Grade 11'),
-        ('Grade 12', 'Grade 12')
+        ('Grade 12', 'Grade 12'),
+        ('Graduated', 'Graduated'),
     )
 
     STATUS = (
+        ('Failed', 'Failed'),
         ('For Evaluation', 'For Evaluation'),
         ('Evaluation In Progress', 'Evaluation In Progress'),
         ('Pending Payment', 'Pending Payment'),
@@ -78,7 +80,7 @@ class StudentProfile(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
     description = models.CharField(max_length=500, null=True, blank=True)
     gradelevel = models.CharField(max_length=20, choices=GRADELEVEL, null=False, default='Grade 7')
-    status = models.CharField(max_length=50, choices=STATUS, null=False, default= 'For Evaluation')
+    status = models.CharField(max_length=50, choices=STATUS, null=False, default= 'Enrolled')
     userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='studentprofile')
     facebook_url = models.CharField(max_length=200, null=True)
 
@@ -183,3 +185,4 @@ class DeviceProfile(models.Model):
     triggercount = models.IntegerField(null=True, blank=True)
     hourcount = models.IntegerField(null=True, blank=True, default = 0)
     rainrate = models.FloatField(null=True, blank=True)
+    waterlevel = models.FloatField(null=True, blank=True)

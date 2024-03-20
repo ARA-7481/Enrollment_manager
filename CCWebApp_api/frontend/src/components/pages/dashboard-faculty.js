@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass, getClassdata } from '../../redux/actions/main';
 
 import { Placeholder } from 'react-bootstrap';
 
@@ -184,6 +184,7 @@ FacultyDashboard.propTypes = {
   setSelectedBG: PropTypes.func,
   newAvatar: PropTypes.string,
   setSelectedclass: PropTypes.func,
+  getClassdata: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -193,4 +194,4 @@ const mapStateToProps = (state) => ({
   newAvatar: state.main.newAvatar
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass})(FacultyDashboard))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass, getClassdata})(FacultyDashboard))

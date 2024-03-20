@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getDevice } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getDevice, getFlooddevice } from '../../redux/actions/main';
 
 import {} from '../../assets/svg/clnsmpl-icon';
 import { propTypes } from 'react-bootstrap/esm/Image';
@@ -15,6 +15,7 @@ function WeatherDashboard(props) {
     props.setsubsidebarState(null);
     props.setpageHeader('Dashboard', '', 'Welcome to the dashboard');
     props.getDevice('c5Y1An7aOd');
+    props.getFlooddevice('XKi0WuagbB');
   }, []);
 
   const websocket = useRef(null);
@@ -27,6 +28,7 @@ function WeatherDashboard(props) {
       console.log(data.event.event)
       if (data.event.event === 'model_update') {
         props.getDevice('c5Y1An7aOd');
+        props.getFlooddevice('XKi0WuagbB');
       }
     };
     return () => {
@@ -70,21 +72,21 @@ function WeatherDashboard(props) {
           </div>
           <div style={{display: 'flex', backgroundColor:'rgba(51, 51, 51, 0.00)'}}>
             <h1 className='inter-400-16px' style={{marginRight: '8px'}}>Active Module:  </h1>
-            <h1 className='inter-400-16px-dark'>RaspberryPi3B-Ultrasonic</h1>
+            <h1 className='inter-400-16px-dark'>{props.flooddeviceData.name}</h1>
           </div>
           <div style={{display: 'flex', backgroundColor:'rgba(51, 51, 51, 0.00)'}}>
             <h1 className='inter-400-16px' style={{marginRight: '8px'}}>Device ID:  </h1>
-            <h1 className='inter-400-16px-dark'>XKi0WuagbB</h1>
+            <h1 className='inter-400-16px-dark'>{props.flooddeviceData.id}</h1>
           </div>
           <div style={{display: 'flex', alignItems: 'center'}}>
-          <h1 className='inter-700-170px-light' style={{color:'rgba(30,144,255, 0.4)' }}>1.75</h1>
-          <h1 className='inter-400-16px-dark'> meters</h1>
+          <h1 className='inter-700-170px-light' style={{color:'rgba(30,144,255, 0.4)' }}>{parseFloat(props.flooddeviceData.waterlevel * 100).toFixed(3)}</h1>
+          <h1 className='inter-400-16px-dark'> centimeters</h1>
           </div>
           <div style={{display: 'flex', alignItems: 'center'}}>
           <h1 className='inter-400-16px' style={{marginRight: '8px'}}>Alert Code:</h1>
-          {(props.deviceData.rainrate > 7.5 && props.deviceData.rainrate <= 15 )? <h1 className='inter-600-20px' style={{color: 'yellow'}}>YELLOW</h1>:
-           (props.deviceData.rainrate > 15 && props.deviceData.rainrate <= 30 )? <h1 className='inter-600-20px' style={{color: 'orange'}}>ORANGE</h1> :
-            (props.deviceData.rainrate > 30)? <h1 className='inter-600-20px' style={{color: 'yellow'}}>RED</h1> : <h1 className='inter-600-20px' style={{color: 'gray'}}>NONE</h1>}
+          {(props.flooddeviceData.waterlevel > 0.1 && props.flooddeviceData.waterlevel <= 0.6 )? <h1 className='inter-600-20px' style={{color: 'yellow'}}>YELLOW</h1>:
+           (props.flooddeviceData.waterlevel > 0.6 && props.flooddeviceData.waterlevel <= 1.1 )? <h1 className='inter-600-20px' style={{color: 'orange'}}>ORANGE</h1> :
+            (props.flooddeviceData.waterlevel > 1.1)? <h1 className='inter-600-20px' style={{color: 'red'}}>RED</h1> : <h1 className='inter-600-20px' style={{color: 'gray'}}>NONE</h1>}
             </div>
         </div>
 
@@ -104,12 +106,15 @@ WeatherDashboard.propTypes = {
   setpageHeader: PropTypes.func,
   getDevice: PropTypes.func,
   deviceData: PropTypes.object,
+  getFlooddevice: PropTypes.func,
+  flooddeviceData: PropTypes.object,
 }
 
 const mapStateToProps = (state) => ({
   sidebarState: state.main.sidebarState,
   subsidebarState: state.main.subsidebarState,
   deviceData: state.main.deviceData,
+  flooddeviceData: state.main.flooddeviceData,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getDevice})(WeatherDashboard))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getDevice, getFlooddevice})(WeatherDashboard))

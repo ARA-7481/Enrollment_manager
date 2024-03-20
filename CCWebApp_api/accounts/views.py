@@ -122,6 +122,24 @@ class ReceiveRainSignal(generics.GenericAPIView):
             print()
         else:
             return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
+        
+class ReceiveFloodSignal(generics.GenericAPIView):
+    def post(self, request):
+        data = request.data
+        device_id = (data['id'])
+        print(data)
+        if device_id:
+            try:
+                device_profile = DeviceProfile.objects.get(id=device_id)
+            except DeviceProfile.DoesNotExist:
+                return Response(status=404, data={"message": "DeviceProfile not found"})
+            
+            device_profile.waterlevel = data['reading']
+            device_profile.save()
+            return Response(status=200, data={"message": "Sensor Reading Validated!!",})
+            print()
+        else:
+            return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
 
 class DeviceProfileView(viewsets.ModelViewSet):
     queryset = DeviceProfile.objects.all()
