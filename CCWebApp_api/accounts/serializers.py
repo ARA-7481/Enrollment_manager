@@ -44,13 +44,38 @@ class FacultySerializer(serializers.ModelSerializer):
 
 
 # for dashboard start teacher
+class SectionSerializerSectionAverage(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = '__all__'
+
+class ClassesSerializerForSectionAverage(serializers.ModelSerializer):
+    section = SectionSerializerSectionAverage(read_only=False)
+    class Meta:
+        model = Class
+        fields = '__all__'        
+
 class GradeScoreEntitySerializer(serializers.ModelSerializer):
     class Meta:
         model = GradeSheet
         fields = '__all__'
 
+class GradeScoreEntitySerializerForDashboard(serializers.ModelSerializer):
+    in_class = ClassesSerializerForSectionAverage(read_only=False)
+    class Meta:
+        model = GradeSheet
+        fields = '__all__'
+
+class GetStudentSerializerForDashboard(serializers.ModelSerializer):
+    userprofile = UserSerializer(read_only=False)
+    related_grade_entities = GradeScoreEntitySerializerForDashboard(read_only=False, many=True)
+   
+    class Meta:
+        model = StudentProfile
+        fields = '__all__'
+
 class SectionSerializerForDashboard(serializers.ModelSerializer):
-    students = GetStudentSerializer(read_only=False, many=True)
+    students = GetStudentSerializerForDashboard(read_only=False, many=True)
     class Meta:
         model = Section
         fields = '__all__'

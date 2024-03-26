@@ -95,3 +95,4 @@ export const PROMOTION_SUCCESSFUL = 'PROMOTION_SUCCESSFUL'
 //rainmeter
 export const GET_DEVICE = 'GET_DEVICE'
 export const GET_FLOOD_DEVICE = 'GET_FLOOD_DEVICE'
+export const GET_DEVICES = 'GET_DEVICES'

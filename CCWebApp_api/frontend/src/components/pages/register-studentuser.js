@@ -1161,9 +1161,7 @@ function RegisterUserstudent(props) {
                           }
                         {strand === "Home Economics" &&
                         <>
-                        <option value="Cookery" > Cookery</option>
-                        <option value="Food & Beverage Services" >Food & Beverage Services</option>
-                        <option value="Bread & Pastry Production" >Bread & Pastry Production</option>
+                        <option value="Cookery" > Cookery, Food & Beverage Services and Bread & Pastry Production</option>
                         </>
                           }
                         </Form.Select>

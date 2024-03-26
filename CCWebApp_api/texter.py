@@ -31,7 +31,17 @@ def send_sms(message, number):
 
 send_sms('Rain-Meter API Started!', '+639095169162,+639561491084,+639994363066,+639319217695,+639303021273,+639616183465,+639105034409')
 while True:
-    # if datetime.now().second
+    if datetime.now().second == 1 or datetime.now().second == 31:
+        from accounts.models import DeviceProfile
+        key = 'XKi0WuagbB'
+        device = DeviceProfile.objects.get(pk=key)
+        waterlevel = device.waterlevel * 100
+        if(waterlevel > 10 and waterlevel <= 60):
+            send_sms(f'YELLOW WATER LEVEL! Threshold exceeded YELLOW Water Level: {waterlevel}', '09095169162,09561491084,09994363066,09319217695,09303021273,09616183465')
+        elif(waterlevel > 60 and waterlevel <= 110):
+            send_sms(f'ORANGE WATER LEVEL! Threshold exceeded ORANGE Water Level: {waterlevel}', '09095169162,09561491084,09994363066,09319217695,09303021273,09616183465')
+        elif(waterlevel > 110):
+            send_sms(f'RED WATER LEVEL! Threshold exceeded RED Water Level: {waterlevel}', '09095169162,09561491084,09994363066,09319217695,09303021273,09616183465')
     if datetime.now().minute == 1 or datetime.now().minute == 16 or datetime.now().minute == 31 or datetime.now().minute == 45:
         from accounts.models import DeviceProfile
         key = 'c5Y1An7aOd'

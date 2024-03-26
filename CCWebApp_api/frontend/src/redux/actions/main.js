@@ -15,6 +15,7 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_SECTION_DATA,
          PROMOTION_SUCCESSFUL,
          GET_FLOOD_DEVICE,
+         GET_DEVICES,
         } from "../types/types";
 
 function formatTime(time) {
@@ -1058,6 +1059,21 @@ export const getDevice = (id) => async dispatch => {
     if(res.status === 200){
       dispatch({
         type: GET_DEVICE,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getDevices = () => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/deviceprofile/`);
+    console.log(res.data)
+    if(res.status === 200){
+      dispatch({
+        type: GET_DEVICES,
         payload: res.data
       });
     }

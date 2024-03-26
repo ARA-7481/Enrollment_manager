@@ -13,7 +13,7 @@ import {
 } from 'cdbreact';
 import Nav from 'react-bootstrap/Nav';
 import { Card, Container, Accordion } from 'react-bootstrap';
-import { setsidebarState, setsubsidebarState} from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, getDevices} from '../../redux/actions/main';
 import logo from '../../assets/images/backgrounds/R.png'
 
 import {ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
@@ -32,19 +32,19 @@ function Weathersidebar(props){
 
   const handleAccordion = () => {
     if (props.subsidebarState === 'admin'){
-    navigate('/admins/users-admin');
+    // navigate('/admins/users-admin');
     }
     else if (props.subsidebarState === 'student'){
-    navigate('/admins/users-students');
+    // navigate('/admins/users-students');
     }
     else if (props.subsidebarState === 'teachers'){
-      navigate('/admins/users-teachers');
+      // navigate('/admins/users-teachers');
       }
     // else if (props.subsidebarState === 'masterlist'){
     //   navigate('/admins/users-masterlist');
     //   }
     else if(props.subsidebarState === null){
-      navigate('/admins/users-students');
+      // navigate('/admins/users-students');
       }
 
     if(open && props.sidebarState !== 'users'){
@@ -57,6 +57,7 @@ function Weathersidebar(props){
  };
 
  useEffect(() => {
+  props.getDevices()
   if(!isCollapsed){
     if(window.innerWidth < 1140){
       handleCollapse()
@@ -96,7 +97,7 @@ function Weathersidebar(props){
          style={{display: 'flex', height: '190px'}} 
         >
             {!isCollapsed && 
-            <Nav.Link href="/#/admins/users-students" style={{transform: 'translate( 0px, -12px)'}}>
+            <Nav.Link style={{transform: 'translate( 0px, -12px)'}}>
               <div style={{transform: 'translate( 35px, 0px)'}}>
                     <img className="circular-avatar" src={logo} alt="description" />
               
@@ -124,12 +125,12 @@ function Weathersidebar(props){
            
            
             <Accordion defaultActiveKey="0" style={{paddingBottom: '8px'}}>
-            <div title={isCollapsed ? 'Users':''} className='zooming-icon' onClick={handleAccordion} style={{cursor: 'pointer', color: props.sidebarState === 'users' ? 'white' : '', backgroundColor: props.sidebarState === 'users' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            <div title={isCollapsed ? 'Devices':''} className='zooming-icon' onClick={handleAccordion} style={{cursor: 'pointer', color: props.sidebarState === 'class' ? 'white' : 'white', backgroundColor: props.sidebarState === 'class' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
-            <ConnectedUsersIcon/>
+            <ConnectedClassIcon/>
             </div>
             <div style={{paddingLeft: '20px'}}>
-            {!isCollapsed && 'Users'}
+            {!isCollapsed && 'Devices'}
             </div>
             <div style={{marginLeft: 'auto', paddingRight: isCollapsed ? '0px':'12px'}}>
             {!isCollapsed && open && 
@@ -142,24 +143,28 @@ function Weathersidebar(props){
             </div>
             {open && (
             <Accordion.Collapse eventKey="0">
-               
               <>
-              <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
-              <div title={isCollapsed ? 'Students':''} className='zooming-icon' style={{color: props.subsidebarState === 'students' ? 'white' : '', backgroundColor: props.subsidebarState === 'students' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
-              {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>S</h6>}
-              {!isCollapsed && (
-                <div style={{ marginLeft: isCollapsed ? '20px' : '10px' }}>
-              <ConnectedDotIconStudents/>
-              </div>
-                )}
-              <div style={{paddingLeft: '20px'}}>
-              {!isCollapsed && 'Students'}
-              </div>
-              </div>
-              </Nav.Link>
+               {props.devicesList?.map((device) =>(
+                
+                <Nav.Link key={device.id} style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+                <div title={isCollapsed ? device.name:''} className='zooming-icon' style={{color: props.subsidebarState === 'students' ? 'white' : 'white', backgroundColor: props.subsidebarState === 'students' ? 'white' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
+                {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>S</h6>}
+                {!isCollapsed && (
+                  <div style={{ marginLeft: isCollapsed ? '20px' : '10px' }}>
+                <ConnectedDotIconStudents/>
+                </div>
+                  )}
+                <div style={{paddingLeft: '20px'}}>
+                {!isCollapsed && device.name}
+                </div>
+                </div>
+                </Nav.Link>
+                
+               ))}
+              </>
 
-              <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
-              <div title={isCollapsed ? 'Teachers':''} className='zooming-icon' style={{color: props.subsidebarState === 'teachers' ? 'white' : '', backgroundColor: props.subsidebarState === 'teachers' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
+              {/* <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              <div title={isCollapsed ? 'ESP32-RainMeter':''} className='zooming-icon' style={{color: props.subsidebarState === 'teachers' ? 'white' : '', backgroundColor: props.subsidebarState === 'teachers' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
               {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>T</h6>}
               {!isCollapsed && (
                 <div style={{ marginLeft: isCollapsed ? '20px' : '10px' }}>
@@ -167,12 +172,12 @@ function Weathersidebar(props){
                 </div>
                 )}
               <div style={{paddingLeft: '20px'}}>
-              {!isCollapsed && 'Teachers'}
+              {!isCollapsed && 'ESP32-RainMeter'}
               </div>
               </div>
-              </Nav.Link>
+              </Nav.Link> */}
 
-              <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
+              {/* <Nav.Link style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
               <div title={isCollapsed ? 'Admin & Staff':''} className='zooming-icon' style={{color: props.subsidebarState === 'admin' ? 'white' : '', backgroundColor: props.subsidebarState === 'admin' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
               {isCollapsed && <h6 style={{paddingLeft: '20px', paddingTop: '10px'}}>A</h6>}
               {!isCollapsed && (
@@ -184,7 +189,7 @@ function Weathersidebar(props){
               {!isCollapsed && 'Admin & Staff'}
               </div>
               </div>
-              </Nav.Link>
+              </Nav.Link> */}
 
               {/* <Nav.Link href="/#/admins/users-masterlist" style={{paddingLeft: isCollapsed ? '0px' : '12px', paddingTop: '8px'}}>
               <div title={isCollapsed ? 'Masterlist':''} className='zooming-icon' style={{color: props.subsidebarState === 'masterlist' ? 'white' : '', backgroundColor: props.subsidebarState === 'masterlist' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '198px', height:'44px', borderRadius:'4px'}}>
@@ -199,7 +204,6 @@ function Weathersidebar(props){
               </div>
               </div>
               </Nav.Link> */}
-              </>
 
 
             </Accordion.Collapse>
@@ -218,18 +222,18 @@ function Weathersidebar(props){
             </div>
             </Nav.Link> */}
 
-            <Nav.Link style={{paddingBottom: '8px'}}>
-            <div title={isCollapsed ? 'Manual':''} className='zooming-icon' style={{color: props.sidebarState === 'subjects' ? 'white' : '', backgroundColor: props.sidebarState === 'subjects' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
+            {/* <Nav.Link style={{paddingBottom: '8px'}}>
+            <div title={isCollapsed ? 'User Manual':''} className='zooming-icon' style={{color: props.sidebarState === 'subjects' ? 'white' : 'white', backgroundColor: props.sidebarState === 'subjects' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedSubjectsIcon/>
             </div>
             <div style={{paddingLeft: '20px'}}>
-            {!isCollapsed && 'Manual'}
+            {!isCollapsed && 'User Manual'}
             </div>
             </div>
-            </Nav.Link>
+            </Nav.Link> */}
             
-            <Nav.Link style={{paddingBottom: '8px'}}>
+            {/* <Nav.Link style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'Devices':''} className='zooming-icon' style={{color: props.sidebarState === 'class' ? 'white' : '', backgroundColor: props.sidebarState === 'class' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
             <div style={{marginLeft: isCollapsed ? '20px':'10px'}}>
             <ConnectedClassIcon/>
@@ -238,7 +242,7 @@ function Weathersidebar(props){
             {!isCollapsed && 'Devices'}
             </div>
             </div>
-            </Nav.Link>
+            </Nav.Link> */}
 
             {/* <Nav.Link href="/#/admins/schoolyear" style={{paddingBottom: '8px'}}>
             <div title={isCollapsed ? 'SchoolYear':''} className='zooming-icon' style={{color: props.sidebarState === 'schoolyear' ? 'white' : '', backgroundColor: props.sidebarState === 'schoolyear' ? '#3A57E8' : '' ,display:'flex', justifyContent: isCollapsed ? 'center':'start', alignItems: 'center', width: isCollapsed ? '45px' : '210px', height:'44px', borderRadius:'4px'}}>
@@ -286,13 +290,16 @@ Weathersidebar.propTypes = {
   setsidebarState: PropTypes.func.isRequired,
   setsubsidebarState: PropTypes.func.isRequired,
   windowDimensions: PropTypes.object,
+  devicesList: PropTypes.array,
+  getDevices: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
   sidebarState: state.main.sidebarState,
   subsidebarState: state.main.subsidebarState,
   windowDimensions: state.main.windowDimensions,
+  devicesList: state.main.devicesList,
   });
 
 
-export default connect(mapStateToProps, {setsidebarState, setsubsidebarState})(Weathersidebar);
+export default connect(mapStateToProps, {setsidebarState, setsubsidebarState, getDevices})(Weathersidebar);

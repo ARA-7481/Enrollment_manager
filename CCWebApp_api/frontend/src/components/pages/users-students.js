@@ -16,7 +16,7 @@ function UsersStudents(props) {
   const [queryDepartment, setQueryDepartment] = useState('');
   const [queryCourse, setQueryCourse] = useState('');
 
-  const [sortStatus, setsortStatus] = useState ('Newest-Oldest')
+  const [sortStatus, setsortStatus] = useState('Newest-Oldest')
   const [statusStatus, setstatusStatus] = useState('All Status');
   const [value, setValue] = useState('');
 

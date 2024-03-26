@@ -40,7 +40,7 @@ function WeatherDashboard(props) {
 
   return (
       <>
-      <div style={{backgroundColor:'rgba(51, 51, 51, 0.70)', display: 'flex', borderRadius:'8px', padding: '100px', width: '100%', gap: '120px'}}>
+      <div style={{backgroundColor:'rgba(255, 255, 255, 0.20)', display: 'flex', borderRadius:'8px', padding: '100px', width: '100%', gap: '120px'}}>
         <div>
           <div style={{display: 'flex', backgroundColor:'rgba(51, 51, 51, 0.00)', marginBottom: '20px'}}>
             <h1 className='inter-400-28px'>RAINFALL INTENSITY</h1>
