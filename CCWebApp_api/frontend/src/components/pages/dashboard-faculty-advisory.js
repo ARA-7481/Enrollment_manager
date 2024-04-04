@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection, clearSectiondata } from '../../redux/actions/main';
 
 import { Placeholder } from 'react-bootstrap';
 
@@ -31,6 +31,7 @@ function FacultyDashboardAdvisory(props) {
     props.setpageHeader(`Hello ${user.first_name}`, '', 'Manage Sections Under Your Advisory');
     props.getTeacherdata(user.facultyprofile);
     props.setSelectedBG('https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg0.png');
+    props.clearSectiondata();
   }, []);
 
   useEffect(() => {
@@ -179,6 +180,7 @@ FacultyDashboardAdvisory.propTypes = {
   setSelectedBG: PropTypes.func,
   newAvatar: PropTypes.string,
   setSelectedsection: PropTypes.func,
+  clearSectiondata: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -188,4 +190,4 @@ const mapStateToProps = (state) => ({
   newAvatar: state.main.newAvatar
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection})(FacultyDashboardAdvisory))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection, clearSectiondata})(FacultyDashboardAdvisory))

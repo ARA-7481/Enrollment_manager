@@ -30,6 +30,7 @@ function Studentgradesadmin(props) {
 
   useEffect(() => {
     props.setpageHeader(`Grade Archive`, '', 'Assess the grades of the student for grade level promotion.');
+    props.setsubsidebarState('student-grade');
   }, []);
 
   useEffect(() => {

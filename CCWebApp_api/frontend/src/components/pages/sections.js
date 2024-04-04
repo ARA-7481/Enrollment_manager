@@ -2,7 +2,8 @@ import React, { useState, Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, getRoomsList, setsectionState, getSectionList } from '../../redux/actions/main';
+import { useNavigate } from 'react-router-dom';
+import { setsidebarState, setsubsidebarState, setpageHeader, setLoading, getRoomsList, setsectionState, getSectionList, setSelectedsection, getSchoolYearList } from '../../redux/actions/main';
 
 import {ComingSoon} from '../../assets/svg/clnsmpl-icon';
 
@@ -10,33 +11,58 @@ import { Col, Table, Dropdown, Form, Placeholder } from 'react-bootstrap';
 import { Magnifier } from '../../assets/svg/clnsmpl-icon';
 
 function Sections(props) {
+  const navigate = useNavigate();
   const [sortStatus, setsortStatus] = useState ('Newest-Oldest')
   const [value, setValue] = useState('');
+  const [searchquery, setSearchquery] = useState('');
+  const [gradelevelquery, setGradelevelquery] = useState('');
+
+  const [gradeleveldropdown, setGradeleveldropdown] = useState('All Grade Levels');
+  // const 
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
 
   const handleSearch = (query) => {
-    // props.getRoomsList(query)
+    props.getSectionList(query, gradelevelquery);
     props.setLoading('isLoading')
+  };
+
+  const handleGradelevelquery = (gradelevel) => {
+    setGradeleveldropdown(gradelevel)
+    setValue('')
+    if (gradelevel === 'All Grade Levels'){
+      setGradelevelquery('')
+      setSearchquery('')
+    }
+    else{
+      setGradelevelquery(gradelevel)
+      setSearchquery('')
+    }
   };
 
   const handleSort = (sort) => {
     setsortStatus(sort)
   };
 
+  const handleSectionSelection = (sectioncode) => {
+    props.setSelectedsection(sectioncode);
+    navigate('/admins/section-page');
+}
 
   useEffect(() => {
     if (props.roomsListForTable.length == 0){
       props.setLoading('isLoading');
     }
+    props.getSchoolYearList();
     props.setsidebarState('sections');
     props.setsubsidebarState(null);
     props.setsectionState('list');
     props.setpageHeader('Manage Sections', '', 'Add and Update Sections');
-    props.getSectionList();
-  }, []);
+    props.getSectionList(searchquery, gradelevelquery);
+    console.log("--------")
+  }, [searchquery, gradelevelquery]);
 
   return (
     <>
@@ -56,6 +82,7 @@ function Sections(props) {
             <h1 className='inter-500-16px' style={{paddingTop: '10px'}}>
               Sort: 
             </h1>
+
             <Dropdown style={{width: '37.5%', minWidth: '1px'}}>
                 <Dropdown.Toggle id="dropdown-basic" 
                                 style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', 
@@ -76,6 +103,37 @@ function Sections(props) {
             <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
               Filter: 
             </h1>
+
+              <Dropdown style={{width: '30%', minWidth: '1px', marginLeft: '10px'}}>
+                    <Dropdown.Toggle id="dropdown-basic" 
+                                    style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%',
+                                            display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                      <div style={{overflow: 'hidden'}}>{gradeleveldropdown}</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu style={{ width: '100%'}}>
+                      {gradeleveldropdown !== 'All Grade Levels'  && <Dropdown.Item onClick={() => handleGradelevelquery('All Grade Levels')}><div className="zooming-text">All Grade Levels</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 7'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 7')}><div className="zooming-text">Grade 7</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 8'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 8')}><div className="zooming-text">Grade 8</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 9'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 9')}><div className="zooming-text">Grade 9</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 10'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 10')}><div className="zooming-text">Grade 10</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 11'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 11')}><div className="zooming-text">Grade 11</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 12'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 12')}><div className="zooming-text">Grade 12</div></Dropdown.Item>}
+                    </Dropdown.Menu>
+              </Dropdown>
+
+              {/* <Dropdown style={{width: '50%', minWidth: '1px'}}>
+                    <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                      <div style={{overflow: 'hidden'}}>{departmentStatus}</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu style={{ width: '100%' }}>
+                      {departmentStatus !== 'All Departments'  && <Dropdown.Item onClick={() => handleDepartment('All Departments')}><div className="zooming-text">All Departments</div></Dropdown.Item>}
+                      {props.departmentsList.filter(dept => dept.code !== departmentStatus).map((department) => (
+                        <Dropdown.Item key={department.code} onClick={() => handleDepartment(department.code)}><div className="zooming-text">{department.code}</div></Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                </Dropdown> */}
             
           </div>
         </div>
@@ -182,7 +240,8 @@ function Sections(props) {
                       <h2 style={{color: '#8A92A6', marginLeft: '12px', marginBottom: '15px'}}>...</h2>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                          <Dropdown.Item><h1 className='dropdown-item'>Update Info</h1></Dropdown.Item>
+                          <Dropdown.Item onClick={() => handleSectionSelection(section.code)}><h1 className='dropdown-item'>Manage Students</h1></Dropdown.Item>
+                          {/* <Dropdown.Item><h1 className='dropdown-item'>Update Info</h1></Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
                 </td>
@@ -215,6 +274,8 @@ Sections.propTypes = {
   setsectionState: PropTypes.func,
   getSectionList: PropTypes.func,
   sectionList: PropTypes.array,
+  setSelectedsection: PropTypes.func,
+  getSchoolYearList: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -226,4 +287,4 @@ const mapStateToProps = (state) => ({
   sectionList: state.main.sectionList,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getRoomsList, setLoading, setsectionState, getSectionList})(Sections))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getRoomsList, setLoading, setsectionState, getSectionList, setSelectedsection, getSchoolYearList})(Sections))

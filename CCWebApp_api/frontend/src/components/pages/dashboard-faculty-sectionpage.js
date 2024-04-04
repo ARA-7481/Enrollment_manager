@@ -8,7 +8,8 @@ import { setsidebarState, setsubsidebarState, setpageHeader, getSectiondata, get
 import { Form, InputGroup, Dropdown, Table, Button, Spinner, Placeholder, Card } from 'react-bootstrap';
 import { Magnifier, Draft, ForEvaluation, EvaluationInProgress, EvaluationComplete, PendingPayment, PaymentReceived, Enrolled, VerificationFailed, New} from '../../assets/svg/clnsmpl-icon';
 import { PDFViewer } from '@react-pdf/renderer';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import logo from '../../assets/images/backgrounds/logo.png'
 
 
 function AdvisoryPage(props) {
@@ -118,9 +119,16 @@ function AdvisoryPage(props) {
                                 case 'For Evaluation': return <Text style={{width: '30%', padding: '5px', fontSize: '8px', color: 'gray'}}>
                                                                     Promoted ({student.status})
                                                               </Text>;
-                                case 'Enrolled': return <Text style={{width: '30%', padding: '5px', fontSize: '8px', color: 'green'}}>
+                                case 'Enrolled': 
+                                if(student.gradelevel === props.sectionData.gradelevel){
+                                return <Text style={{width: '30%', padding: '5px', fontSize: '10px', color: 'red'}}>
+                                                            Failed
+                                                        </Text>;
+                                }else{
+                                    return <Text style={{width: '30%', padding: '5px', fontSize: '8px', color: 'green'}}>
                                                             Promoted ({student.status})
                                                         </Text>;
+                                }
                             }
                             })()}
                     </View>
@@ -215,7 +223,7 @@ function AdvisoryPage(props) {
             let failedstudentcount = 0;
     
             for (const student of students) {
-                if (student.status === "Failed"){
+                if (student.status === "Failed" || (student.gradelevel === props.sectionData.gradelevel && student.status === "Enrolled")){
                         failedstudentcount++;
                 }
                 if (student.related_grade_entities) {

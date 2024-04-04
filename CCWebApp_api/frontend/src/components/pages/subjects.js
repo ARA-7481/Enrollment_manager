@@ -87,7 +87,7 @@ function Subjects(props) {
 
       <div style={{backgroundColor:'#ffffff', borderRadius:'8px'}}>
         <div style={{height: '81px', display: 'flex'}}>
-          <h1 className='table-title'>Section List</h1>
+          <h1 className='table-title'>Subjects List</h1>
         </div>
         {props.loadingState == 'isLoading' ?  
           <div style={{marginLeft: '20px', marginRight: '40px', marginTop: '7px'}}>

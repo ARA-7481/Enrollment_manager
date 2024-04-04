@@ -7,6 +7,8 @@ import { setsidebarState, setsubsidebarState, setpageHeader, setSelectedBG, getC
 
 import { Form, InputGroup, Dropdown, Table, Button, Spinner, Placeholder } from 'react-bootstrap';
 import { RedExclamation, ConnectedAccordionIconOpen } from '../../assets/svg/clnsmpl-icon';
+import { PDFViewer } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 function ClassPage(props) {
 
@@ -18,12 +20,116 @@ function ClassPage(props) {
     const [students, setStudents] = useState([]);
     const [activeinput, setActiveinput] = useState('');
 
+    const [showpdf, setShowpdf] = useState(false);
+
     const [q1, setQ1] = useState()
     const [q2, setQ2] = useState()
     const [q3, setQ3] = useState()
     const [q4, setQ4] = useState()
     const [remarks, setRemarks] = useState('')
     const [gradeid, setGradeid] = useState('')
+
+
+    const MyDocument = () => (
+        <Document>
+          <Page size="A4" style={{padding: '20px'}}>
+          <View style={{ padding: '15px', borderTop: '2px solid black', borderBottom: '2px solid black', marginBottom: '12px'}}>
+            <Text style={{alignSelf: 'center', fontSize: '25px', fontWeight: 700}}>CLASS REPORT SHEET</Text>
+            <Text style={{alignSelf: 'center', paddingTop: '5px', fontSize: '12px', color: 'gray'}}>SY: {props.classData.section.schoolyear}</Text>
+          </View>
+          <View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Class:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px'}}>{props.classData.code}</Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Teacher:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px'}}>{props.teacherData.userprofile.last_name}, {props.teacherData.userprofile.first_name} {props.teacherData.userprofile.middle_name}</Text>
+                </View>
+            </View>
+          </View>
+          <View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Subject:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px'}}>{props.classData.subject}</Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Section:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px'}}>{props.classData.section.code}</Text>
+                </View>
+            </View>
+          </View>
+          <View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Grade Level:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px'}}>{props.classData.section.gradelevel}</Text>
+                </View>
+            </View>
+          </View>
+
+
+          <View style={{border: '1px solid black', marginTop: '12px'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={{width: '40%', borderRight: '1px solid black', padding: '5px'}}>NAME</Text>
+                <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px'}}>Q1</Text>
+                <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px'}}>Q2</Text>
+                <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px'}}>Q3</Text>
+                <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px'}}>Q4</Text>
+                <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px'}}>AVE.</Text>
+                <Text style={{width: '30%', padding: '5px'}}>STATUS</Text>
+            </View>
+            {students.sort((a, b) => a.userprofile.last_name.localeCompare(b.userprofile.last_name))?.map((student) => {
+                const studentScores = [...props.classData.class_related_score].find(score => score.student === student.id);
+                return (
+                    <View key={student.id} style={{flexDirection: 'row', borderTop: '1px solid black'}}>
+                        <Text style={{width: '40%', borderRight: '1px solid black', padding: '5px', fontSize: '12px'}}>
+                            {student.userprofile.last_name}, {student.userprofile.first_name} {student.userprofile.middle_name} 
+                        </Text>
+                        <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px', fontSize: '12px', color: 'gray'}}>{studentScores.quarter1}</Text>
+                        <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px', fontSize: '12px', color: 'gray'}}>{studentScores.quarter2}</Text>
+                        <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px', fontSize: '12px', color: 'gray'}}>{studentScores.quarter3}</Text>
+                        <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px', fontSize: '12px', color: 'gray'}}>{studentScores.quarter4}</Text>
+                        <Text style={{width: '15%', borderRight: '1px solid black', padding: '5px', fontSize: '15px'}}>
+                            {studentScores ? 
+                                ((studentScores.quarter1 !== 0 ? studentScores.quarter1 : 0) +
+                                (studentScores.quarter2 !== 0 ? studentScores.quarter2 : 0) +
+                                (studentScores.quarter3 !== 0 ? studentScores.quarter3 : 0) +
+                                (studentScores.quarter4 !== 0 ? studentScores.quarter4 : 0)) / 
+                                ((studentScores.quarter1 !== 0 ? 1 : 0) +
+                                (studentScores.quarter2 !== 0 ? 1 : 0) +
+                                (studentScores.quarter3 !== 0 ? 1 : 0) +
+                                (studentScores.quarter4 !== 0 ? 1 : 0)).toFixed(2)
+                                : ''
+                            }
+                            </Text>
+                        <Text style={{width: '30%', padding: '5px', fontSize: '12px', color: activeinput == student.id ? 'black':
+                                                                                                                  studentScores.remarks==="Ongoing"?'#0047AB':
+                                                                                                                  studentScores.remarks==="Passed"?'green':
+                                                                                                                  studentScores.remarks==="Failed"?'red':
+                                                                                                                  'black'}}>{studentScores.remarks}
+                       </Text>
+
+
+                    </View>
+                );
+            })}
+          </View>
+          <View style={{flexDirection: 'row', marginTop: '30px'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Submitted By:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px'}}>{props.teacherData.userprofile.last_name}, {props.teacherData.userprofile.first_name} {props.teacherData.userprofile.middle_name}</Text>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: '20px'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Approved By:</Text>
+          </View>
+
+          </Page>
+        </Document>
+      );
+
+
 
     const handleCreategradesheet = (studentid) => {
         props.setGradesheet(studentid, classcode)
@@ -54,6 +160,7 @@ function ClassPage(props) {
 
     useEffect(() => {
         try{
+            console.log(props.classData)
             props.setpageHeader(`${props.classData.subject}`, `${props.classData.section.code}`, `${props.classData.code}`);
             setClasscode(props.classData.code)
             setDescription(props.classData.description)
@@ -217,7 +324,38 @@ function ClassPage(props) {
             })}
             </tbody>
           </Table>
+          {!showpdf?
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
+            <Button type="button" onClick={() => {setShowpdf(true)}} 
+                                    style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '15%', alignContent: 'center', marginRight: '24px'}}>
+                    <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
+                        Generate Report
+                    </h1>
+            </Button>
+          </div>
+            :
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
+             <Button type="button" onClick={() => {handleGetsectionaverage();setShowpdf(true)}} 
+                                    style={{borderColor:'green', borderRadius: '4px', backgroundColor: 'green', width: '15%', alignContent: 'center', marginRight: '24px'}}>
+                    <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
+                        Refresh Report
+                    </h1>
+            </Button>
+            <Button type="button" onClick={() => {setShowpdf(false)}} 
+                                    style={{borderColor:'red', borderRadius: '4px', backgroundColor: 'red', width: '15%', alignContent: 'center', marginRight: '24px'}}>
+                    <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
+                        Remove Report
+                    </h1>
+            </Button>
+          </div>}
         </div>
+        
+        {showpdf &&
+            <PDFViewer style={{width: '100%', height: '1300px'}}>
+            <MyDocument />
+        </PDFViewer>}
+
+        
         </>
     )
 }

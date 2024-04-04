@@ -14,6 +14,7 @@ import {
 import Nav from 'react-bootstrap/Nav';
 import { Card, Container, Accordion } from 'react-bootstrap';
 import { setsidebarState, setsubsidebarState} from '../../redux/actions/main';
+import logo from '../../assets/images/backgrounds/logo.png'
 
 import {ConnectedAccordionIconClose, ConnectedAccordionIconOpen, ConnectedDashboardIcon, ConnectedUsersIcon, ConnectedSchedulesIcon, ConnectedClassIcon, ConnectedSubjectsIcon, ConnectedCourseIcon, ConnectedRoomsIcon, ConnectedSettingsIcon, ConnectedDotIconStudents, ConnectedDotIconTeachers, ConnectedDotIconAdmin, ConnectedDotIconMasterlist, MainIcon, ToogleIcon, ColoredHat, ToogleIconOn } from '../../assets/svg/clnsmpl-icon';
 
@@ -54,7 +55,7 @@ function Studentsidebar(props){
             }
             </div>
           {(window.innerWidth >= 1140) &&
-          <Card onClick={handleCollapse} style={{backgroundColor:'rgba(51, 51, 51, 0.00)', transform: 'translate(86px, 6px)', position:'fixed', width:'10px'}}>
+          <Card onClick={handleCollapse} style={{backgroundColor:'rgba(51, 51, 51, 0.00)', transform: 'translate(68px, 6px)', position:'fixed', width:'10px'}}>
           {!isCollapsed && 
               <ToogleIcon />
             }
@@ -66,11 +67,15 @@ function Studentsidebar(props){
           </div>
                                   }
 
-         style={{display: 'flex', height: '78px'}} 
+         style={{display: 'flex', height: '170px'}} 
         >
             {!isCollapsed && 
-            <Nav.Link href="/#/students/dashboard" style={{transform: 'translate( 0px, -12px)'}}>
-              <MainIcon />
+            <Nav.Link href="/#/admins/users-students" style={{transform: 'translate( 0px, -12px)'}}>
+              <div style={{transform: 'translate( 35px, 0px)'}}>
+                    <img className="circular-avatar" src={logo} alt="description" />
+              
+              </div>
+              <h1 className='inter-500-16px-dark' style={{ marginTop: '8px'}}>SCHOOL MANAGEMENT</h1>
             </Nav.Link>
             }
         </CDBSidebarHeader>

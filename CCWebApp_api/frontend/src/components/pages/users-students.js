@@ -19,9 +19,11 @@ function UsersStudents(props) {
   const [sortStatus, setsortStatus] = useState('Newest-Oldest')
   const [statusStatus, setstatusStatus] = useState('All Status');
   const [value, setValue] = useState('');
+  const [trigger, setTrigger] = useState(false);
 
   const handleEnrollment = (gradelevel,studentid) => {
     props.setStudentPromotion(gradelevel,'Enrolled',studentid)
+    setTrigger(true)
   }
 
   const handleChange = (event) => {
@@ -31,7 +33,7 @@ function UsersStudents(props) {
   const handleViewgrade = (studentid) => {
     props.getStudentdata(studentid)
     navigate('/admins/studentgrades');
-}
+  }
 
   const handleSearch = (query) => {
     props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, query)
@@ -63,9 +65,9 @@ function UsersStudents(props) {
     props.setsubsidebarState('students');
     props.setpageHeader('Manage Students', '', 'Manage students here. Enroll, Update, Evaluate etc.');
     props.getStudents();
-
+    setTrigger(false);
    
-    }, []);
+    }, [trigger]);
 
   return (
       <>
@@ -179,11 +181,10 @@ function UsersStudents(props) {
           <thead>
             <tr>
             <th className='table-head' style={{width: '15%', paddingLeft:'20px'}}>IDs</th>
-              <th className='table-head' style={{width: '23%'}}>FULL NAME</th>
-              <th className='table-head' style={{width: '13%'}}>GRADE LEVEL</th>
-              <th className='table-head' style={{width: '15%'}}>SECTION</th>
-              <th className='table-head' style={{width: '15%'}}>DATE ENROLLED</th>
-              <th className='table-head' style={{width: '13%'}}>STATUS</th>
+              <th className='table-head' style={{width: '33%'}}>FULL NAME</th>
+              <th className='table-head' style={{width: '20%'}}>GRADE LEVEL</th>
+              <th className='table-head' style={{width: '20%'}}>DATE REGISTERED</th>
+              <th className='table-head' style={{width: '20%'}}>STATUS</th>
               <th className='table-head'>ACTION</th>
             </tr>
           </thead>
@@ -213,8 +214,6 @@ function UsersStudents(props) {
                   <td className='table-body'>
                     {student.gradelevel}</td>
                   <td className='table-body'>
-                    {student.section}</td>
-                  <td className='table-body'>
                     {student.userprofile.date_joined}</td>
                   <td className='table-body'>
                     
@@ -240,15 +239,15 @@ function UsersStudents(props) {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
-                        {student.status === 'Verification Failed'  && 
+                        {student.status === 'Failed'  && 
                           <>
-                            <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleEnrollment(student.gradelevel, student.id)}><h1 className='dropdown-item'>Enroll As Repeater</h1></Dropdown.Item>
                           </>}
                         {student.status === 'For Evaluation'  && 
                           <>
-                            <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View & Evaluate Student</h1></Dropdown.Item>
                             <Dropdown.Item onClick={() => handleEnrollment(student.gradelevel, student.id)}><h1 className='dropdown-item'>Enroll</h1></Dropdown.Item>
-                            <Dropdown.Item><h1 className='dropdown-item'>Reject This Student</h1></Dropdown.Item>
+                            {/* <Dropdown.Item><h1 className='dropdown-item'>Reject This Student</h1></Dropdown.Item> */}
                           </>}
                         {student.status === 'Evaluation In Progress'  && 
                           <>
@@ -274,7 +273,7 @@ function UsersStudents(props) {
                           </>}
                         {student.status === 'Enrolled'  && 
                           <>
-                          <Dropdown.Item><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                          <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
                           </>}
                         {student.status === 'Draft'  && 
                           <>

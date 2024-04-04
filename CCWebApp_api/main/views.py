@@ -77,6 +77,8 @@ class SectionViewset(viewsets.ModelViewSet):
         IsSuperAdmin
     ]
     serializer_class = SectionSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['gradelevel', '$code', '$adviser__userprofile__first_name', '$adviser__userprofile__last_name', '$adviser__id']
 
 class SectionAddViewset(viewsets.ModelViewSet):
     queryset = Section.objects.all()

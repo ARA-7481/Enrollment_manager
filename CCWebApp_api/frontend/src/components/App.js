@@ -22,6 +22,7 @@ const Signin = lazy(() =>  import('./accounts/admin-signin'))
 const Class = lazy(() =>  import('./pages/class'))
 const Subjects = lazy(() =>  import('./pages/subjects'))
 const Sections = lazy(() =>  import('./pages/sections'))
+const SectionPage = lazy(() =>  import('./pages/section-studentmanagement'))
 const UsersAdmin = lazy(() =>  import('./pages/users-admin'))
 const UsersStudents = lazy(() =>  import('./pages/users-students'))
 const UsersTeachers = lazy(() =>  import('./pages/users-teachers'))
@@ -81,6 +82,7 @@ function AppContent() {
           <Route path="subjects" element={<Subjects />} />
           <Route path="subjects-create" element={<SubjectCreate />} />
           <Route path="sections" element={<Sections />} />
+          <Route path="section-page" element={<SectionPage />} />
           <Route path="section-create" element={<SectionCreate />} />
           <Route path="rooms-create" element={<RoomCreate />} />
           <Route path="users-admin" element={<UsersAdmin />} />

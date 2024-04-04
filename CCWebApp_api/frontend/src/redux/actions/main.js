@@ -16,6 +16,8 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          PROMOTION_SUCCESSFUL,
          GET_FLOOD_DEVICE,
          GET_DEVICES,
+         CLEAR_CLASS_DATA,
+         CLEAR_SECTION_DATA,
         } from "../types/types";
 
 function formatTime(time) {
@@ -224,9 +226,9 @@ export const getSubject = (subject) => async dispatch => {
     }
   };
 
-  export const getSectionList = () => async dispatch => {
+  export const getSectionList = (query, gradelevel) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`api/section/`);
+      const res = await instanceAxios.get(`api/section/?search=${query} ${gradelevel}`);
       if(res.status === 200){
         dispatch({
           type: GET_SECTION,
@@ -915,6 +917,18 @@ export const getClassdata = (classcode) => async dispatch => {
   } catch (error) {
       console.error(error);
   }
+};
+
+export const clearClassdata = () => dispatch => {
+  dispatch({
+    type: CLEAR_CLASS_DATA,
+  })
+};
+
+export const clearSectiondata = () => dispatch => {
+  dispatch({
+    type: CLEAR_SECTION_DATA,
+  })
 };
 
 export const getSectiondata = (sectioncode) => async dispatch => {

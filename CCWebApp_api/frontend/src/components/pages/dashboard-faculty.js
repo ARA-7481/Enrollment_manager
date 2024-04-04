@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass, getClassdata } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass, getClassdata, clearClassdata } from '../../redux/actions/main';
 
 import { Placeholder } from 'react-bootstrap';
 
@@ -31,6 +31,7 @@ function FacultyDashboard(props) {
     props.setpageHeader(`Hello ${user.first_name}`, '', 'Welcome to your dashboard');
     props.getTeacherdata(user.facultyprofile);
     props.setSelectedBG('https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg0.png');
+    props.clearClassdata();
   }, []);
 
   useEffect(() => {
@@ -185,6 +186,7 @@ FacultyDashboard.propTypes = {
   newAvatar: PropTypes.string,
   setSelectedclass: PropTypes.func,
   getClassdata: PropTypes.func,
+  clearClassdata: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -194,4 +196,4 @@ const mapStateToProps = (state) => ({
   newAvatar: state.main.newAvatar
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass, getClassdata})(FacultyDashboard))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedclass, getClassdata, clearClassdata})(FacultyDashboard))
