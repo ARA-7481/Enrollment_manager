@@ -74,9 +74,9 @@ function Subjects(props) {
           </div>
         
           <div style={{display: 'flex', width: !props.isLess800? '60%': '100%'}}>
-            <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
+            {/* <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
               Filter: 
-            </h1>
+            </h1> */}
             
           </div>
         </div>
@@ -150,7 +150,7 @@ function Subjects(props) {
             <th className='table-head' style={{width: '40%'}}>DESCRIPTION</th>
             <th className='table-head' style={{width: '15%'}}>PREREQUISITE</th>
             <th className='table-head' style={{width: '15%'}}>COREQUISITE</th>
-            <th className='table-head' style={{border: 'none'}}>ACTION</th>
+            {/* <th className='table-head' style={{border: 'none'}}>ACTION</th> */}
           </tr>
         </thead>
         <tbody style={{cursor: 'pointer', }}>
@@ -168,7 +168,7 @@ function Subjects(props) {
                  <td className='table-body'>
                 {subject.corequisite}
                  </td>
-                <td className='table-body'>
+                {/* <td className='table-body'>
                 
                 <Dropdown>
                     <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: '#e9ecef', color: 'rgba(51, 51, 51, 0.00)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'center', marginLeft: '10px'}}>
@@ -178,7 +178,7 @@ function Subjects(props) {
                           <Dropdown.Item><h1 className='dropdown-item'>Update Info</h1></Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                </td>
+                </td> */}
               </tr>
           ))}
         </tbody>

@@ -16,8 +16,10 @@ function Sections(props) {
   const [value, setValue] = useState('');
   const [searchquery, setSearchquery] = useState('');
   const [gradelevelquery, setGradelevelquery] = useState('');
-
   const [gradeleveldropdown, setGradeleveldropdown] = useState('All Grade Levels');
+
+  const [schoolyearquery, setSchoolyearquery] = useState('');
+  const [schoolyeardropdown, setSchoolyeardropdown] = useState('All School Years');
   // const 
 
   const handleChange = (event) => {
@@ -29,16 +31,23 @@ function Sections(props) {
     props.setLoading('isLoading')
   };
 
+  const handleSchoolyear = (schoolyear) => {
+    setSchoolyeardropdown(schoolyear)
+    if(schoolyear === 'All School Years'){
+        setSchoolyearquery('')
+    }
+    else{
+      setSchoolyearquery(schoolyear)
+    }
+  }
+
   const handleGradelevelquery = (gradelevel) => {
     setGradeleveldropdown(gradelevel)
-    setValue('')
     if (gradelevel === 'All Grade Levels'){
       setGradelevelquery('')
-      setSearchquery('')
     }
     else{
       setGradelevelquery(gradelevel)
-      setSearchquery('')
     }
   };
 
@@ -56,13 +65,14 @@ function Sections(props) {
       props.setLoading('isLoading');
     }
     props.getSchoolYearList();
+    props.getSchoolYearList();
     props.setsidebarState('sections');
     props.setsubsidebarState(null);
     props.setsectionState('list');
     props.setpageHeader('Manage Sections', '', 'Add and Update Sections');
-    props.getSectionList(searchquery, gradelevelquery);
+    props.getSectionList(searchquery, gradelevelquery, schoolyearquery);
     console.log("--------")
-  }, [searchquery, gradelevelquery]);
+  }, [searchquery, gradelevelquery, schoolyearquery]);
 
   return (
     <>
@@ -97,6 +107,19 @@ function Sections(props) {
                   {sortStatus !== 'Z-A'  && <Dropdown.Item onClick={() => handleSort('Z-A')}><div className="zooming-text">Z-A</div></Dropdown.Item>}
                 </Dropdown.Menu>
             </Dropdown>
+
+            <Dropdown style={{width: '100%', minWidth: '1px'}}>
+                <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                    <div style={{overflow: 'hidden'}}>{schoolyeardropdown}</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu style={{ width: '100%' }}>
+                    {schoolyeardropdown !== 'All School Years'  && <Dropdown.Item onClick={() => handleSchoolyear('All School Years')}><div className="zooming-text">All School Years</div></Dropdown.Item>}
+                    {props.schoolyearList.filter(schoolyear => schoolyear.code !== schoolyeardropdown).map((schoolyear) => (
+                        <Dropdown.Item key={schoolyear.code} onClick={() => handleSchoolyear(schoolyear.code)}><div className="zooming-text">{schoolyear.code}</div></Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+              </Dropdown>
           </div>
         
           <div style={{display: 'flex', width: !props.isLess800? '60%': '100%'}}>
@@ -219,7 +242,7 @@ function Sections(props) {
                     {section.code}
                   </td>
                   <td className='table-body' style={{paddingLeft:'20px'}}>
-                    {section.schoolyear}
+                    {section.schoolyear.code}
                   </td>
                 <td className='table-body'>
                     {section.adviser.userprofile.last_name}, {section.adviser.userprofile.first_name} {section.adviser.userprofile.middle_name}
@@ -276,6 +299,7 @@ Sections.propTypes = {
   sectionList: PropTypes.array,
   setSelectedsection: PropTypes.func,
   getSchoolYearList: PropTypes.func,
+  schoolyearList: PropTypes.array,
 }
 
 const mapStateToProps = (state) => ({
@@ -285,6 +309,7 @@ const mapStateToProps = (state) => ({
   roomsListForTable: state.main.roomsListForTable,
   loadingState: state.main.loadingState,
   sectionList: state.main.sectionList,
+  schoolyearList: state.main.schoolyearList,
   });
 
 export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getRoomsList, setLoading, setsectionState, getSectionList, setSelectedsection, getSchoolYearList})(Sections))

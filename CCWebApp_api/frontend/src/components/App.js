@@ -34,7 +34,9 @@ const RoomCreate = lazy(() =>  import('./pages/room-create'))
 const RegisterUserstudent = lazy(() =>  import('./pages/register-studentuser'))
 const RegisterUserteacher = lazy(() =>  import('./pages/register-teacheruser'))
 const Studentgradesadmin = lazy(() =>  import('./pages/dashboard-admin-studentgrade'))
-
+const Updatestudentdata = lazy(() =>  import('./pages/admin-updatestudentdata'))
+const Studentdatasheet = lazy(() =>  import('./pages/student-informationform'))
+const Facultydatasheet = lazy(() =>  import('./pages/faculty-informationform'))
 const SchoolYear = lazy(() =>  import('./pages/schoolyear.js'))
 
 const Studentdashboard = lazy(() =>  import('./pages/dashboard-student.js'))
@@ -93,6 +95,9 @@ function AppContent() {
           <Route path="register-teacheruser" element={<RegisterUserteacher />} />
           <Route path="schoolyear" element={<SchoolYear />} />
           <Route path="studentgrades" element={<Studentgradesadmin />} />
+          <Route path="updatestudentdata" element={<Updatestudentdata />} />
+          <Route path="informationform" element={<Studentdatasheet />} />
+          <Route path="facultyinformationform" element={<Facultydatasheet />} />
           </Route>
 
           <Route path='/students' element={<Studentlayout/>}>

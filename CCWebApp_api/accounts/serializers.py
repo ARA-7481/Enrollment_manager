@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     date_joined = serializers.DateTimeField(format="%m-%d-%Y", read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'middle_name', 'last_name', 'extension_name', 'email', 'mobile_number', 'usertype', 'avatar', 'facultyprofile', 'studentprofile', 'gender', 'birthdate', 'birthplace', 'nationality', 'address_value1', 'address_value2', 'address_value3', 'date_joined')
+        fields = ('id', 'first_name', 'middle_name', 'last_name', 'extension_name', 'email', 'mobile_number', 'usertype', 'avatar', 'facultyprofile', 'studentprofile', 'gender', 'birthdate', 'birthplace', 'nationality', 'address_value1', 'address_value2', 'address_value3', 'date_joined', 'addressketch')
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -205,4 +205,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 class DeviceProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = DeviceProfile
+        fields = '__all__'
+
+class SectionSerializerforadmin(serializers.ModelSerializer):
+    adviser = GetFacultySerializer(read_only=False)
+    schoolyear = SchoolyearSerializer(read_only=False)
+    class Meta:
+        model = Section
         fields = '__all__'

@@ -89,7 +89,7 @@ function SchoolYear(props) {
             <th className='table-head' style={{width: '30%'}}>PRINCIPAL</th>
             <th className='table-head' style={{width: '30%'}}>ASSISTANT PRINCIPAL</th>
             <th className='table-head' style={{width: '30%'}}>REMARKS</th>
-            <th className='table-head' style={{border: 'none'}}>ACTION</th>
+            {/* <th className='table-head' style={{border: 'none'}}>ACTION</th> */}
           </tr>
         </thead>
         <tbody style={{cursor: 'pointer', }}>
@@ -107,7 +107,7 @@ function SchoolYear(props) {
                  <td className='table-body'>
                 {schoolyear.description}
                  </td>
-                <td className='table-body'>
+                {/* <td className='table-body'>
                 
                 <Dropdown>
                     <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: '#e9ecef', color: 'rgba(51, 51, 51, 0.00)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'center', marginLeft: '10px'}}>
@@ -117,7 +117,7 @@ function SchoolYear(props) {
                           <Dropdown.Item><h1 className='dropdown-item'>Update Info</h1></Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                </td>
+                </td> */}
               </tr>
           ))}
         </tbody>

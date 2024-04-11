@@ -35,7 +35,7 @@ function ClassCreate(props) {
         props.setclassState('create-page-one')
         props.setpageHeader('Create a Class', '', 'Fill Information to Create a Class')
         props.getSubjectsList('');
-        props.getSectionList();
+        props.getSectionList('','');
         props.getFaculty('','');
       },[])
 

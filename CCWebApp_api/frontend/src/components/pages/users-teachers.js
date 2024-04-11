@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getFaculty, setLoading } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getFaculty, setLoading, getTeacherdata } from '../../redux/actions/main';
 
 import { Card, Col, Table, Form, Dropdown, Button, Placeholder } from 'react-bootstrap';
 import { Magnifier, New } from '../../assets/svg/clnsmpl-icon';
 
 function UsersTeachers(props) {
 
+  const navigate = useNavigate();
   const [queryPosition, setQueryPosition] = useState('');
   const [sortStatus, setsortStatus] = useState ('Newest-Oldest')
-  const [positionStatus, setpositionStatus] = useState ('All Positions')
+  const [searchquery, setSearchquery] = useState('');
+  const [postionquery, setPositionquery] = useState ('')
+  const [positiondropdown, setPositiondropdown] = useState ('All Positions')
   const [value, setValue] = useState('');
 
 
@@ -21,8 +24,7 @@ function UsersTeachers(props) {
   };
 
   const handleSearch = (query) => {
-    props.getFaculty(queryPosition, query)
-    props.setLoading('isLoading')
+    setSearchquery(query)
   };
 
   const handleSort = (sort) => {
@@ -30,16 +32,19 @@ function UsersTeachers(props) {
   };
 
   const handlePosition = (position) => {
-    setpositionStatus(position)
+    setPositiondropdown(position)
     if (position === 'All Positions'){
-      setQueryPosition('')
-      props.getFaculty('','')
+      setPositionquery('')
     }
     else{
-      setQueryPosition(position)
-      props.getFaculty(position,'')
+      setPositionquery(position)
     }
   };
+
+  const handleViewinfo = (id) => {
+    props.getTeacherdata(id)
+    navigate('/admins/facultyinformationform');
+  }
 
   useEffect(() => {
     if (props.facultyList.length == 0){
@@ -48,8 +53,8 @@ function UsersTeachers(props) {
     props.setsidebarState('users');
     props.setsubsidebarState('teachers');
     props.setpageHeader('Manage Faculty', '', 'Manage faculty here. Add, Update, etc.');
-    props.getFaculty('','');
-  }, []);
+    props.getFaculty(postionquery,searchquery);
+  }, [postionquery, searchquery]);
 
   return (
     <>
@@ -88,6 +93,26 @@ function UsersTeachers(props) {
             <h1 className='inter-500-16px ' style={{paddingTop: '10px', marginLeft: '20px'}}>
               Filter: 
             </h1>
+
+            <Dropdown style={{width: '40%', minWidth: '1px', marginLeft: '10px'}}>
+                    <Dropdown.Toggle id="dropdown-basic" 
+                                    style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%',
+                                            display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                      <div style={{overflow: 'hidden'}}>{positiondropdown}</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu style={{ width: '100%'}}>
+                      {positiondropdown !== 'All Positions'  && <Dropdown.Item onClick={() => handlePosition('All Positions')}><div className="zooming-text">All Positions</div></Dropdown.Item>}
+                      {positiondropdown !== 'Principal'  && <Dropdown.Item onClick={() => handlePosition('Principal')}><div className="zooming-text">Principal</div></Dropdown.Item>}
+                      {positiondropdown !== 'Assistant Principal'  && <Dropdown.Item onClick={() => handlePosition('Assistant Principal')}><div className="zooming-text">Assistant Principal</div></Dropdown.Item>}
+                      {positiondropdown !== 'Part-Time'  && <Dropdown.Item onClick={() => handlePosition('Part-Time')}><div className="zooming-text">Part-Time</div></Dropdown.Item>}
+                      {positiondropdown !== 'Teacher-1'  && <Dropdown.Item onClick={() => handlePosition('Teacher-1')}><div className="zooming-text">Teacher-1</div></Dropdown.Item>}
+                      {positiondropdown !== 'Teacher-2'  && <Dropdown.Item onClick={() => handlePosition('Teacher-2')}><div className="zooming-text">Teacher-2</div></Dropdown.Item>}
+                      {positiondropdown !== 'Teacher-3'  && <Dropdown.Item onClick={() => handlePosition('Teacher-3')}><div className="zooming-text">Teacher-3</div></Dropdown.Item>}
+                      {positiondropdown !== 'Laboratory Attendant'  && <Dropdown.Item onClick={() => handlePosition('Laboratory Attendant')}><div className="zooming-text">Laboratory Attendant</div></Dropdown.Item>}
+                      {positiondropdown !== 'Unspecified'  && <Dropdown.Item onClick={() => handlePosition('Unspecified')}><div className="zooming-text">Unspecified</div></Dropdown.Item>}
+                      </Dropdown.Menu>
+              </Dropdown>
             
             </div>
         </div>
@@ -195,8 +220,7 @@ function UsersTeachers(props) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                          <Dropdown.Item><h1 className='dropdown-item'>Update Info</h1></Dropdown.Item>
-                          <Dropdown.Item><h1 className='dropdown-item'>Delete</h1></Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleViewinfo(faculty.id)}><h1 className='dropdown-item'>View Information Sheet</h1></Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 
@@ -229,6 +253,7 @@ UsersTeachers.propTypes = {
   setLoading: PropTypes.func,
   loadingState: PropTypes.string,
   isLess800: PropTypes.bool,
+  getTeacherdata: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -240,4 +265,4 @@ const mapStateToProps = (state) => ({
   isLess800: state.main.isLess800,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getFaculty, setLoading})(UsersTeachers))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getFaculty, setLoading, getTeacherdata})(UsersTeachers))

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.forms.models import model_to_dict
 
 
-from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer, ClassesSerializerForDashboard, ClassesSerializerForClassPage, GradeScoreEntitySerializer, GetStudentDataSerializer, SectionSerializerForDashboard
+from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer, ClassesSerializerForDashboard, ClassesSerializerForClassPage, GradeScoreEntitySerializer, GetStudentDataSerializer, SectionSerializerForDashboard, SectionSerializerforadmin
 from accounts.models import StudentProfile, FacultyProfile, StaffProfile
 from .models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 from accounts.permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
@@ -40,7 +40,7 @@ class GetStudentsViewSet(viewsets.ModelViewSet):
     queryset = StudentProfile.objects.all()
     serializer_class = GetStudentSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['status', '$userprofile__first_name', '$userprofile__last_name', '=id']
+    search_fields = ['status', '$userprofile__first_name', '$userprofile__last_name', '=id', 'gradelevel']
 
 class FacultyViewSet(viewsets.ModelViewSet):
     queryset = FacultyProfile.objects.all()
@@ -66,9 +66,6 @@ class StaffViewSet(viewsets.ModelViewSet):
 
 class SchoolYearViewset(viewsets.ModelViewSet):
     queryset = SchoolYear.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
     serializer_class = SchoolyearSerializer
 
 class SectionViewset(viewsets.ModelViewSet):
@@ -76,9 +73,9 @@ class SectionViewset(viewsets.ModelViewSet):
     permission_classes = [
         IsSuperAdmin
     ]
-    serializer_class = SectionSerializer
+    serializer_class = SectionSerializerforadmin
     filter_backends = [filters.SearchFilter]
-    search_fields = ['gradelevel', '$code', '$adviser__userprofile__first_name', '$adviser__userprofile__last_name', '$adviser__id']
+    search_fields = ['gradelevel', '$code', '$adviser__userprofile__first_name', '$adviser__userprofile__last_name', '$adviser__id', 'schoolyear__code']
 
 class SectionAddViewset(viewsets.ModelViewSet):
     queryset = Section.objects.all()

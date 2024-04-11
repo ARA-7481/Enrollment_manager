@@ -82,6 +82,7 @@ function Studentgradesadmin(props) {
 
   useEffect(() => {
     try{
+        console.log(props.studentData)
         setAvatar(props.studentData.userprofile.avatar)
         setFirstname(props.studentData.userprofile.first_name)
         setLastname(props.studentData.userprofile.last_name)

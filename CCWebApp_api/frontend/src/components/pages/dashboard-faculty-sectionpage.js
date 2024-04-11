@@ -149,6 +149,16 @@ function AdvisoryPage(props) {
                 </View>
             </View>
           </View>
+          <View style={{flexDirection: 'row', marginTop: '30px', border: '2px solid black'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black' , width: '110px'}}>Submitted By:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px', borderRight: '1px solid black' , width: '210px'}}>{props.teacherData.userprofile.last_name}, {props.teacherData.userprofile.first_name} {props.teacherData.userprofile.middle_name}</Text>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black' , width: '110px'}}>Signature:</Text>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: '15px', border: '2px solid black'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black', width: '110px'}}>Approved By:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px', borderRight: '1px solid black' , width: '210px'}}></Text>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black' , width: '110px'}}>Signature:</Text>
+          </View>
           </Page>
         </Document>
       );

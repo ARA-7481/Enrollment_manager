@@ -26,16 +26,28 @@ function SectionPage(props) {
     const [trigger, setTrigger] = useState(false);
 
     const handleEnrollment = (gradelevel,studentid) => {
-        props.setStudentPromotion(gradelevel,'Enrolled',studentid)
-        setTrigger(true)
+        if(gradelevel == "Grade 11"){
+            props.getStudentdata(studentid)
+            navigate('/admins/updatestudentdata');
+        }
+        else{
+            props.setStudentPromotion(gradelevel,'Enrolled',studentid)
+            setTrigger(true)
+        }
       }
 
     const handleViewgrade = (studentid) => {
         props.getStudentdata(studentid)
         navigate('/admins/studentgrades');
       }
+      
+    const handleViewinfo = (studentid) => {
+        props.getStudentdata(studentid)
+        navigate('/admins/informationform');
+      }
     
     useEffect(() => {
+        props.setsidebarState('sections');
         props.setsectionState('sectionpage');
         props.getSectiondata(props.selectedSection);
         setTrigger(false)
@@ -150,18 +162,22 @@ function SectionPage(props) {
                                 <Dropdown.Menu>
                                     {student.status === 'Failed'  && 
                                     <>
+                                        <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Grades</h1></Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleViewinfo(student.id)}><h1 className='dropdown-item'>View Information Sheet</h1></Dropdown.Item>
                                         <Dropdown.Item onClick={() => handleEnrollment(student.gradelevel, student.id)}><h1 className='dropdown-item'>Enroll As Repeater</h1></Dropdown.Item>
                                     </>}
                                     {student.status === 'For Evaluation'  && 
                                     <>
-                                        <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View & Evaluate Student</h1></Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Grades</h1></Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleViewinfo(student.id)}><h1 className='dropdown-item'>View Information Sheet</h1></Dropdown.Item>
                                         <Dropdown.Item onClick={() => handleEnrollment(student.gradelevel, student.id)}><h1 className='dropdown-item'>Enroll</h1></Dropdown.Item>
                                         {/* <Dropdown.Item><h1 className='dropdown-item'>Reject This Student</h1></Dropdown.Item> */}
                                     </>}
                                    
                                     {student.status === 'Enrolled'  && 
                                     <>
-                                    <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Grades</h1></Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleViewinfo(student.id)}><h1 className='dropdown-item'>View Information Sheet</h1></Dropdown.Item>
                                     </>}
 
                                 </Dropdown.Menu>

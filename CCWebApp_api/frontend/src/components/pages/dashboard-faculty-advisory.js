@@ -3,20 +3,31 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
-import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection, clearSectiondata } from '../../redux/actions/main';
+import { setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection, clearSectiondata, getSchoolYearList } from '../../redux/actions/main';
 
-import { Placeholder } from 'react-bootstrap';
+import { Placeholder, Dropdown } from 'react-bootstrap';
+import schoolyear from './schoolyear';
 
 
 function FacultyDashboardAdvisory(props) {
-
+  
   const [avatar, setAvatar] = useState(JSON.parse(localStorage.getItem('user')).avatar);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-
+  const [schoolyearStatus, setSchoolyearstatus] = useState('All School Years')
+  const [filteredTeacherData, setFilteredTeacherData] = useState([]);
   const navigate = useNavigate();
 
   if (!user){
     navigate('/auth/admin-signin');
+  }
+
+  const handleSchoolyear = (schoolyear) => {
+    if(schoolyear === 'All School Years'){
+        setSchoolyearstatus('All School Years')
+    }
+    else{
+        setSchoolyearstatus(schoolyear)
+    }
   }
 
   const handleSectionSelection = (sectioncode, bg_url) => {
@@ -32,6 +43,8 @@ function FacultyDashboardAdvisory(props) {
     props.getTeacherdata(user.facultyprofile);
     props.setSelectedBG('https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/bg0.png');
     props.clearSectiondata();
+    props.getSchoolYearList();
+    console.log(props.teacherData)
   }, []);
 
   useEffect(() => {
@@ -39,7 +52,17 @@ function FacultyDashboardAdvisory(props) {
         setAvatar(props.newAvatar)
     }
 }, [props.newAvatar]);
-
+  
+  useEffect(() => {
+    if(schoolyearStatus !== "All School Years"){
+        const filteredData = props.teacherData.teacher_related_section.filter(
+            (item) => item.schoolyear === schoolyearStatus
+        )
+        setFilteredTeacherData(filteredData)
+    }else{
+        setFilteredTeacherData(props.teacherData.teacher_related_section)
+    }
+}, [schoolyearStatus, props.teacherData]);
   return (
       <>
             <div style={{backgroundColor:'#e9ecef', borderTopLeftRadius:'8px', borderTopRightRadius:'8px', width: '100%'}}> 
@@ -47,7 +70,7 @@ function FacultyDashboardAdvisory(props) {
                     <div style={{transform: 'translate( 0px, -60px)'}}>
                         <img className="circular-avatar" src={avatar} alt="description" />
                     </div>
-
+                    <div style={{display: 'flex', gap: '200px'}}>
                     <div style={{marginLeft: '24px'}}>
                         <div style={{display: 'flex'}}>
                         <h1 className='inter-700-28px'>{user.first_name} {user.last_name}</h1>
@@ -57,10 +80,33 @@ function FacultyDashboardAdvisory(props) {
                         </div>
                         {props.teacherData.id}
                     </div>
+                    
+                        <div style={{display: 'flex', width: '250px'}}>
+                        <h1 className='inter-500-16px' style={{paddingTop: '10px'}}>
+                        Filter: 
+                        </h1>
+
+                        <Dropdown style={{width: '100%', minWidth: '1px'}}>
+                            <Dropdown.Toggle id="dropdown-basic" style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%', display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                            <div style={{overflow: 'hidden'}}>{schoolyearStatus}</div>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu style={{ width: '100%' }}>
+                            {schoolyearStatus !== 'All School Years'  && <Dropdown.Item onClick={() => handleSchoolyear('All School Years')}><div className="zooming-text">All School Years</div></Dropdown.Item>}
+                            {props.schoolyearList.filter(schoolyear => schoolyear.code !== schoolyearStatus).map((schoolyear) => (
+                                <Dropdown.Item key={schoolyear.code} onClick={() => handleSchoolyear(schoolyear.code)}><div className="zooming-text">{schoolyear.code}</div></Dropdown.Item>
+                            ))}
+                            </Dropdown.Menu>
+                        </Dropdown>
+                        </div>
+                    </div>
+                   
+
+
                 </div>
 
                 <div className='class-container'>
-                    {props.teacherData.id? [...props.teacherData.teacher_related_section].sort((a, b) => a.code.localeCompare(b.code)).map(item => (
+                    {props.teacherData.id? filteredTeacherData.sort((a, b) => a.code.localeCompare(b.code)).map(item => (
                         <div key={item.code} className="class-item" onClick={() => handleSectionSelection(item.code, item.bg_gradient)}>
                             <div className="class-itemheader" style={{backgroundImage: `url(${item.bg_gradient})`}}>
                             </div>
@@ -181,13 +227,16 @@ FacultyDashboardAdvisory.propTypes = {
   newAvatar: PropTypes.string,
   setSelectedsection: PropTypes.func,
   clearSectiondata: PropTypes.func,
+  getSchoolYearList: PropTypes.func,
+  schoolyearList: PropTypes.array,
 }
 
 const mapStateToProps = (state) => ({
   sidebarState: state.main.sidebarState,
   subsidebarState: state.main.subsidebarState,
   teacherData: state.main.teacherData,
-  newAvatar: state.main.newAvatar
+  newAvatar: state.main.newAvatar,
+  schoolyearList: state.main.schoolyearList,
   });
 
-export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection, clearSectiondata})(FacultyDashboardAdvisory))
+export default withAuth(connect(mapStateToProps, {setsidebarState, setsubsidebarState, setpageHeader, getTeacherdata, setSelectedBG, setSelectedsection, clearSectiondata, getSchoolYearList})(FacultyDashboardAdvisory))

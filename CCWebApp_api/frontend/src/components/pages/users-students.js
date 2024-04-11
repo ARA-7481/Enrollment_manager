@@ -11,19 +11,24 @@ import { Magnifier, Draft, ForEvaluation, EvaluationInProgress, EvaluationComple
 function UsersStudents(props) {
 
   const navigate = useNavigate();
-  const [queryStatus, setQueryStatus] = useState('');
-  const [queryYearlevel, setQueryYearlevel] = useState('');
-  const [queryDepartment, setQueryDepartment] = useState('');
-  const [queryCourse, setQueryCourse] = useState('');
-
   const [sortStatus, setsortStatus] = useState('Newest-Oldest')
-  const [statusStatus, setstatusStatus] = useState('All Status');
+  const [statusquery, setStatusquery] = useState('');
+  const [statusdropdown, setStatusdropdown] = useState('All Status');
+  const [gradelevelquery, setGradelevelquery] = useState('');
+  const [gradeleveldropdown, setGradeleveldropdown] = useState('All Grade Levels');
+  const [searchquery, setSearchquery] = useState('');
   const [value, setValue] = useState('');
   const [trigger, setTrigger] = useState(false);
 
   const handleEnrollment = (gradelevel,studentid) => {
-    props.setStudentPromotion(gradelevel,'Enrolled',studentid)
-    setTrigger(true)
+    if(gradelevel == "Grade 11"){
+        props.getStudentdata(studentid)
+        navigate('/admins/updatestudentdata');
+    }
+    else{
+        props.setStudentPromotion(gradelevel,'Enrolled',studentid)
+        setTrigger(true)
+    }
   }
 
   const handleChange = (event) => {
@@ -35,9 +40,14 @@ function UsersStudents(props) {
     navigate('/admins/studentgrades');
   }
 
+  const handleViewinfo = (studentid) => {
+    props.getStudentdata(studentid)
+    navigate('/admins/informationform');
+  }
+
+
   const handleSearch = (query) => {
-    props.getStudents(queryStatus,queryYearlevel,queryDepartment,queryCourse, query)
-    props.setLoading('isLoading')
+    setSearchquery(query)
   };
 
   const handleSort = (sort) => {
@@ -45,14 +55,22 @@ function UsersStudents(props) {
   }
 
   const handleStatus = (statuscode) => {
-    setstatusStatus(statuscode)
+    setStatusdropdown(statuscode)
     if (statuscode === 'All Status'){
-      setQueryStatus('')
-      props.getStudents('',queryYearlevel,queryDepartment,queryCourse, '')
+      setStatusquery('')
     }
     else{
-      setQueryStatus(statuscode)
-      props.getStudents(statuscode,queryYearlevel,queryDepartment,queryCourse, '')
+      setStatusquery(statuscode)
+    }
+  };
+
+  const handleGradelevelquery = (gradelevel) => {
+    setGradeleveldropdown(gradelevel)
+    if (gradelevel === 'All Grade Levels'){
+      setGradelevelquery('')
+    }
+    else{
+      setGradelevelquery(gradelevel)
     }
   };
 
@@ -64,10 +82,10 @@ function UsersStudents(props) {
     props.setsidebarState('users');
     props.setsubsidebarState('students');
     props.setpageHeader('Manage Students', '', 'Manage students here. Enroll, Update, Evaluate etc.');
-    props.getStudents();
+    props.getStudents(gradelevelquery,statusquery,searchquery);
     setTrigger(false);
    
-    }, [trigger]);
+    }, [trigger, gradelevelquery, searchquery, statusquery]);
 
   return (
       <>
@@ -107,6 +125,41 @@ function UsersStudents(props) {
             <h1 className='inter-500-16px' style={{paddingTop: '10px', marginLeft: '20px'}}>
               Filter: 
             </h1>
+
+            <Dropdown style={{width: '30%', minWidth: '1px', marginLeft: '10px'}}>
+                    <Dropdown.Toggle id="dropdown-basic" 
+                                    style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%',
+                                            display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                      <div style={{overflow: 'hidden'}}>{gradeleveldropdown}</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu style={{ width: '100%'}}>
+                      {gradeleveldropdown !== 'All Grade Levels'  && <Dropdown.Item onClick={() => handleGradelevelquery('All Grade Levels')}><div className="zooming-text">All Grade Levels</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 7'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 7')}><div className="zooming-text">Grade 7</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 8'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 8')}><div className="zooming-text">Grade 8</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 9'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 9')}><div className="zooming-text">Grade 9</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 10'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 10')}><div className="zooming-text">Grade 10</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 11'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 11')}><div className="zooming-text">Grade 11</div></Dropdown.Item>}
+                      {gradeleveldropdown !== 'Grade 12'  && <Dropdown.Item onClick={() => handleGradelevelquery('Grade 12')}><div className="zooming-text">Grade 12</div></Dropdown.Item>}
+                    </Dropdown.Menu>
+              </Dropdown>
+
+
+              <Dropdown style={{width: '30%', minWidth: '1px', marginLeft: '10px'}}>
+                    <Dropdown.Toggle id="dropdown-basic" 
+                                    style={{border: 'none', backgroundColor: 'rgba(51, 51, 51, 0.00)', color: 'black', width: '100%',
+                                            display: 'flex', alignItems: 'center', outline: 'none', justifyContent: 'space-between'}}>
+                      <div style={{overflow: 'hidden'}}>{statusdropdown}</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu style={{ width: '100%'}}>
+                      {statusdropdown !== 'All Status'  && <Dropdown.Item onClick={() => handleStatus('All Status')}><div className="zooming-text">All Status</div></Dropdown.Item>}
+                      {statusdropdown !== 'For Evaluation'  && <Dropdown.Item onClick={() => handleStatus('For Evaluation')}><div className="zooming-text">For Evaluation</div></Dropdown.Item>}
+                      {statusdropdown !== 'Enrolled'  && <Dropdown.Item onClick={() => handleStatus('Enrolled')}><div className="zooming-text">Enrolled</div></Dropdown.Item>}
+                      {statusdropdown !== 'Failed'  && <Dropdown.Item onClick={() => handleStatus('Failed')}><div className="zooming-text">Failed</div></Dropdown.Item>}
+                      </Dropdown.Menu>
+              </Dropdown>
+
             
           </div>
         </div>
@@ -241,11 +294,14 @@ function UsersStudents(props) {
                       <Dropdown.Menu>
                         {student.status === 'Failed'  && 
                           <>
+                            <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Grades</h1></Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleViewinfo(student.id)}><h1 className='dropdown-item'>View Information Sheet</h1></Dropdown.Item>
                             <Dropdown.Item onClick={() => handleEnrollment(student.gradelevel, student.id)}><h1 className='dropdown-item'>Enroll As Repeater</h1></Dropdown.Item>
                           </>}
                         {student.status === 'For Evaluation'  && 
                           <>
-                            <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View & Evaluate Student</h1></Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Grades</h1></Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleViewinfo(student.id)}><h1 className='dropdown-item'>View Information Sheet</h1></Dropdown.Item>
                             <Dropdown.Item onClick={() => handleEnrollment(student.gradelevel, student.id)}><h1 className='dropdown-item'>Enroll</h1></Dropdown.Item>
                             {/* <Dropdown.Item><h1 className='dropdown-item'>Reject This Student</h1></Dropdown.Item> */}
                           </>}
@@ -273,7 +329,8 @@ function UsersStudents(props) {
                           </>}
                         {student.status === 'Enrolled'  && 
                           <>
-                          <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Student</h1></Dropdown.Item>
+                          <Dropdown.Item onClick={() => handleViewgrade(student.id)}><h1 className='dropdown-item'>View Grades</h1></Dropdown.Item>
+                          <Dropdown.Item onClick={() => handleViewinfo(student.id)}><h1 className='dropdown-item'>View Information Sheet</h1></Dropdown.Item>
                           </>}
                         {student.status === 'Draft'  && 
                           <>

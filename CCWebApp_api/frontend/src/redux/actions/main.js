@@ -113,9 +113,9 @@ export const setcourseState = (coursestate) => dispatch => {
     })
   };
 
-export const getStudents = () => async dispatch => {
+export const getStudents = (queryGradelevel, queryStatus, querySearch) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`/api/getstudents/`);
+      const res = await instanceAxios.get(`/api/getstudents/?search=${queryGradelevel} ${queryStatus} ${querySearch}`);
       if(res.status === 200){
         console.log(res)
         dispatch({
@@ -226,9 +226,9 @@ export const getSubject = (subject) => async dispatch => {
     }
   };
 
-  export const getSectionList = (query, gradelevel) => async dispatch => {
+  export const getSectionList = (query, gradelevel, schoolyear) => async dispatch => {
     try {
-      const res = await instanceAxios.get(`api/section/?search=${query} ${gradelevel}`);
+      const res = await instanceAxios.get(`api/section/?search=${query} ${gradelevel} ${schoolyear}`);
       if(res.status === 200){
         dispatch({
           type: GET_SECTION,
@@ -712,6 +712,26 @@ export const setStudentPromotion = (gradelevel, status, studentID) => async disp
       // dispatch({
       //   type: PROMOTION_SUCCESSFUL,
       // })
+  } catch (error){
+    console.error(error);
+  }
+}
+
+export const setStudentPromotiontoSHS = (formData, studentID) => async dispatch => {
+  const adjustedStudentformdata = {
+    ...formData,
+    elementarycompletiondate: formatDate(new Date(formData.elementarycompletiondate)),
+    jhscompletion: formatDate(new Date(formData.jhscompletion)),
+    ...(formData.peptcompletion ? {peptcompletion: formatDate(new Date(formData.peptcompletion))}: {}),
+    ...(formData.aecompletion ? {aecompletion: formatDate(new Date(formData.aecompletion))}: {}),
+    ...(formData.aecompletionjhs ? {aecompletionjhs: formatDate(new Date(aecompletionjhs.aecompletionjhs))}: {}),
+    ...(formData.peptcompletionjhs ? {peptcompletionjhs: formatDate(new Date(peptcompletionjhs.peptcompletionjhs))}: {}),
+  }
+  try{
+    const res = await instanceAxios.patch(`/api/getstudents/${studentID}/`, adjustedStudentformdata)
+      dispatch({
+        type: PROMOTION_SUCCESSFUL,
+      })
   } catch (error){
     console.error(error);
   }

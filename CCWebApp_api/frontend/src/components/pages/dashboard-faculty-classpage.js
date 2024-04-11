@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import withAuth from '../common/withAuth';
 import { setsidebarState, setsubsidebarState, setpageHeader, setSelectedBG, getClassdata, setGradesheet, patchGrades } from '../../redux/actions/main';
 
-import { Form, InputGroup, Dropdown, Table, Button, Spinner, Placeholder } from 'react-bootstrap';
-import { RedExclamation, ConnectedAccordionIconOpen } from '../../assets/svg/clnsmpl-icon';
+import { Form, InputGroup, Dropdown, Table, Button, Spinner, Placeholder, Card } from 'react-bootstrap';
+import { RedExclamation, ConnectedAccordionIconOpen, BlueExclamation } from '../../assets/svg/clnsmpl-icon';
 import { PDFViewer } from '@react-pdf/renderer';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
@@ -117,14 +117,16 @@ function ClassPage(props) {
                 );
             })}
           </View>
-          <View style={{flexDirection: 'row', marginTop: '30px'}}>
-                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Submitted By:</Text>
-                    <Text style={{padding: '5px', fontSize: '12px'}}>{props.teacherData.userprofile.last_name}, {props.teacherData.userprofile.first_name} {props.teacherData.userprofile.middle_name}</Text>
+          <View style={{flexDirection: 'row', marginTop: '30px', border: '2px solid black'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black' , width: '110px'}}>Submitted By:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px', borderRight: '1px solid black' , width: '210px'}}>{props.teacherData.userprofile.last_name}, {props.teacherData.userprofile.first_name} {props.teacherData.userprofile.middle_name}</Text>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black' , width: '110px'}}>Signature:</Text>
           </View>
-          <View style={{flexDirection: 'row', marginTop: '20px'}}>
-                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray'}}>Approved By:</Text>
+          <View style={{flexDirection: 'row', marginTop: '15px', border: '2px solid black'}}>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black', width: '110px'}}>Approved By:</Text>
+                    <Text style={{padding: '5px', fontSize: '12px', borderRight: '1px solid black' , width: '210px'}}></Text>
+                    <Text style={{padding: '5px', fontSize: '12px', color: 'gray', borderRight: '1px solid black' , width: '110px'}}>Signature:</Text>
           </View>
-
           </Page>
         </Document>
       );
@@ -230,6 +232,12 @@ function ClassPage(props) {
                 }
             </InputGroup>
           </div>
+          {props.classData.span == 2 &&
+          <Card style={{border: '2px solid #3A57E8', width: '97%', height: '60px', backgroundColor: '#D8DDFA', borderRadius: '4px', justifyContent: 'center', marginBottom: '8px', marginTop: '24px', marginLeft: '24px'}}>
+                  <div style={{display:'flex', paddingLeft: '12px'}}>
+                  <BlueExclamation/><h1 style={{color:'#293DA2', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: '16px', paddingTop: '4px', paddingLeft: '8px'}}>This class only has a span of 2 quarters. Kindly input the "Q1 grade" to Q1 and Q3 slots and "Q2 grade" to Q2 and Q4 slots.</h1>
+                  </div>
+          </Card>}
           <h1 className='card-title' style={{marginTop: '24px', marginLeft: '24px'}}>Grade Sheet</h1>
           <Table hover style={{border: 'none'}}>
             <thead>

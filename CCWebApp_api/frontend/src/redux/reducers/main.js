@@ -376,6 +376,8 @@ export default function(state = initialState, action) {
         case PROMOTION_SUCCESSFUL:
             return{
                 ...state,
+                success: 'Successfully Promoted the Student to SHS',
+                loadingState: 'isNotLoading'
             }
         case ANALYZE_IMAGES_SUCCESS:
             return{
