@@ -56,7 +56,7 @@ const Studentlayout = (props) => {
           </div>          
             }
     
-    <div style={{display: 'flex', backgroundColor: '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '720px'}} > 
+    <div style={{display: 'flex', backgroundColor: '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '10px'}} > 
             <div style={{zIndex: 9999}}>
             <Studentsidebar/>
             </div>

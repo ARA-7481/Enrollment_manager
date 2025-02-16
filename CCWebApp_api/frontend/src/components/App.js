@@ -11,6 +11,10 @@ import '../assets/css/popups.css'
 import '../assets/css/sidebar.css'
 import '../assets/css/avatars.css'
 import '../assets/css/portalbody.css'
+import '../assets/css/water.css'
+import '../assets/css/calendar.css'
+import '../assets/css/scheduler.css'
+import '../assets/css/TimePicker.css'
 
 const Fallback = lazy(() =>  import('./reusable/fallback'))
 const WeatherLayout = lazy(() =>  import('./layouts/Weatherlayout'))
@@ -18,41 +22,48 @@ const AuthLayout = lazy(() =>  import('./layouts/Authlayout'))
 const MainLayout = lazy(() =>  import('./layouts/Mainlayout'))
 const Studentlayout = lazy(() =>  import('./layouts/Studentlayout'))
 const Teacherlayout = lazy(() =>  import('./layouts/Teacherlayout'))
+const Waterlayout = lazy(() =>  import('./layouts/Waterlayout'))
 const Signin = lazy(() =>  import('./accounts/admin-signin'))
-const Class = lazy(() =>  import('./pages/class'))
-const Subjects = lazy(() =>  import('./pages/subjects'))
-const Sections = lazy(() =>  import('./pages/sections'))
-const SectionPage = lazy(() =>  import('./pages/section-studentmanagement'))
-const UsersAdmin = lazy(() =>  import('./pages/users-admin'))
-const UsersStudents = lazy(() =>  import('./pages/users-students'))
-const UsersTeachers = lazy(() =>  import('./pages/users-teachers'))
-const UsersMasterlist = lazy(() =>  import('./pages/users-masterlist'))
-const ClassCreate = lazy(() =>  import('./pages/class-create'))
-const SubjectCreate = lazy(() =>  import('./pages/subject-create'))
-const SectionCreate = lazy(() =>  import('./pages/section-create'))
-const RoomCreate = lazy(() =>  import('./pages/room-create'))
-const RegisterUserstudent = lazy(() =>  import('./pages/register-studentuser'))
-const RegisterUserteacher = lazy(() =>  import('./pages/register-teacheruser'))
-const Studentgradesadmin = lazy(() =>  import('./pages/dashboard-admin-studentgrade'))
-const Updatestudentdata = lazy(() =>  import('./pages/admin-updatestudentdata'))
-const Studentdatasheet = lazy(() =>  import('./pages/student-informationform'))
-const Facultydatasheet = lazy(() =>  import('./pages/faculty-informationform'))
-const SchoolYear = lazy(() =>  import('./pages/schoolyear.js'))
+const Class = lazy(() =>  import('./index_4/class.js'))
+const Subjects = lazy(() =>  import('./index_4/subjects.js'))
+const Sections = lazy(() =>  import('./index_4/sections.js'))
+const SectionPage = lazy(() =>  import('./index_4/section-studentmanagement.js'))
+const UsersAdmin = lazy(() =>  import('./index_4/users-admin.js'))
+const UsersStudents = lazy(() =>  import('./index_4/users-students.js'))
+const UsersTeachers = lazy(() =>  import('./index_4/users-teachers.js'))
+const UsersMasterlist = lazy(() =>  import('./index_4/users-masterlist.js'))
+const ClassCreate = lazy(() =>  import('./index_4/class-create.js'))
+const SubjectCreate = lazy(() =>  import('./index_4/subject-create.js'))
+const SectionCreate = lazy(() =>  import('./index_4/section-create.js'))
+const RoomCreate = lazy(() =>  import('./index_4/room-create.js'))
+const RegisterUserstudent = lazy(() =>  import('./index_4/register-studentuser.js'))
+const RegisterUserteacher = lazy(() =>  import('./index_4/register-teacheruser.js'))
+const Studentgradesadmin = lazy(() =>  import('./index_4/dashboard-admin-studentgrade.js'))
+const Updatestudentdata = lazy(() =>  import('./index_4/admin-updatestudentdata.js'))
+const Studentdatasheet = lazy(() =>  import('./index_4/student-informationform.js'))
+const Facultydatasheet = lazy(() =>  import('./index_4/faculty-informationform.js'))
+const SchoolYear = lazy(() =>  import('./index_4/schoolyear.js'))
 
-const Studentdashboard = lazy(() =>  import('./pages/dashboard-student.js'))
-const StudentProfile = lazy(() =>  import('./pages/student-profile.js'))
+const Studentdashboard = lazy(() =>  import('./index_4/dashboard-student.js'))
+const StudentProfile = lazy(() =>  import('./index_4/student-profile.js'))
+const WaterProfile = lazy(() =>  import('./index_4/wateruserprofile.js'))
 
-const FacultyDashboard = lazy(() =>  import('./pages/dashboard-faculty.js'))
-const FacultyDashboardAdvisory = lazy(() =>  import('./pages/dashboard-faculty-advisory.js'))
-const AdvisoryPage = lazy(() =>  import('./pages/dashboard-faculty-sectionpage.js'))
-const FacultyProfile = lazy(() =>  import('./pages/faculty-profile.js'))
-const ClassPage = lazy(() =>  import('./pages/dashboard-faculty-classpage.js'))
-const Studentgrades = lazy(() =>  import('./pages/dashboard-faculty-advisorystudentgrade.js'))
+const FacultyDashboard = lazy(() =>  import('./index_4/dashboard-faculty.js'))
+const FacultyDashboardAdvisory = lazy(() =>  import('./index_4/dashboard-faculty-advisory.js'))
+const AdvisoryPage = lazy(() =>  import('./index_4/dashboard-faculty-sectionpage.js'))
+const FacultyProfile = lazy(() =>  import('./index_4/faculty-profile.js'))
+const ClassPage = lazy(() =>  import('./index_4/dashboard-faculty-classpage.js'))
+const Studentgrades = lazy(() =>  import('./index_4/dashboard-faculty-advisorystudentgrade.js'))
 
 
-const WeatherDashboard = lazy(() =>  import('./rainmeter/weatherdashboard'))
+const WeatherDashboard = lazy(() =>  import('./index_2/weatherdashboard'))
 const GenSignin = lazy(() =>  import('./accounts/general-signin'))
 
+const WaterDashboard = lazy(() =>  import('./index_3/waterdashboard.js'))
+const WaterBilling = lazy(() =>  import('./index_3/billing.js'))
+
+const SchedulerLayout = lazy(() =>  import('./layouts/Scheduler.js'))
+const SchedulerDashboard = lazy(() => import('./main/calendar.js'))
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
@@ -66,14 +77,14 @@ function AppContent() {
         <Fragment>
         <Routes>
 
-         <Route path="" element={<Signin />} />
-         {/* <Route path="login" element={<GenSignin />} />
+         <Route path="" element={<GenSignin />} />
+         <Route path="login" element={<GenSignin />} />
 
-         <Route path="signin" element={<Signin />} /> */}
+         <Route path="signin" element={<GenSignin />} />
 
           <Route path='/auth' element={<AuthLayout/>}>
-          <Route index element={<Signin />} />
-          <Route path="admin-signin" element={<Signin />} />
+          <Route index element={<GenSignin />} />
+          <Route path="admin-signin" element={<GenSignin />} />
           </Route>
 
           <Route path='/admins' element={<MainLayout/>}>
@@ -120,6 +131,22 @@ function AppContent() {
           <Route index element={<WeatherDashboard />} />
           <Route path="dashboard" element={<WeatherDashboard />} />
           </Route>
+
+          <Route path='/water' element={<Waterlayout/>}>
+          <Route index element={<WaterDashboard />} />
+          <Route path="dashboard" element={<WaterDashboard />} />
+          <Route path="profile" element={<WaterProfile />} />
+          <Route path='billing' element={<WaterBilling />} />
+          </Route>
+
+        
+
+          <Route path='/scheduler' element={<SchedulerLayout/>}>
+          <Route index element={<SchedulerDashboard />} />
+          <Route path="dashboard" element={<SchedulerDashboard />} />
+          </Route>
+
+          
 
         </Routes>
         </Fragment>

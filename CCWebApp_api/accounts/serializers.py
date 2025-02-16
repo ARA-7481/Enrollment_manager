@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile
+from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile, ESP32Profile, PlumbingProfile, EventsList
 from main.models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     date_joined = serializers.DateTimeField(format="%m-%d-%Y", read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'middle_name', 'last_name', 'extension_name', 'email', 'mobile_number', 'usertype', 'avatar', 'facultyprofile', 'studentprofile', 'gender', 'birthdate', 'birthplace', 'nationality', 'address_value1', 'address_value2', 'address_value3', 'date_joined', 'addressketch')
+        fields = ('id', 'first_name', 'middle_name', 'last_name', 'extension_name', 'email', 'mobile_number', 'usertype', 'avatar', 'facultyprofile', 'studentprofile', 'gender', 'birthdate', 'birthplace', 'nationality', 'address_value1', 'address_value2', 'address_value3', 'date_joined', 'addressketch', 'solenoid_address')
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -207,9 +207,25 @@ class DeviceProfileSerializer(serializers.ModelSerializer):
         model = DeviceProfile
         fields = '__all__'
 
+class ESP32ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ESP32Profile
+        fields = '__all__'
+
+class PlumbingProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlumbingProfile
+        fields = '__all__'
+
 class SectionSerializerforadmin(serializers.ModelSerializer):
     adviser = GetFacultySerializer(read_only=False)
     schoolyear = SchoolyearSerializer(read_only=False)
     class Meta:
         model = Section
         fields = '__all__'
+
+#events
+class EventsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventsList
+        fields = ('approval', 'avatar', 'category', 'created_on', 'date', 'description', 'id', 'link', 'time_end', 'time_start', 'title', 'participants', 'students', 'conflict', 'location', 'created_by')

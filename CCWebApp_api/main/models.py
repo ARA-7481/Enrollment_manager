@@ -63,7 +63,11 @@ class Section(models.Model):
         ('Grade 9', 'Grade 9'),
         ('Grade 10', 'Grade 10'),
         ('Grade 11', 'Grade 11'),
-        ('Grade 12', 'Grade 12')
+        ('Grade 12', 'Grade 12'),
+        ('First Year', 'First Year'),
+        ('Second Year', 'Second Year'),
+        ('Third Year', 'Third Year'),
+        ('Fourth Year', 'Fourth Year')
     )
     code = models.CharField(max_length=200, primary_key=True, null=False, unique=True)
     schoolyear = models.ForeignKey(SchoolYear, on_delete=models.SET_NULL, null=True, blank=True)

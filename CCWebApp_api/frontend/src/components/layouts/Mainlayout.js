@@ -85,7 +85,6 @@ const MainLayout = (props) => {
               <Footer/>
               </div> 
               </div>
-              
             </div>
              
       </div>

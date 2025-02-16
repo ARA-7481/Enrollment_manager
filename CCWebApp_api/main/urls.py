@@ -1,5 +1,5 @@
 from rest_framework import routers
-from accounts.views import UserViewset, DeviceProfileView
+from accounts.views import UserViewset, DeviceProfileView, ESP32ProfileView, PlumbingProfileView, EventsView
 from .views import SubjectViewSet, RoomViewSet, StudentsViewSet, FacultyViewSet, StaffViewSet, GetStudentsViewSet, GetFacultyViewset, SchoolYearViewset, SectionViewset, SectionAddViewset, ClassesAddViewset, ClassesViewset, GetClassesViewset, GradesViewset, GetStudentDataViewSet, GetSectionsViewset
 
 router = routers.DefaultRouter()
@@ -22,5 +22,10 @@ router.register('api/grades', GradesViewset , 'grades')
 router.register('api/studentdata', GetStudentDataViewSet , 'studentdata')
 
 router.register('api/deviceprofile', DeviceProfileView , 'deviceprofile')
+router.register('api/esp32profile', ESP32ProfileView , 'esp32profile')
+
+router.register('api/plumbingprofile', PlumbingProfileView , 'plumbingprofile')
+
+router.register('api/eventslist', EventsView , 'eventslist')
 
 urlpatterns = router.urls

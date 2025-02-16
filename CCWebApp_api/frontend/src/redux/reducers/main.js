@@ -6,7 +6,8 @@ import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMEN
         GET_STUDENT_DATA, GET_ACTIVITY, ADD_ACTIVITY_ENTRY, GET_CLASS_DATA, ANALYZE_IMAGES_SUCCESS, GET_ENTRY, SET_SUBMITTING_STUDENT,
         CLEAR_RESPONSE, REGISTER_STUDENT, REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
         GET_SCHOOLYEAR, SET_SECTION, GET_SECTION, ADD_SECTION, SET_GRADESHEET, GET_DEVICE, GET_SECTION_DATA, SET_SELECTED_SECTION, PROMOTION_SUCCESSFUL,
-        GET_FLOOD_DEVICE, GET_DEVICES, CLEAR_CLASS_DATA, CLEAR_SECTION_DATA,
+        GET_FLOOD_DEVICE, GET_DEVICES, CLEAR_CLASS_DATA, CLEAR_SECTION_DATA, GET_ESP32AQUA, GET_PLUMBINGDEVICE,
+        GET_EVENTS_LIST
         } from "../types/types";
 
 const initialState = {
@@ -38,8 +39,10 @@ const initialState = {
     newUserdata: {},
     studentData: {},
     teacherData: {},
+    aquaData: {},
     emptygradeSheet: {},
     deviceData: {},
+    plumbingDeviceData: {},
     flooddeviceData: {},
     studentsList: [],
     facultyList: [],
@@ -56,6 +59,7 @@ const initialState = {
     activitiesOnclass: [],
     sectionList: [],
     devicesList:[],
+    eventsList: [],
     isLess800: false,
 
     //new
@@ -405,6 +409,11 @@ export default function(state = initialState, action) {
                 ...state,
                 deviceData: action.payload,
             }
+        case GET_ESP32AQUA:
+            return{
+                ...state,
+                aquaData: action.payload,
+            }
         case GET_FLOOD_DEVICE:
             return{
                 ...state,
@@ -414,6 +423,16 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 devicesList: action.payload,
+            }
+        case GET_PLUMBINGDEVICE:
+            return{
+                ...state,
+                plumbingDeviceData: action.payload,
+            }
+        case GET_EVENTS_LIST:
+            return{
+                ...state,
+                eventsList: action.payload,
             }
         case CLEAR_STATE:
             return{
@@ -448,6 +467,8 @@ export default function(state = initialState, action) {
                 teacherData: {},
                 deviceData: {},
                 flooddeviceData: {},
+                plumbingDeviceData: {},
+                aquaData: {},
                 studentsList: [],
                 facultyList: [],
                 staffList: [],
@@ -463,6 +484,7 @@ export default function(state = initialState, action) {
                 activitiesOnclass: [],
                 sectionList: [],
                 devicesList:[],
+                eventsList: [],
                 isLess800: false,
      
                 //new

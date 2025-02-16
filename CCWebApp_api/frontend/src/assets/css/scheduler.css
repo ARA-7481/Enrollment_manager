@@ -1,0 +1,63 @@
+.scheduler-dashboard-options {
+    width: 20%;
+    border: 2px solid #556BD9;
+    transition: transform 0.3s ease;
+  }
+.scheduler-dashboard-options:hover{
+    border-bottom: 2px solid #556BD9;
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.schedule-item {
+  width: 100%;
+  height: 105px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  margin-top: 10px;
+}
+.schedule-item:hover{
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.events-container{
+  height: 78%;
+  margin-top: 65px;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 87%;
+  overflow-y: auto;
+  padding-inline: 20px !important;
+  /* background-color: rgba(0, 0, 0, 0.05); */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+}
+.events-button{
+  height: 35px;
+  width: 87%;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5px;
+  background-color: #556BD9;
+}
+.events-button:hover{
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.events-create{
+  height: 35px;
+  width: 35%;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin-left: 65%;
+  margin-top: 25px;
+  background-color: #556BD9;
+  right: 0;
+}
+.events-create:hover{
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}

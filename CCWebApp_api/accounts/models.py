@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
+from django.core.exceptions import ValidationError
 import random
 import string
 
@@ -41,6 +42,8 @@ class User(AbstractUser):
     usertype = models.CharField(max_length=20, choices=USERTYPE, null=True)
     registration_datetime = models.DateTimeField(auto_now_add=True)
     avatar = models.FileField(upload_to='uploads/', default='avatar.webp')
+
+    solenoid_address = models.CharField(max_length=200, null=True)
 
     gender = models.CharField(max_length=20, choices=GENDER, null=False, default='Unspecified')
     birthdate = models.DateField(null=True)
@@ -182,7 +185,108 @@ class StaffProfile(models.Model):
 class DeviceProfile(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
     name = models.CharField(null=True, blank=True)
+    img = models.CharField(null=True, blank=True)
     triggercount = models.IntegerField(null=True, blank=True)
     hourcount = models.IntegerField(null=True, blank=True, default = 0)
     rainrate = models.FloatField(null=True, blank=True)
     waterlevel = models.FloatField(null=True, blank=True)
+    waterlevelwarning = models.CharField(null=True, blank=True)
+    rainwarning = models.CharField(null=True, blank=True)
+    text = models.CharField(max_length=500, null=True, blank=True)
+    mode = models.CharField(max_length=50, null=True, blank=True)
+
+class ESP32Profile(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
+    name = models.CharField(null=True, blank=True)
+    ph_tower_one = models.FloatField(null=True, blank=True)
+    ph_tower_two = models.FloatField(null=True, blank=True)
+    status_tower_one = models.CharField(null=True, blank=True)
+    status_tower_two = models.CharField(null=True, blank=True)
+    temperature = models.FloatField(null=True, blank=True)
+
+class PlumbingProfile(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
+    name = models.CharField(null=True, blank=True)
+    trigger = models.IntegerField(null=True, blank=True)
+    ballvalve = models.IntegerField(null=True, blank=True)
+    solenoid1 = models.IntegerField(null=True, blank=True)
+    solenoid2 = models.IntegerField(null=True, blank=True)
+    solenoid3 = models.IntegerField(null=True, blank=True)
+    dcmotor = models.IntegerField(null=True, blank=True)
+    pressureanalog = models.IntegerField(null=True, blank=True)
+    flowspeedpulse1 = models.IntegerField(null=True, blank=True)
+    flowspeedpulse2 = models.IntegerField(null=True, blank=True)
+    flowspeedpulse3 = models.IntegerField(null=True, blank=True)
+    ultrasonic = models.IntegerField(null=True, blank=True)
+    flowspeed1 = models.FloatField(null=True, blank=True)
+    flowspeed2 = models.FloatField(null=True, blank=True)
+    flowspeed3 = models.FloatField(null=True, blank=True)
+    billedvolume1 = models.IntegerField(null=True, blank=True)
+    billedvolume2 = models.IntegerField(null=True, blank=True)
+    billedvolume3 = models.IntegerField(null=True, blank=True)
+    billedvolume1_month = models.IntegerField(null=True, blank=True)
+    billedvolume2_month = models.IntegerField(null=True, blank=True)
+    billedvolume3_month = models.IntegerField(null=True, blank=True)
+    conversionrate = models.FloatField(null=True, blank=True)
+
+class ScheduleStaffProfile(models.Model):
+    ROLE = (     
+        ('Admin', 'Admin'),
+        ('Staff','Staff'),
+        ('Not Specified', 'Not Specified'),
+        ('Registrar', 'Registrar'),
+        ('Guidance', 'Guidance'),
+        
+    )
+    id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
+    role = models.CharField(max_length=50, choices=ROLE, null=False, default= 'Not Specified')
+    userprofile = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+
+class Events(models.Model):
+    CATEGORY = (     
+        ('Holiday', 'Holiday'),
+        ('Allow-Conflict','Allow-Conflict'),
+        ('No-Conflict', 'No-Conflict'),
+        ('Special-Event', 'Special-Event'),
+        ('Not-Specified', 'Not-Specified'),
+        
+    )
+    id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
+    date = models.DateTimeField(null=True)
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
+    avatar = models.FileField(upload_to='uploads/', default='avatar.webp')
+    link = models.CharField(max_length=500, null=True, blank=True)
+    category = models.CharField(max_length=50, choices=CATEGORY, null=False, default= 'Not-Specified')
+    approval = models.CharField(max_length=50, null=True, blank=True, default="No" )
+    time_start = models.DateTimeField(null=True)
+    time_end = models.DateTimeField(null=True)
+
+class EventsList(models.Model):
+    CATEGORY = (     
+        ('Holiday', 'Holiday'),
+        ('Special-Event', 'Special-Event'),
+        ('Academic-Event', 'Academinc-Event'),
+        ('Not-Specified', 'Not-Specified'),
+        
+    )
+    CONFLICT = (
+        ('Allow-Conflict','Allow-Conflict'),
+        ('No-Conflict', 'No-Conflict'),
+    )
+    id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
+    date = models.DateField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    description = models.CharField(max_length=1000, null=True, blank=True)
+    avatar = models.FileField(upload_to='uploads/', default='avatar.webp')
+    link = models.CharField(max_length=500, null=True, blank=True)
+    category = models.CharField(max_length=50, choices=CATEGORY, null=False, default= 'Not-Specified')
+    conflict = models.CharField(max_length=50, choices=CONFLICT, null=False, default= 'Allow-Conflict')
+    approval = models.CharField(max_length=50, null=True, blank=True, default="No" )
+    time_start = models.TimeField(null=True)
+    time_end = models.TimeField(null=True)
+    title = models.CharField(max_length=500, null=True, blank=True)
+    participants = models.ManyToManyField(ScheduleStaffProfile, related_name='staff_related_event', blank=True)
+    students = models.ManyToManyField('main.Section', related_name='section_related_event', blank=True)
+    location = models.CharField(max_length=500, null=True, blank=True)
+    created_by = models.CharField(max_length=500, null=True, blank=True)

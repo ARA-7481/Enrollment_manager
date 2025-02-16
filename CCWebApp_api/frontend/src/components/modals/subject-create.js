@@ -6,7 +6,7 @@ import withAuth from '../common/withAuth';
 import { setLoading, getSubjectsList, addSubject, setSubjectformdata } from '../../redux/actions/main';
 
 import {Form, InputGroup, Dropdown, Table, Button, Spinner } from 'react-bootstrap';
-import { RedExclamation, ConnectedAccordionIconOpen } from '../../assets/svg/clnsmpl-icon';
+import { RedExclamation, ConnectedAccordionIconOpen, CloseButton } from '../../assets/svg/clnsmpl-icon';
 import { object } from 'prop-types';
 
 function SubjectCreatemodal(props) {

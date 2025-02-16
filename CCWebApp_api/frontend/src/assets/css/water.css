@@ -1,0 +1,7 @@
+.div-valve{
+    width: 100%;
+}
+.div-valve:hover{
+    cursor: pointer;
+    background-color: rgb(186, 223, 186);
+}

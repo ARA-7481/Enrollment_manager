@@ -18,6 +18,9 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_DEVICES,
          CLEAR_CLASS_DATA,
          CLEAR_SECTION_DATA,
+         GET_ESP32AQUA,
+         GET_PLUMBINGDEVICE,
+         GET_EVENTS_LIST
         } from "../types/types";
 
 function formatTime(time) {
@@ -496,6 +499,12 @@ export const getSubject = (subject) => async dispatch => {
     }
   };
 
+  export const valveError = () => async dispatch => {
+    dispatch({
+      type: FILL_ERROR,
+      payload: "Command Denied: Ball Valve is still active!"
+    })
+  }
 
   export const registerStudentSHS = (formData, studentFormdata) => async dispatch => {
     const config = {
@@ -1086,7 +1095,7 @@ export const analyzeImages = (referencefileUrl, entryfileUrl, prompt, customprom
 };
 
 
-export const getDevice = (id) => async dispatch => {
+export const getDevicebaby = (id) => async dispatch => {
   try {
     const res = await instanceAxios.get(`/api/deviceprofile/${id}`);
     console.log(res.data)
@@ -1096,6 +1105,79 @@ export const getDevice = (id) => async dispatch => {
         payload: res.data
       });
     }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getDeviceRain = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/deviceprofile/${id}`);
+    console.log(res.data)
+    if(res.status === 200){
+      dispatch({
+        type: GET_DEVICE,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getDevice = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/esp32profile/${id}`);
+    console.log(res.data)
+    if(res.status === 200){
+      dispatch({
+        type: GET_ESP32AQUA,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getPlumbingDevice = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/plumbingprofile/${id}`);
+    console.log(res.data)
+    if(res.status === 200){
+      dispatch({
+        type: GET_PLUMBINGDEVICE,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const updateplumbingTrigger = (id, ballvalve, solenoid1, solenoid2, solenoid3, dcmotor) => async dispatch => {
+  const body = {
+    trigger : 1,
+    ballvalve : ballvalve,
+    solenoid1 : solenoid1,
+    solenoid2 : solenoid2,
+    solenoid3 : solenoid3,
+    dcmotor : dcmotor,
+  }
+  try {
+    const res = await instanceAxios.patch(`/api/plumbingprofile/${id}/`, body);
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const triggerDeviceIdle = (id) => async dispatch => {
+  const body = {
+    triggercount : 3,
+    img : "https://ccwebappbucket.s3.ap-southeast-1.amazonaws.com/uploads/baby_sleeping.png"
+  }
+  try {
+    const res = await instanceAxios.patch(`/api/deviceprofile/${id}/`, body);
   } catch (error) {
       console.error(error);
   }
@@ -1123,6 +1205,24 @@ export const getFlooddevice = (id) => async dispatch => {
     if(res.status === 200){
       dispatch({
         type: GET_FLOOD_DEVICE,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const getEventsList = (assignedDate) => async dispatch => {
+  const formattedDate = formatDate(assignedDate)
+  console.log(formattedDate)
+  console.log(assignedDate)
+  try {
+    const res = await instanceAxios.get(`/api/eventslist/?search=${formattedDate}`);
+    console.log(res.data)
+    if(res.status === 200){
+      dispatch({
+        type: GET_EVENTS_LIST,
         payload: res.data
       });
     }

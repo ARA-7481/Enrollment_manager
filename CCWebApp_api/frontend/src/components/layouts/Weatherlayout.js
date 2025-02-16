@@ -49,6 +49,7 @@ const WeatherLayout = (props) => {
   
   return (
     <>
+    
     <div style={{width: '100%', height: '100%', backgroundImage:`url(${bg})`}}>
     { props.error  &&
          <div style={{position: 'fixed', transform: 'translateX(-50%)', left: '50%', zIndex: 9999}}>
@@ -61,27 +62,27 @@ const WeatherLayout = (props) => {
           </div>          
             }
 
-    <div style={{display: 'flex', backgroundColor: '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '720px', backgroundImage:`url(${bg})`}} > 
+    <div style={{display: 'flex', backgroundColor: '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '1px', backgroundImage:`url(${bg})`}} > 
             <div style={{zIndex: 9999}}>
-            <Weathersidebar/>
+            {!props.isLess800?<Weathersidebar/> : '' }
             </div>
             <div style={{width: windowWidth, position: 'relative', minWidth: '1px'}}>
               <div style={{maxHeight:windowHeight, zIndex: 9999}}>
 
-              <div style={{position: 'sticky', top:0, zIndex: 9998, backgroundColor:'rgba(51, 51, 51, 0.00)'}}>
+              <div style={{position: 'sticky', top:0, zIndex: 9998}}>
               <WeatherNavbar/>
               </div>
-              <div style={{height: '200px'}}>
-              {/* <WeatherTopBar/> */}
-              </div>
+              {/* <div style={{height: '200px'}}>
+              <WeatherTopBar/>
+              </div> */}
               <div style={{minHeight: '64.5vh'}}>
-              <div style={{transform: 'translate( 0px, -150px)', backgroundColor:'rgba(51, 51, 51, 0.00)', marginRight: !props.isLess800? '40px': '15px', marginLeft: !props.isLess800? '40px': '15px', borderRadius:'8px', minHeight: '1px'}}>
+              <div style={{transform: 'translate( 0px, 0px)', backgroundColor:'rgba(51, 51, 51, 0.00)', marginRight: !props.isLess800? '10px': '1px', marginLeft: !props.isLess800? '10px': '1px', borderRadius:'8px', minHeight: '1px'}}>
               <Outlet/>
               </div>
               </div>
-              <div style={{position: 'sticky', bottom: 0, backgroundColor: '#ffffff', width: '100%', backgroundColor:'rgba(51, 51, 51, 0.00)'}}>
+              {/* <div style={{position: 'sticky', bottom: 0, backgroundColor: '#ffffff', width: '100%', backgroundColor:'rgba(51, 51, 51, 0.00)'}}>
               <WeatherFooter/>
-              </div> 
+              </div>  */}
               </div>
               
             </div>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instanceAxios = axios.create({
-  baseURL: `https://${window.location.host}`,
+  // baseURL: `https://${window.location.host}`,
  });
 
 

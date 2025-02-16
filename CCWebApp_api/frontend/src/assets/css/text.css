@@ -4,7 +4,28 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 170px;
+  font-size: 120px;
+}
+.inter-500-22px-light {
+  color:#ffffff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+}
+.inter-700-40px-light {
+  color:#22242b;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+}
+.inter-700-40px-white {
+  color:#ffffff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
 }
 .inter-700-28px-light {
   color:#22242b;
@@ -13,12 +34,54 @@
   font-weight: 700;
   font-size: 28px;
 }
+.inter-600-30px-light {
+  color:#22242b;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+}
+.inter-600-15px-light {
+  color:#22242b;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+}
+.inter-600-12px-light {
+  color:#ffffff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+}
+.inter-500-16px-light {
+  color:#ffffff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+}
 .inter-700-28px {
   color:#000000;
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
+}
+.inter-700-20px-light{
+  color:#ffffff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+}
+.inter-700-22px {
+  color:#000000;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
 }
 .inter-600-20px {
   color:#22242b;
@@ -70,6 +133,13 @@
     font-weight: 500;
     font-size: 18px;
   }
+  .inter-500-18px-dark {
+    color: #000000;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+  }
 .inter-500-19px {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -103,6 +173,16 @@
     font-weight: 400;
     font-size: 16px;
   }
+  .inter-400-16px-gray {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color:#8F9BB3;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+  }
 .inter-400-16px-link {
     color:#087AEB;
     font-family: 'Inter', sans-serif;
@@ -110,6 +190,34 @@
     font-weight: 400;
     font-size: 16px;
     text-decoration: none;
+  }
+.inter-400-10px-dark {
+    color:#000000;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+  }
+.inter-400-12px-dark {
+    color:#000000;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+  }
+  .inter-400-14px-dark {
+    color:#595D62;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  .inter-600-18px-dark {
+    color:#000000;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
   }
 .buttons-font {
     white-space: nowrap;
@@ -183,4 +291,13 @@
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
+}
+.table-body-modal {
+  color:#000000 !important;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+  vertical-align: middle !important;
+  border: none !important;
 }
