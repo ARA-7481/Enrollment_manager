@@ -38,13 +38,13 @@ while True:
         rainrate = device.hourcount * 0.631356 * 4
         if(rainrate > 7.5 and rainrate <= 15):
             device.rainwarning = 'yellow'
-            # send_sms('YELLOW RAINFALL! Flooding is possible! Monitor the weather condition', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
+            send_sms('YELLOW RAINFALL! Flooding is possible! Monitor the weather condition', '+639306394598,+639616183465')
         elif(rainrate > 15 and rainrate <= 30):
             device.rainwarning = 'orange'
-            # send_sms('ORANGE RAINFALL! Flooding is threatening! Prepare for Possible Evacuation', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
+            send_sms('ORANGE RAINFALL! Flooding is threatening! Prepare for Possible Evacuation', '+639306394598,+639616183465')
         elif(rainrate > 30):
             device.rainwarning = 'red'
-            # send_sms('RED RAINFALL! Serious Flooding in low lying areas. Please Evacuate', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
+            send_sms('RED RAINFALL! Serious Flooding in low lying areas. Please Evacuate', '+639306394598,+639616183465')
         else:
             device.rainwarning = 'none'
         device.hourcount = 0

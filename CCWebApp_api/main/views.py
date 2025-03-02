@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from django.forms.models import model_to_dict
 
 
-from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer, ClassesSerializerForDashboard, ClassesSerializerForClassPage, GradeScoreEntitySerializer, GetStudentDataSerializer, SectionSerializerForDashboard, SectionSerializerforadmin
-from accounts.models import StudentProfile, FacultyProfile, StaffProfile
+from accounts.serializers import SubjectSerializer, RoomSerializer, FacultySerializer, StudentSerializer, StaffSerializer, GetStudentSerializer, GetFacultySerializer, SchoolyearSerializer, SectionSerializer, SectionAddSerializer, ClassesAddSerializer, ClassesSerializer, ClassesSerializerForDashboard, ClassesSerializerForClassPage, GradeScoreEntitySerializer, GetStudentDataSerializer, SectionSerializerForDashboard, SectionSerializerforadmin, EventAddSerializer
+from accounts.models import StudentProfile, FacultyProfile, StaffProfile, EventsList
 from .models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 from accounts.permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
 
@@ -117,3 +117,7 @@ class GradesViewset(viewsets.ModelViewSet):
 class GetStudentDataViewSet(viewsets.ModelViewSet):
     queryset = StudentProfile.objects.all()
     serializer_class = GetStudentDataSerializer
+
+class EventAddViewset(viewsets.ModelViewSet):
+    queryset = EventsList.objects.all()
+    serializer_class = EventAddSerializer

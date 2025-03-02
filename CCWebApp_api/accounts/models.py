@@ -274,19 +274,27 @@ class EventsList(models.Model):
         ('Allow-Conflict','Allow-Conflict'),
         ('No-Conflict', 'No-Conflict'),
     )
+    TYPE = (
+        ('Face-To-Face','Face-To-Face'),
+        ('Online', 'Online'),
+        ('Hybrid', 'Hybrid'),
+        ('Holiday', 'Holiday'),
+    )
+
     id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
     date = models.DateField(null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True, null=True)
     description = models.CharField(max_length=1000, null=True, blank=True)
-    avatar = models.FileField(upload_to='uploads/', default='avatar.webp')
     link = models.CharField(max_length=500, null=True, blank=True)
     category = models.CharField(max_length=50, choices=CATEGORY, null=False, default= 'Not-Specified')
     conflict = models.CharField(max_length=50, choices=CONFLICT, null=False, default= 'Allow-Conflict')
     approval = models.CharField(max_length=50, null=True, blank=True, default="No" )
     time_start = models.TimeField(null=True)
     time_end = models.TimeField(null=True)
-    title = models.CharField(max_length=500, null=True, blank=True)
-    participants = models.ManyToManyField(ScheduleStaffProfile, related_name='staff_related_event', blank=True)
-    students = models.ManyToManyField('main.Section', related_name='section_related_event', blank=True)
+    title = models.CharField(max_length=500, null=True, blank=True, unique=True)
+    participants = models.ManyToManyField(FacultyProfile, related_name='faculty_related_event', blank=True)
     location = models.CharField(max_length=500, null=True, blank=True)
     created_by = models.CharField(max_length=500, null=True, blank=True)
+    participants_additional = models.CharField(max_length=500, null=True, blank=True)
+    type = models.CharField(max_length=50, choices=TYPE, null=False, default= 'Face-To-Face')
+    meetlink = models.CharField(max_length=500, null=True, blank=True)

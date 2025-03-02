@@ -56,11 +56,11 @@ const SchedulerLayout = (props) => {
           </div>          
             }
     
-    <div style={{display: 'flex', backgroundColor: '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '10px'}} > 
+    <div style={{display: 'flex', backgroundColor: 'white', height: windowHeight, overflow: 'hidden', minWidth: '10px'}} > 
             <div style={{width: windowWidth, position: 'relative', minWidth: '1px'}}>
               {props.errorMessage && 
               <div style={{position: 'fixed', left: '56%', transform: 'translateX(-50%)', zIndex: 9999}}>
-              <ErrorPopupmain/>
+              <ErrorPopupMain/>
               </div>
               }
               <div style={{maxHeight:windowHeight, overflowY: 'auto', zIndex: 9999}}>

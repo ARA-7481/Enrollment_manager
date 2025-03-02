@@ -20,27 +20,27 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .events-container{
-  height: 78%;
-  margin-top: 65px;
-  margin-left: 10%;
+  height: 85%;
+  margin-top: 45px;
   margin-right: 10%;
-  width: 87%;
+  width: 85%;
   overflow-y: auto;
   padding-inline: 20px !important;
   /* background-color: rgba(0, 0, 0, 0.05); */
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 16px;
+  margin-left: 3.5%;
+  overflow-x: hidden;
 }
 .events-button{
   height: 35px;
-  width: 87%;
+  width: 85%;
   border-radius: 8px;
   display: flex;
   justify-content: center;
-  margin-left: 10%;
-  margin-right: 10%;
   margin-top: 5px;
   background-color: #556BD9;
+  margin-left: 3.5%;
 }
 .events-button:hover{
   cursor: pointer;

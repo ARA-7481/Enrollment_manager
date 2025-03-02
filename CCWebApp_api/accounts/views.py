@@ -504,4 +504,4 @@ class EventsView(viewsets.ModelViewSet):
     queryset = EventsList.objects.all()
     serializer_class = EventsSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['=date']
+    search_fields = ['date']

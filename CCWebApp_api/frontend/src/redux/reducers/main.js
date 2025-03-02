@@ -7,7 +7,9 @@ import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMEN
         CLEAR_RESPONSE, REGISTER_STUDENT, REGISTER_TEACHER, FILL_ERROR, EMPTY_ERROR, EMPTY_SUCCESS, SET_USER_AVATAR, SET_USER_DATA, SET_USER_PW,
         GET_SCHOOLYEAR, SET_SECTION, GET_SECTION, ADD_SECTION, SET_GRADESHEET, GET_DEVICE, GET_SECTION_DATA, SET_SELECTED_SECTION, PROMOTION_SUCCESSFUL,
         GET_FLOOD_DEVICE, GET_DEVICES, CLEAR_CLASS_DATA, CLEAR_SECTION_DATA, GET_ESP32AQUA, GET_PLUMBINGDEVICE,
-        GET_EVENTS_LIST
+        GET_EVENTS_LIST,
+        ADD_EVENT,
+        GET_EVENTS_LIST_MONTH
         } from "../types/types";
 
 const initialState = {
@@ -60,6 +62,7 @@ const initialState = {
     sectionList: [],
     devicesList:[],
     eventsList: [],
+    eventsListMonth: [],
     isLess800: false,
 
     //new
@@ -434,6 +437,17 @@ export default function(state = initialState, action) {
                 ...state,
                 eventsList: action.payload,
             }
+        case GET_EVENTS_LIST_MONTH:
+            return{
+                ...state,
+                eventsListMonth: action.payload,
+            }
+        case ADD_EVENT:
+            return{
+                ...state,
+                loadingState: 'isNotLoading',
+                success: 'Successfully Added An Event'
+                }
         case CLEAR_STATE:
             return{
                 loadingState: 'isNotLoading',
@@ -485,6 +499,7 @@ export default function(state = initialState, action) {
                 sectionList: [],
                 devicesList:[],
                 eventsList: [],
+                eventsListMonth: [],
                 isLess800: false,
      
                 //new

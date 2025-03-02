@@ -110,8 +110,29 @@
     font-weight: 500;
     font-size: 16px;
   }
+.inter-500-16px-link {
+    color:#0874cc;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+  }
 .inter-500-16px-dark {
     color:#000000;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+  }
+.inter-500-16px-red {
+    color:#a70303;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+  }
+.inter-500-16px-green {
+    color:#03a75a;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
@@ -154,6 +175,13 @@
     font-size: 19px;
   }
 .inter-500-20px {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+  }
+.inter-500-20px-light {
+    color: #ffffff;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
@@ -207,6 +235,13 @@
   }
   .inter-400-14px-dark {
     color:#595D62;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  .inter-400-14px-black {
+    color:#000000;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -299,5 +334,14 @@
   font-weight: 400 !important;
   font-size: 15px !important;
   vertical-align: middle !important;
+  border: none !important;
+}
+.table-head-modal {
+  color:#8A92A6 !important;
+  background-color:#F5F6FA !important;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
   border: none !important;
 }

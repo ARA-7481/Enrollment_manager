@@ -226,6 +226,13 @@ class SectionSerializerforadmin(serializers.ModelSerializer):
 
 #events
 class EventsSerializer(serializers.ModelSerializer):
+    participants = FacultySerializerForStudent(read_only=False, many=True)
     class Meta:
         model = EventsList
-        fields = ('approval', 'avatar', 'category', 'created_on', 'date', 'description', 'id', 'link', 'time_end', 'time_start', 'title', 'participants', 'students', 'conflict', 'location', 'created_by')
+        fields = ('approval', 'category', 'created_on', 'date', 'description', 'id', 'link', 'time_end', 'time_start', 'title', 'participants', 'conflict', 'location', 'created_by', 'participants_additional', 'type', 'meetlink')
+
+class EventAddSerializer(serializers.ModelSerializer):
+    participants = serializers.PrimaryKeyRelatedField(many=True, queryset=FacultyProfile.objects.all())
+    class Meta:
+        model = EventsList
+        fields = '__all__'

@@ -29,7 +29,7 @@ def send_sms(message, number):
     response = requests.post(path)
     print(response.text)
 
-send_sms('Rain-Meter API Started!', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
+# send_sms('Rain-Meter API Started!', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
 while True:
     if datetime.now().second == 1 or datetime.now().second == 31:
         from accounts.models import DeviceProfile

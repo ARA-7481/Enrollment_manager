@@ -20,7 +20,9 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          CLEAR_SECTION_DATA,
          GET_ESP32AQUA,
          GET_PLUMBINGDEVICE,
-         GET_EVENTS_LIST
+         GET_EVENTS_LIST,
+         ADD_EVENT,
+         GET_EVENTS_LIST_MONTH
         } from "../types/types";
 
 function formatTime(time) {
@@ -37,6 +39,39 @@ function formatDate(date) {
   day = day < 10 ? `0${day}` : day;
 
   return `${year}-${month}-${day}`;
+}
+
+function formatDateMonth(date) {
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+
+  let monthprev;
+  let monthnext;
+  let yearprev;
+  let yearnext;
+
+  if(month == 1){
+    monthprev = 12;
+    monthnext = 2;
+    yearprev = year - 1;
+    yearnext = year;
+  }else if(month == 12){
+    monthprev = 11;
+    monthnext = 1;
+    yearprev = year;
+    yearnext = year + 1;
+  }else{
+    monthprev = month - 1;
+    monthnext = month + 1;
+    yearprev = year;
+    yearnext = year;
+  }
+
+  month = month < 10 ? `0${month}` : month;
+  monthprev = monthprev < 10 ? `0${monthprev}` : monthprev;
+  monthnext = monthnext < 10 ? `0${monthnext}` : monthnext;
+
+  return [`${yearprev}-${monthprev}`,`${year}-${month}`,`${yearnext}-${monthnext}`];
 }
 
 export const setError = (errorMessage) => dispatch => {
@@ -1213,13 +1248,14 @@ export const getFlooddevice = (id) => async dispatch => {
   }
 };
 
+
 export const getEventsList = (assignedDate) => async dispatch => {
   const formattedDate = formatDate(assignedDate)
   console.log(formattedDate)
-  console.log(assignedDate)
+  // console.log(assignedDate)
   try {
     const res = await instanceAxios.get(`/api/eventslist/?search=${formattedDate}`);
-    console.log(res.data)
+    // console.log(res.data)
     if(res.status === 200){
       dispatch({
         type: GET_EVENTS_LIST,
@@ -1230,3 +1266,68 @@ export const getEventsList = (assignedDate) => async dispatch => {
       console.error(error);
   }
 };
+
+
+export const getEventsListMonth = (assignedDate) => async dispatch => {
+  const formattedDateMonth = formatDateMonth(assignedDate)
+  console.log(formattedDateMonth)
+  // console.log(assignedDate)
+  try {
+    const requests = formattedDateMonth.map(dateMonth =>
+      instanceAxios.get(`/api/eventslist/?search=${dateMonth}`))
+  
+    const responses = await Promise.all(requests);
+    
+    const combinedData = responses
+            .filter(res => res.status === 200)
+            .map(res => res.data)
+            .flat();
+      dispatch({
+        type: GET_EVENTS_LIST_MONTH,
+        payload: combinedData
+      });
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+
+export const addEvent = (formData) => async dispatch => {
+  const adjustedFormData = {
+    ...formData,
+    date: formatDate(formData.date),
+  };
+  try {
+    const res = await instanceAxios.post('/api/addevent/', adjustedFormData);
+    dispatch({
+      type: ADD_EVENT,
+      payload: res.data,
+    });
+  } catch (error) {
+    if(error.response.data.title){
+      dispatch({
+        type: FILL_ERROR,
+        payload: "An Event With the Same Title Already Exists"
+      })
+    }else{
+    console.log(error)
+    dispatch({
+      type: FILL_ERROR,
+      payload: 'An Error Occured During Submission.Please Check Your Field Inputs.'
+    })
+  }
+  }
+};
+
+export const ConflictError = (eventtitle, timestart, timeend) => async dispatch => {
+  dispatch({
+    type: FILL_ERROR,
+    payload: `Failed to add event: Conflict with an event named ${eventtitle}, start time: ${timestart}, end time: ${timeend}.`
+  })
+}
+export const TimeError = () => async dispatch => {
+  dispatch({
+    type: FILL_ERROR,
+    payload: `Failed to add event: Start Time should be earlier than End Time.`
+  })
+}
