@@ -11,6 +11,9 @@ import bg1 from '../../assets/images/auth/bg2.webp'
 import www from '../../assets/images/backgrounds/www.png'
 import { MainIcon } from '../../assets/svg/clnsmpl-icon';
 
+import bg from '../../assets/images/backgrounds/bg_bisu.jpg'
+import logo from '../../assets/images/backgrounds/R.png'
+
 function GenSignin (props) {
 
    const [email, setEmail] = React.useState('');
@@ -56,15 +59,21 @@ function GenSignin (props) {
       
             
             <Row className="m-0 bg-white vh-100">
+                <div style={{position:'fixed', transform: 'translate( 70px, 30px)', zIndex:'9991'}}>
+                                   <img className="circular-avatar" src={logo} alt="description" />
+                             </div>
+               <div style={{position:'fixed', zIndex:'9990', transform:'translate(0px, -250px)'}}>
+                                  <Image src={bg} className="Image-fluid gradient-main animated-scaleX" alt="images" />
+                               </div>
                <Col md="12" style={{backgroundColor: 'white'}}>
                   <Row className='align-items-start' style={{height: '28%'}}> 
                         
                   </Row>
                   <Row className="justify-content-center">
                      <Col md="4">
-                        <Card className="shadow-none d-flex justify-content-center mb-0">
+                        <Card className="shadow-none d-flex justify-content-center mb-0" style={{zIndex:'9991', backgroundColor:'rgba(0, 0, 0, 0.75)'}}>
                            <Card.Body>
-                              <h2 className="mb-4 text-center" style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 700}}>Sign In</h2>
+                              <h2 className="mb-4 text-center" style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, color:'white'}}>Sign In</h2>
                               <Form style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize: 13}}>
                                  <Row>
                                     <Col lg="12">
