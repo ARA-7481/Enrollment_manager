@@ -21,4 +21,4 @@ admin.site.register(StaffProfile)
 
 # admin.site.register(DeviceProfile)
 # admin.site.register(ESP32Profile)
-# admin.site.register(PlumbingProfile)
+admin.site.register(PlumbingProfile)

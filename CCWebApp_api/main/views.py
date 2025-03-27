@@ -57,9 +57,6 @@ class GetFacultyViewset(viewsets.ModelViewSet):
 
 class StaffViewSet(viewsets.ModelViewSet):
     queryset = StaffProfile.objects.all()
-    permission_classes = [
-        IsSuperAdmin
-    ]
     serializer_class = StaffSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['$userprofile__first_name', '$userprofile__last_name', '=role', '=id']

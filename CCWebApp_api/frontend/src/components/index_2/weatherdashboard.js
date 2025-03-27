@@ -115,7 +115,7 @@ function WeatherDashboard(props) {
             <div  style={{display: 'flex', transform: !props.isLess800 ? 'translate(0px, 0px) scale(1)' :'translate(0px, 0px) scale(0.7)'}}>
               <div style={{width: '50%', marginRight: '10px'}}>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
-                  <h5>Sensor:   </h5>
+                  <h5>Sensors:   </h5>
                 </div>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
                   <h5>Device Sytem ID:   </h5>
@@ -127,15 +127,22 @@ function WeatherDashboard(props) {
                   <h5>Protocol:   </h5>
                 </div>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
-                  <h5>Alert Code:   </h5>
+                  <h5>Sensor #1 Reading:   </h5>
                 </div>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
-                  <h5>Sampling Period:   </h5>
+                  <h5>Sensor #2 Reading:   </h5>
                 </div>
+                <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
+                  <h5>Alert Code #1:   </h5>
+                </div>
+                <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
+                  <h5>Alert Code #2:   </h5>
+                </div>
+               
               </div>
                 <div style={{width: '50%'}}>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
-                  <h5 style={{color: 'white'}}>Float Switch</h5>
+                  <h5 style={{color: 'white'}}>Ultrasonic URM07</h5>
                 </div>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
                   <h5 style={{color: 'white'}}>bx5HHPfZhZ</h5>
@@ -147,10 +154,16 @@ function WeatherDashboard(props) {
                   <h5 style={{color: 'white'}}>HTTP/HTTPS</h5>
                 </div>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
+                  <h5 style={{color: 'white'}}>{props.deviceData.waterlevel}</h5>
+                </div>
+                <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
+                  <h5 style={{color: 'white'}}>{props.deviceData.waterlevel2}</h5>
+                </div>
+                <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
                   <h5 style={{color: 'white'}}>{props.deviceData.waterlevelwarning}</h5>
                 </div>
                 <div style={{display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>
-                  <h5 style={{color: 'white'}}>1st,31st Second</h5>
+                  <h5 style={{color: 'white'}}>{props.deviceData.waterlevelwarning2}</h5>
                 </div>
               </div>
             </div>

@@ -22,11 +22,26 @@ import { SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTME
          GET_PLUMBINGDEVICE,
          GET_EVENTS_LIST,
          ADD_EVENT,
-         GET_EVENTS_LIST_MONTH
+         GET_EVENTS_LIST_MONTH,
+         ADD_EVENT_IMAGES,
+         EVENT_IMAGES_LIST,
+         DELETE_IMAGE,
+         UPDATE_EVENT,
+         DELETE_EVENT,
+         GET_EVENTS_LIST_SINGLE_MONTH,
+         GET_EVENTS_REPORT,
+         UPDATE_EVENT_APPROVAL,
         } from "../types/types";
 
 function formatTime(time) {
   return `${time}:00`;
+}
+
+function getYearRange(start, end) {
+  return Array.from(
+    { length: end - start + 1 },
+    (_, index) => start + index
+  );
 }
 
 function formatDate(date) {
@@ -39,6 +54,15 @@ function formatDate(date) {
   day = day < 10 ? `0${day}` : day;
 
   return `${year}-${month}-${day}`;
+}
+
+function formatDateSingleMonth(date){
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+
+  month = month < 10 ? `0${month}` : month;
+  
+  return `${year}-${month}`;
 }
 
 function formatDateMonth(date) {
@@ -537,7 +561,7 @@ export const getSubject = (subject) => async dispatch => {
   export const valveError = () => async dispatch => {
     dispatch({
       type: FILL_ERROR,
-      payload: "Command Denied: Ball Valve is still active!"
+      payload: "Denied: Ball Valve isn't Available!"
     })
   }
 
@@ -725,6 +749,7 @@ export const setUseremail = (contact, email, userID) => async dispatch => {
 }
 
 export const setUseravatar = (avatar, userID) => async dispatch => {
+  console.log(avatar)
   const body = {
     avatar: avatar
   };
@@ -1251,11 +1276,8 @@ export const getFlooddevice = (id) => async dispatch => {
 
 export const getEventsList = (assignedDate) => async dispatch => {
   const formattedDate = formatDate(assignedDate)
-  console.log(formattedDate)
-  // console.log(assignedDate)
   try {
     const res = await instanceAxios.get(`/api/eventslist/?search=${formattedDate}`);
-    // console.log(res.data)
     if(res.status === 200){
       dispatch({
         type: GET_EVENTS_LIST,
@@ -1270,8 +1292,6 @@ export const getEventsList = (assignedDate) => async dispatch => {
 
 export const getEventsListMonth = (assignedDate) => async dispatch => {
   const formattedDateMonth = formatDateMonth(assignedDate)
-  console.log(formattedDateMonth)
-  // console.log(assignedDate)
   try {
     const requests = formattedDateMonth.map(dateMonth =>
       instanceAxios.get(`/api/eventslist/?search=${dateMonth}`))
@@ -1286,6 +1306,77 @@ export const getEventsListMonth = (assignedDate) => async dispatch => {
         type: GET_EVENTS_LIST_MONTH,
         payload: combinedData
       });
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+
+export const getEventsListReport = (startdate, enddate, category) => async dispatch => {
+  let finaleventarray
+  let filteredfinaleventarray
+  const formattedstartdate = formatDate(startdate)
+  const formattedenddate = formatDate(enddate)
+  if(startdate.getFullYear() != enddate.getFullYear()){
+    const yearsarray = getYearRange(startdate.getFullYear(), enddate.getFullYear())
+    try {
+      const requests = yearsarray.map(dateYear =>
+        instanceAxios.get(`/api/eventslist/?search=${dateYear}`))
+      const responses = await Promise.all(requests)
+      const combinedData = responses
+              .filter(res => res.status === 200)
+              .map(res => res.data)
+              .flat();
+      const dateddata = combinedData.filter(event => (event.date >= formattedstartdate) && (event.date <= formattedenddate))
+      if(category.length == 1){
+          finaleventarray = dateddata.filter(event => event.category == category[0])
+      }else if(category.length == 2){
+          finaleventarray = dateddata.filter(event => (event.category == category[0]) || (event.category == category[1]))
+      }else{
+          finaleventarray = dateddata
+      }
+      filteredfinaleventarray = finaleventarray.filter(event => event.approval == 'Yes')
+      dispatch({
+        type: GET_EVENTS_REPORT,
+        payload: filteredfinaleventarray
+      });
+    }catch (error) {
+        console.error(error);
+    }
+  }else{
+    try{
+      const year = startdate.getFullYear()
+      const res = await instanceAxios.get(`/api/eventslist/?search=${year}`)
+      const combinedData = res.data
+      const dateddata = combinedData.filter(event => (event.date >= formattedstartdate) && (event.date <= formattedenddate))
+      if(category.length == 1){
+          finaleventarray = dateddata.filter(event => event.category == category[0])
+      }else if(category.length == 2){
+          finaleventarray = dateddata.filter(event => (event.category == category[0]) || (event.category == category[1]))
+      }else{
+          finaleventarray = dateddata
+      }
+      filteredfinaleventarray = finaleventarray.filter(event => event.approval == 'Yes')
+      dispatch({
+        type: GET_EVENTS_REPORT,
+        payload: filteredfinaleventarray
+      });
+  }catch (error) {
+      console.error(error);
+  }
+  }
+};
+
+export const getEventsListSingleMonth = (assignedDate) => async dispatch => {
+  const formattedDateSingleMonth = formatDateSingleMonth(assignedDate)
+  try {
+     const res = await instanceAxios.get(`/api/eventslist/?search=${formattedDateSingleMonth}`)
+    if(res.status === 200){
+      dispatch({
+        type: GET_EVENTS_LIST_SINGLE_MONTH,
+        payload: res.data
+      });
+    }
   } catch (error) {
       console.error(error);
   }
@@ -1319,6 +1410,60 @@ export const addEvent = (formData) => async dispatch => {
   }
 };
 
+export const updateEvent = (formData, id) => async dispatch => {
+  const adjustedFormData = {
+    ...formData,
+    date: formatDate(formData.date),
+  };
+  try {
+    const res = await instanceAxios.patch(`/api/addevent/${id}/`, adjustedFormData);
+    dispatch({
+      type: UPDATE_EVENT,
+    });
+  } catch (error) {
+    
+    console.log(error)
+    dispatch({
+      type: FILL_ERROR,
+      payload: 'An Error Occured During Submission.Please Check Your Field Inputs.'
+    })
+  }
+};
+
+export const updateEventApproval = (id) => async dispatch => {
+  const adjustedFormData = {
+    approval: 'Yes',
+  };
+  try {
+    const res = await instanceAxios.patch(`/api/addevent/${id}/`, adjustedFormData);
+    dispatch({
+      type: UPDATE_EVENT_APPROVAL,
+    });
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: FILL_ERROR,
+      payload: 'An Error Occured During Event Update.'
+    })
+  }
+};
+
+
+export const deleteEvent = (id) => async dispatch => {
+  try {
+    const res = await instanceAxios.delete(`/api/addevent/${id}/`);
+    dispatch({
+      type: DELETE_EVENT,
+    });
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: FILL_ERROR,
+      payload: 'An Error Occured During Cancellation'
+    })
+  }
+};
+
 export const ConflictError = (eventtitle, timestart, timeend) => async dispatch => {
   dispatch({
     type: FILL_ERROR,
@@ -1331,3 +1476,69 @@ export const TimeError = () => async dispatch => {
     payload: `Failed to add event: Start Time should be earlier than End Time.`
   })
 }
+export const FacultyError = (errorcode) => async dispatch => {
+  dispatch({
+    type: FILL_ERROR,
+    payload: errorcode
+  })
+}
+
+export const addEventsImages = (imagearray, eventid) => async dispatch => {
+  try {
+    const requests = imagearray.map(imagefile => {
+      const body = {
+        picture : imagefile,
+        event : eventid
+      }
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+                }
+      }
+      instanceAxios.post(`/api/addeventimage/`, body, config)})
+    const responses = await Promise.all(requests);
+    const res2 = await instanceAxios.get(`/api/eventimagelist/${eventid}`);
+      if(res2.status === 200){
+        dispatch({
+          type: EVENT_IMAGES_LIST,
+          payload: res2.data
+        })}
+      dispatch({
+        type: ADD_EVENT_IMAGES
+      })
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+
+export const getEventImageList = (eventid) => async dispatch => {
+  try {
+    const res = await instanceAxios.get(`/api/eventimagelist/${eventid}`);
+    if(res.status === 200){
+      dispatch({
+        type: EVENT_IMAGES_LIST,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+
+export const deleteImage = (imageid, eventid) => async dispatch => {
+  try {
+    const res = await instanceAxios.delete(`/api/addeventimage/${imageid}`);
+    if(res.status === 204){
+      const res2 = await instanceAxios.get(`/api/eventimagelist/${eventid}`);
+      if(res2.status === 200){
+        dispatch({
+          type: EVENT_IMAGES_LIST,
+          payload: res2.data
+        })}
+    }
+  } catch (error) {
+      console.error(error);
+  }
+};
+

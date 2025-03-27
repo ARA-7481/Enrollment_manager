@@ -51,7 +51,7 @@ function FacultyProfile(props) {
 
   return (
       <>
-      <div style={{backgroundColor:'#ffffff', borderRadius:'8px', padding: '24px'}}>
+      <div style={{backgroundColor:'#ffffff', borderRadius:'8px', padding: '24px', paddingInline:'48px'}}>
         <div style={{backgroundColor:'#ffffff', height: '124px', borderRadius:'8px', display: 'flex', alignItems: 'center', paddingRight: '24px', paddingTop: '24px', marginBottom: '48px'}}>
             <div onClick={handleAvatarClick} style={{marginRight: '24px'}}>
                 <img className="circular-avatar" src={avatar} alt="description" style={{border: '2px solid #556BD9'}} />

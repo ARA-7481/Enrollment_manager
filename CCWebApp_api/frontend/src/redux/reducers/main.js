@@ -9,7 +9,15 @@ import {SET_SIDEBAR, SET_SUBSIDEBAR, SET_PAGEHEADER, GET_STUDENTS, GET_DEPARTMEN
         GET_FLOOD_DEVICE, GET_DEVICES, CLEAR_CLASS_DATA, CLEAR_SECTION_DATA, GET_ESP32AQUA, GET_PLUMBINGDEVICE,
         GET_EVENTS_LIST,
         ADD_EVENT,
-        GET_EVENTS_LIST_MONTH
+        GET_EVENTS_LIST_MONTH,
+        ADD_EVENT_IMAGES,
+        EVENT_IMAGES_LIST,
+        DELETE_IMAGE,
+        UPDATE_EVENT,
+        DELETE_EVENT,
+        GET_EVENTS_LIST_SINGLE_MONTH,
+        GET_EVENTS_REPORT,
+        UPDATE_EVENT_APPROVAL,
         } from "../types/types";
 
 const initialState = {
@@ -63,6 +71,9 @@ const initialState = {
     devicesList:[],
     eventsList: [],
     eventsListMonth: [],
+    eventsListSingleMonth: [],
+    eventsListReport: [],
+    eventimageList: {},
     isLess800: false,
 
     //new
@@ -437,17 +448,61 @@ export default function(state = initialState, action) {
                 ...state,
                 eventsList: action.payload,
             }
+        case GET_EVENTS_REPORT:
+            return{
+                ...state,
+                eventsListReport: action.payload,
+            }
         case GET_EVENTS_LIST_MONTH:
             return{
                 ...state,
                 eventsListMonth: action.payload,
+            }
+        case GET_EVENTS_LIST_SINGLE_MONTH:
+            return{
+                ...state,
+                eventsListSingleMonth: action.payload,
             }
         case ADD_EVENT:
             return{
                 ...state,
                 loadingState: 'isNotLoading',
                 success: 'Successfully Added An Event'
-                }
+            }
+        case UPDATE_EVENT:
+            return{
+                ...state,
+                loadingState: 'isNotLoading',
+                success: 'Successfully Updated the Event'
+            }
+        case UPDATE_EVENT_APPROVAL:
+            return{
+                ...state,
+                success: 'Successfully Approved the Event.'
+            }
+        case DELETE_EVENT:
+            return{
+                ...state,
+                loadingState: 'isNotLoading',
+                success: 'Successfully Cancelled the Event'
+            }
+        case ADD_EVENT_IMAGES:
+            return{
+                ...state,
+                loadingState: 'isNotLoading',
+            }
+        case EVENT_IMAGES_LIST:
+            return{
+                ...state,
+                eventimageList: action.payload,
+            }
+        case DELETE_IMAGE:
+            return{
+                ...state,
+                loadingState: 'isNotLoading',
+                success: 'Successfully Delete the Photo',
+                eventimageList: action.payload,
+            }
         case CLEAR_STATE:
             return{
                 loadingState: 'isNotLoading',
@@ -500,6 +555,9 @@ export default function(state = initialState, action) {
                 devicesList:[],
                 eventsList: [],
                 eventsListMonth: [],
+                eventsListSingleMonth: [],
+                eventsListReport: [],
+                eventimageList: {},
                 isLess800: false,
      
                 //new

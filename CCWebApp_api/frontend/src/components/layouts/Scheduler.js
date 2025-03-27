@@ -68,7 +68,7 @@ const SchedulerLayout = (props) => {
               <SchedulerNavbar/>
               </div>
               <div style={{minHeight: '64.5vh'}}>
-              <div style={{backgroundColor: '#ffffff', marginRight: !props.isLess800? '0px': '0px', marginLeft: !props.isLess800? '0px': '0px', borderRadius:'0px', minHeight: '1px'}}>
+              <div style={{backgroundColor: '#ffffff', marginRight: props.isLess800? '0px': '10px', marginLeft: !props.isLess800? '0px': '0px', borderRadius:'0px', minHeight: '1px'}}>
               <Outlet/>
               </div>
               </div>

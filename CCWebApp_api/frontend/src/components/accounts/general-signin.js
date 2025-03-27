@@ -24,15 +24,21 @@ function GenSignin (props) {
     await props.SignIn(email, password);
   }
 
+  const handleSignInFree = async (e) => {
+   props.setloadingUser(true);
+   e.preventDefault();
+   await props.SignIn('free@user.com', '1234');
+ }
+
   useEffect(() => {
    if (props.isAuthenticated) {
       if (props.user.usertype === 'Admin'){
-         navigate('/scheduler/dashboard');
+         navigate('/scheduler/regularview');
       }
       else if (props.user.usertype === 'Student'){
-         navigate('/students/dashboard');
+         navigate('/noaccount/regularview');
       }else if (props.user.usertype === 'Faculty'){
-         navigate('/faculty/dashboard');
+         navigate('/scheduler/regularview');
       }else if (props.user.usertype === 'Sub-admin'){
         navigate('/weather/dashboard');
      }
@@ -77,6 +83,9 @@ function GenSignin (props) {
                                  <div className="d-flex justify-content-center">
                                     <Button onClick={handleSignIn} type="button" variant="btn btn-primary" style={{borderRadius: '4px', backgroundColor: '#3A57E8', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '8px', paddingTop: '8px', width: '188px', height: '44px'}}>{props.isloadingUser? <Spinner animation="border" variant="light" /> : <>Sign In</> }</Button>
                                  </div >
+                                 <div className='gensignin-accountless-button' onClick={handleSignInFree}>
+                                    <h4 className="mb-4 text-center" style={{fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 400, fontSize:'16px', color:'#3A57E8'}}>Continue Without Account</h4>   
+                                 </div>
                               </Form>
                            </Card.Body>
                         </Card>

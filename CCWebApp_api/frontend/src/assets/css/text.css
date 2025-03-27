@@ -90,6 +90,13 @@
   font-weight: 600;
   font-size: 20px;
 }
+.inter-600-20px-light {
+  color:#556BD9;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+}
 .inter-600-16px {
   font-family: 'Inter', sans-serif;
   font-style: normal;
@@ -174,6 +181,13 @@
     font-weight: 500;
     font-size: 19px;
   }
+.inter-500-19px-gray {
+    color: #595D62;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 19px;
+  }
 .inter-500-20px {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -200,12 +214,30 @@
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
+    padding-top: 8px;
+  }
+  .inter-400-15px-dark {
+    color:#000000;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
   }
   .inter-400-16px-gray {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color:#8F9BB3;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .inter-400-16px-white {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color:#ffffff;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -232,6 +264,13 @@
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
+  }
+.inter-400-24px {
+    color:#8F9BB3;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
   }
   .inter-400-14px-dark {
     color:#595D62;

@@ -66,7 +66,7 @@ function Facultydatasheet(props) {
         <>
           <div style={{backgroundColor:'#ffffff', borderRadius:'8px', paddingBottom: '48px'}}>
             <div style={{padding: '24px'}}>
-              <h1 className='card-title'>Student Personal Information</h1>
+              <h1 className='card-title'>Faculty Personal Information</h1>
 
               <div style={{marginRight: '24px', marginBottom: '12px'}}>
                 <img className="circular-avatar" src={avatar} alt="description" style={{border: '2px solid #556BD9'}} />
@@ -85,7 +85,7 @@ function Facultydatasheet(props) {
     
                   <div className="form-group text-left"style={{width: '30%'}}>
                   <Form.Group>
-                  <Form.Label htmlFor="middlename" className='form-label'>Middle Name</Form.Label>
+                  <Form.Label htmlFor="middlename" className='form-label'>Mid. Name</Form.Label>
                   <div style={{display: 'flex'}}>
                   <Form.Control type="text" disabled={true} defaultValue={middlename} id="middlename" style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                   </div>
@@ -103,7 +103,7 @@ function Facultydatasheet(props) {
 
                   <div className="form-group text-left"style={{width: '10%'}}>
                   <Form.Group>
-                  <Form.Label htmlFor="extensionname" className='form-label'>Suffix</Form.Label>
+                  <Form.Label htmlFor="extensionname" className='form-label'>Suf.</Form.Label>
                   <div style={{display: 'flex'}}>
                   <Form.Control type="text" disabled={true} defaultValue={extensionname} id="extensionname" style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                   </div>
@@ -168,7 +168,7 @@ function Facultydatasheet(props) {
 
                   <div className="form-group text-left"style={{width: '50%'}}>
                     <Form.Group>
-                    <Form.Label htmlFor="contact" className='form-label'>Mobile Contact Number</Form.Label>
+                    <Form.Label htmlFor="contact" className='form-label'>Contact Number</Form.Label>
                     <div style={{display: 'flex'}}>
                     <Form.Control type="text" disabled={true} defaultValue={contact} id="contact" onChange={e => setContact(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                     </div>
@@ -179,7 +179,7 @@ function Facultydatasheet(props) {
               <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', gap: '8px'}}>       
                 <div className="form-group text-left"style={{width: '100%'}}>
                   <Form.Group>
-                  <Form.Label htmlFor="address1" className='form-label'>House No./Street/Purok</Form.Label>
+                  <Form.Label htmlFor="address1" className='form-label'>Street</Form.Label>
                   <div style={{display: 'flex'}}>
                   <Form.Control type="text" disabled={true} defaultValue={address1} id="address1" onChange={e => setAddress1(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                   </div>
@@ -197,7 +197,7 @@ function Facultydatasheet(props) {
 
                 <div className="form-group text-left"style={{width: '100%'}}>
                   <Form.Group>
-                  <Form.Label htmlFor="address3" className='form-label'>City/Municipality/Province</Form.Label>
+                  <Form.Label htmlFor="address3" className='form-label'>City/Municipality</Form.Label>
                   <div style={{display: 'flex'}}>
                   <Form.Control type="text" disabled={true} defaultValue={address3} id="address3" style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                   </div>

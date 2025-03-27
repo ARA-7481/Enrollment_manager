@@ -197,3 +197,14 @@
 .holiday-tile--active:enabled:focus {
   background: #F86F03 !important;
 }
+.react-calendar__year-view__months__month {
+  text-overflow: ellipsis;
+  position: relative;
+  max-width: 100%;
+  text-align: center;
+  aspect-ratio: 1 / 0.7;
+  border-radius: 15px;
+  scale: 80%;
+  padding-inline: 20px;
+  align-items: center;
+}

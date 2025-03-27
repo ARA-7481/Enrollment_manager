@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-from accounts.models import StudentProfile, FacultyProfile, StaffProfile, User, DeviceProfile, ESP32Profile, PlumbingProfile, EventsList
+from accounts.models import StudentProfile, FacultyProfile, StaffProfile, User, DeviceProfile, ESP32Profile, PlumbingProfile, EventsList, EventImages
 from .models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 
 @receiver(post_save, sender=StudentProfile)
@@ -19,6 +19,7 @@ from .models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 @receiver(post_save, sender=GradeSheet)
 @receiver(post_save, sender=PlumbingProfile)
 @receiver(post_save, sender=EventsList)
+@receiver(post_save, sender=EventImages)
 def announce_new_object(sender, instance, created, **kwargs):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)('dbupdatetrigger', {
@@ -40,6 +41,7 @@ def announce_new_object(sender, instance, created, **kwargs):
 @receiver(post_delete, sender=GradeSheet)
 @receiver(post_save, sender=PlumbingProfile)
 @receiver(post_save, sender=EventsList)
+@receiver(post_save, sender=EventImages)
 def announce_deleted_object(sender, instance, **kwargs):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)('dbupdatetrigger', {
@@ -61,6 +63,7 @@ def announce_deleted_object(sender, instance, **kwargs):
 @receiver(post_save, sender=GradeSheet)
 @receiver(post_save, sender=PlumbingProfile)
 @receiver(post_save, sender=EventsList)
+@receiver(post_save, sender=EventImages)
 def announce_updated_object(sender, instance, created, **kwargs):
     if not created:
         channel_layer = get_channel_layer()

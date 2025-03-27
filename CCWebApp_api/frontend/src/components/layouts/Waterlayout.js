@@ -11,6 +11,7 @@ import { debounce } from 'lodash';
 import ErrorPopupMain from '../reusable/error-main';
 import SuccessPopupMain from '../reusable/success';
 import { setResolution, setCollapseState } from '../../redux/actions/main';
+import logo from '../../assets/images/backgrounds/R.png'
 
 const Waterlayout = (props) => {
   
@@ -56,7 +57,7 @@ const Waterlayout = (props) => {
           </div>          
             }
     
-    <div style={{display: 'flex', backgroundColor: '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '10px'}} > 
+    <div style={{display: 'flex', backgroundColor: props.isLess800? '#ffffff' : '#e9ecef', height: windowHeight, overflow: 'hidden', minWidth: '10px'}} > 
             <div style={{zIndex: 9999}}>
             {!props.isLess800?<Watersidebar/> : '' }
             </div>
@@ -68,21 +69,25 @@ const Waterlayout = (props) => {
               }
               <div style={{maxHeight:windowHeight, overflowY: 'auto', zIndex: 9999}}>
 
-              <div style={{position: 'sticky', top:0, zIndex: 9998}}>
+              <div style={{position: 'sticky', top:0, zIndex: 9998, display:'flex'}}>
+                {props.isLess800? <div style={{transform: 'translate( 20px, 15px)'}}>
+                                    <img className="school-logo" src={logo} alt="description" />
+                                    
+                                  </div> : ''}
               <MainNavbar/>
               </div>
               <div>
                 {!props.isLess800?<TopNavbar/> : '' }
               
               </div>
-              <div style={{minHeight: '64.5vh'}}>
-              <div style={{transform: !props.isLess800? 'translate( 0px, -36px)' : 'translate( 0px, 0px) scale(1)', backgroundColor: '#ffffff', marginRight: !props.isLess800? '40px': '0px', marginLeft: !props.isLess800? '40px': '0px', borderRadius:'8px', minHeight: '1px'}}>
-              <Outlet/>
+              <div style={{minHeight: '70vh', backgroundColor: '#ffffff', marginRight: !props.isLess800? '40px': '0px', marginLeft: !props.isLess800? '40px': '0px'}}>
+                <div style={{transform: !props.isLess800? 'translate( 0px, -36px) scale(1)' : 'translate( 0px, 0px) scale(1)', backgroundColor: '#ffffff', minHeight: '1px', borderRadius:'8px'}}>
+                <Outlet/>
+                </div>
               </div>
-              </div>
-              <div style={{position: 'sticky', bottom: 0, backgroundColor: '#ffffff', width: '100%'}}>
+              {/* <div style={{position: 'sticky', bottom: 0, backgroundColor: '#ffffff', width: '100%'}}>
               <Footer/>
-              </div> 
+              </div>  */}
               </div>
               
             </div>

@@ -158,7 +158,10 @@ class FacultyProfile(models.Model):
         ('Teacher-2', 'Teacher-2'),
         ('Teacher-3', 'Teacher-3'),
         ('Laboratory Attendant', 'Laboratory Attendant'),
-        ('Unspecified', 'Unspecified')
+        ('Unspecified', 'Unspecified'),
+        ('Dean', 'Dean'),
+        ('Department-Head', 'Department-Head'),
+        ('Regular Instructor', 'Regular Instructor'),
         
     )
     id = models.CharField(primary_key=True, unique=True, default=student_code_generator, editable=False)
@@ -190,7 +193,9 @@ class DeviceProfile(models.Model):
     hourcount = models.IntegerField(null=True, blank=True, default = 0)
     rainrate = models.FloatField(null=True, blank=True)
     waterlevel = models.FloatField(null=True, blank=True)
+    waterlevel2 = models.FloatField(null=True, blank=True)
     waterlevelwarning = models.CharField(null=True, blank=True)
+    waterlevelwarning2 = models.CharField(null=True, blank=True)
     rainwarning = models.CharField(null=True, blank=True)
     text = models.CharField(max_length=500, null=True, blank=True)
     mode = models.CharField(max_length=50, null=True, blank=True)
@@ -261,12 +266,13 @@ class Events(models.Model):
     approval = models.CharField(max_length=50, null=True, blank=True, default="No" )
     time_start = models.DateTimeField(null=True)
     time_end = models.DateTimeField(null=True)
-
+    
 class EventsList(models.Model):
     CATEGORY = (     
         ('Holiday', 'Holiday'),
         ('Special-Event', 'Special-Event'),
-        ('Academic-Event', 'Academinc-Event'),
+        ('Academic-Event', 'Academic-Event'),
+        ('Private-Event', 'Private-Event'),
         ('Not-Specified', 'Not-Specified'),
         
     )
@@ -298,3 +304,10 @@ class EventsList(models.Model):
     participants_additional = models.CharField(max_length=500, null=True, blank=True)
     type = models.CharField(max_length=50, choices=TYPE, null=False, default= 'Face-To-Face')
     meetlink = models.CharField(max_length=500, null=True, blank=True)
+    in_charge = models.CharField(max_length=500, null=True, blank=True)
+
+class EventImages(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=random_code_generator, editable=False)
+    picture = models.FileField(upload_to='uploads/')
+    date_added = models.DateTimeField(auto_now_add=True)
+    event = models.ManyToManyField(EventsList, related_name='event_related_photo', blank=True)

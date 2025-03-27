@@ -64,6 +64,9 @@ const WaterBilling = lazy(() =>  import('./index_3/billing.js'))
 
 const SchedulerLayout = lazy(() =>  import('./layouts/Scheduler.js'))
 const SchedulerDashboard = lazy(() => import('./main/calendar.js'))
+const SchedulerRegularView = lazy(() => import('./main/regularview-calendar.js'))
+const UsersTeachersScheduler = lazy(() => import('./main/facultylist.js'))
+const FreeuserLayout = lazy(() =>  import('./layouts/Freeuser.js'))
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
@@ -144,7 +147,18 @@ function AppContent() {
           <Route path='/scheduler' element={<SchedulerLayout/>}>
           <Route index element={<SchedulerDashboard />} />
           <Route path="dashboard" element={<SchedulerDashboard />} />
+          <Route path="regularview" element={<SchedulerRegularView />} />
+          <Route path="profile" element={<FacultyProfile />} />
+          <Route path="facultylist" element={<UsersTeachersScheduler />} />
+          <Route path="register" element={<RegisterUserteacher />} />
+          <Route path="facultyinformationform" element={<Facultydatasheet />} />
           </Route>
+
+          <Route path='/noaccount' element={<FreeuserLayout/>}>
+          <Route index element={<SchedulerRegularView />} />
+          <Route path="regularview" element={<SchedulerRegularView />} />
+          </Route>
+          
 
           
 

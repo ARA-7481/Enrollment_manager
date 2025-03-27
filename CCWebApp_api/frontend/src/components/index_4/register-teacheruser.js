@@ -86,8 +86,6 @@ function RegisterUserteacher(props) {
       if (props.loadingState === 'isNotLoading' && submissionComplete) {
         if(props.error){
           setSubmission(false)
-        }else if(props.success){
-          navigate('/admins/users-teachers');
         }
           }
       setFormData({
@@ -139,7 +137,7 @@ function RegisterUserteacher(props) {
     
                   <div className="form-group text-left"style={{width: '30%'}}>
                     <Form.Group>
-                      <Form.Label htmlFor="middlename" className='form-label'>Middle Name</Form.Label>
+                      <Form.Label htmlFor="middlename" className='form-label'>Mid. Name</Form.Label>
                       <div style={{display: 'flex'}}>
                         <Form.Control type="text" value={middlename} placeholder="" id="middlename" onChange={e => setMiddlename(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                       </div>
@@ -162,7 +160,7 @@ function RegisterUserteacher(props) {
 
                   <div className="form-group text-left"style={{width: '10%'}}>
                     <Form.Group>
-                      <Form.Label htmlFor="extensionname" className='form-label'>Suffix</Form.Label>
+                      <Form.Label htmlFor="extensionname" className='form-label'>Suf.</Form.Label>
                       <div style={{display: 'flex'}}>
                       <Form.Control type="text" value={extensionname} placeholder="ex: JR, SR, II, etc." id="extensionname" onChange={e => setExtensionname(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                       </div>
@@ -176,7 +174,7 @@ function RegisterUserteacher(props) {
                       <Form.Group>
                       <Form.Label htmlFor="birthdate" className='form-label'>Birth Date</Form.Label>
                       <div className='date-picker-wrapper' style={{display: 'flex'}}>
-                      <DatePicker className='date-picker' placeholderText='Select Date(Type the year for quick date search)' popperPlacement="bottom-end" selected={birthdate} onChange={(date) => setBirthdate(date)} />
+                      <DatePicker className='date-picker' placeholderText='' popperPlacement="bottom-end" selected={birthdate} onChange={(date) => setBirthdate(date)} />
                       <div style={{transform: 'translate( -33px, 7px)', width: '0px', pointerEvents: 'none'}}>
                       <SimpleCalendar/>
                       </div>
@@ -258,7 +256,7 @@ function RegisterUserteacher(props) {
 
                   <div className="form-group text-left"style={{width: '50%'}}>
                     <Form.Group>
-                    <Form.Label htmlFor="contact" className='form-label'>Mobile Contact Number</Form.Label>
+                    <Form.Label htmlFor="contact" className='form-label'>Contact Number</Form.Label>
                     <div style={{display: 'flex'}}>
                     <Form.Control type="text" value={contact} placeholder="" id="contact" onChange={e => setContact(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                     {!contact &&
@@ -274,7 +272,7 @@ function RegisterUserteacher(props) {
               <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', gap: '8px'}}>       
                 <div className="form-group text-left"style={{width: '100%'}}>
                   <Form.Group>
-                  <Form.Label htmlFor="address1" className='form-label'>House No./Street/Purok</Form.Label>
+                  <Form.Label htmlFor="address1" className='form-label'>Street</Form.Label>
                   <div style={{display: 'flex'}}>
                   <Form.Control type="text" value={address1} placeholder="" id="address1" onChange={e => setAddress1(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                   {!address1 &&
@@ -302,7 +300,7 @@ function RegisterUserteacher(props) {
 
                 <div className="form-group text-left"style={{width: '100%'}}>
                   <Form.Group>
-                  <Form.Label htmlFor="address3" className='form-label'>City/Municipality/Province</Form.Label>
+                  <Form.Label htmlFor="address3" className='form-label'>City/Municipality</Form.Label>
                   <div style={{display: 'flex'}}>
                   <Form.Control type="text" value={address3} placeholder="" id="address3" onChange={e => setAddress3(e.target.value)} style={{ width: '100%', border: '1px solid #EEEEEE', borderRadius:'4px'}}/>
                   {!address3 &&
@@ -346,12 +344,10 @@ function RegisterUserteacher(props) {
                       <div style={{display: 'flex'}}>
                       <Form.Select id="position" value={position} onChange={e => setPosition(e.target.value)} className='formselect-border'>
                       <option value="" disabled >Select Position</option>
-                      <option value="Principal" >Principal</option>
-                      <option value="Assistant Principal" >Assistant Principal</option>
+                      <option value="Dean" >Dean</option>
+                      <option value="Department-Head" >Department-Head</option>
                       <option value="Part-Time" >Part-Time</option>
-                      <option value="Teacher-1" >Teacher-1</option>
-                      <option value="Teacher-2" >Teacher-2</option>
-                      <option value="Teacher-3" >Teacher-3</option>
+                      <option value="Regular Instructor" >Regular Instructor</option>
                       <option value="Laboratory Attendant" >Laboratory Attendant</option>
                       <option value="Unspecified" >Unspecified</option>
                       </Form.Select>
@@ -368,7 +364,7 @@ function RegisterUserteacher(props) {
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px' }}>
               <Button disabled={!firstname || !lastname || !birthdate || !birthplace || !gender || !nationality ||
-                                !email || !contact || !address1 || !address2 || !address3 || !position } type="button" onClick={handleSubmit} style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '15%', height: '48px', alignContent: 'center', marginRight: '24px'}}>
+                                !email || !contact || !address1 || !address2 || !address3 || !position } type="button" onClick={handleSubmit} style={{borderColor:'#3A57E8', borderRadius: '4px', backgroundColor: '#3A57E8', width: '15%', height: '48px', alignContent: 'center', marginRight: '24px', minWidth:'100px'}}>
                   <h1 style={{color:'white', fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '18px', paddingTop: '8px'}}>
                   {props.loadingState == 'isNotLoading'? <>Register</> : <div style={{transform: 'translate( 0px, -6px)'}}><Spinner animation="border" variant="light"/></div>}</h1>
               </Button>

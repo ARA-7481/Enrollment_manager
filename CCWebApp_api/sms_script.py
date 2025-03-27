@@ -31,20 +31,20 @@ def send_sms(message, number):
 
 # send_sms('Rain-Meter API Started!', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
 while True:
-    if datetime.now().second == 1 or datetime.now().second == 31:
-        from accounts.models import DeviceProfile
-        key = 'c5Y1An7aOd'
-        device = DeviceProfile.objects.get(pk=key)
-        waterlevel = device.waterlevelwarning
-        if(waterlevel == 'yellow'):
-            # send_sms(f'YELLOW WATER LEVEL! Threshold exceeded YELLOW Water Level', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
-            time.sleep(600)
-            device.waterlevelwarning = 'yellow (warning update pending...)'
-        elif(waterlevel == 'orange'):
-            # send_sms(f'ORANGE WATER LEVEL! Threshold exceeded ORANGE Water Level', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
-            time.sleep(600)
-            device.waterlevelwarning = 'orange (warning update pending...)'
-        elif(waterlevel == 'red'):
-            # send_sms(f'RED WATER LEVEL! Threshold exceeded RED Water Level', '+639306394598,+639706626010,+639276994613,+639155890375,+639957403473,+639616183465')
-            time.sleep(600)
-            device.waterlevelwarning = 'red (warning update pending...)'
+    
+    from accounts.models import DeviceProfile
+    key = 'c5Y1An7aOd'
+    device = DeviceProfile.objects.get(pk=key)
+    waterlevel1 = device.waterlevel
+    waterlevel2 = device.waterlevel2
+    warning1 = device.waterlevelwarning
+    warning2 = device.waterlevelwarning2
+    if(warning1 == 'yellow' and warning2 == 'yellow'):
+        send_sms(f'YELLOW WATER LEVEL! Threshold exceeded YELLOW Water Level', '+639306394598,+639616183465')
+        time.sleep(600)
+    elif(warning1 == 'orange' and warning2 == 'orange'):
+        send_sms(f'ORANGE WATER LEVEL! Threshold exceeded ORANGE Water Level', '+639306394598,+639616183465')
+        time.sleep(600)
+    elif(warning1 == 'red' and warning2 == 'red'):
+        send_sms(f'RED WATER LEVEL! Threshold exceeded RED Water Level', '+639306394598,+639616183465')
+        time.sleep(600)

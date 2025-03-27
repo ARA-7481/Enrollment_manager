@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile, ESP32Profile, PlumbingProfile, EventsList
+from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile, ESP32Profile, PlumbingProfile, EventsList, EventImages
 from main.models import Subject, Room, SchoolYear, Section, Class, GradeSheet
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -93,20 +93,24 @@ class ClassesSerializerForDashboard(serializers.ModelSerializer):
         model = Class
         fields = '__all__'
 
+class FacultySerializerForStudent(serializers.ModelSerializer):
+    userprofile = UserSerializer(read_only=False)
+    class Meta:
+        model = FacultyProfile
+        fields = '__all__'
+
+class EventsSerializer(serializers.ModelSerializer):
+    participants = FacultySerializerForStudent(read_only=False, many=True)
+    class Meta:
+        model = EventsList
+        fields = ('approval', 'category', 'created_on', 'date', 'description', 'id', 'link', 'time_end', 'time_start', 'title', 'participants', 'conflict', 'location', 'created_by', 'participants_additional', 'type', 'meetlink', 'in_charge')
+
 class GetFacultySerializer(serializers.ModelSerializer):
     userprofile = UserSerializer(read_only=False)
     teacher_related_class = ClassesSerializerForDashboard(read_only=False, many=True)
     teacher_related_section = SectionSerializerForDashboard(read_only=False, many=True)
+    faculty_related_event = EventsSerializer(read_only=False, many=True)
    
-    class Meta:
-        model = FacultyProfile
-        fields = '__all__'
-# for dashboard end teacher
-        
-
-# for dashboard start student
-class FacultySerializerForStudent(serializers.ModelSerializer):
-    userprofile = UserSerializer(read_only=False)
     class Meta:
         model = FacultyProfile
         fields = '__all__'
@@ -225,14 +229,20 @@ class SectionSerializerforadmin(serializers.ModelSerializer):
         fields = '__all__'
 
 #events
-class EventsSerializer(serializers.ModelSerializer):
-    participants = FacultySerializerForStudent(read_only=False, many=True)
+
+class EventImagesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventsList
-        fields = ('approval', 'category', 'created_on', 'date', 'description', 'id', 'link', 'time_end', 'time_start', 'title', 'participants', 'conflict', 'location', 'created_by', 'participants_additional', 'type', 'meetlink')
+        model = EventImages
+        fields = '__all__'
 
 class EventAddSerializer(serializers.ModelSerializer):
     participants = serializers.PrimaryKeyRelatedField(many=True, queryset=FacultyProfile.objects.all())
     class Meta:
         model = EventsList
         fields = '__all__'
+
+class ImagesofEventSerializer(serializers.ModelSerializer):
+    event_related_photo = EventImagesSerializer(read_only=False, many=True)
+    class Meta:
+        model = EventsList
+        fields = ('id', 'event_related_photo')

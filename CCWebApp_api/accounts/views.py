@@ -5,9 +5,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer, PasswordChangeSerializer, DeviceProfileSerializer, ESP32ProfileSerializer, PlumbingProfileSerializer, EventsSerializer
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer, StudentSerializer, FacultySerializer, StaffSerializer, PasswordChangeSerializer, DeviceProfileSerializer, ESP32ProfileSerializer, PlumbingProfileSerializer, EventsSerializer, EventImagesSerializer, ImagesofEventSerializer
 from .permissions import IsFaculty, IsStudent, IsSubAdmin, IsSuperAdmin
-from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile, ESP32Profile, PlumbingProfile, EventsList
+from .models import User, StudentProfile, FacultyProfile, StaffProfile, DeviceProfile, ESP32Profile, PlumbingProfile, EventsList, EventImages
 from rest_framework import filters
 import json
 from django.http import JsonResponse
@@ -19,30 +19,30 @@ from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 import os
 import environ
-from openai import OpenAI
+# from openai import OpenAI
 
 env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-client = OpenAI(
-    api_key= env('OPENAI_KEY'),
-)
+# client = OpenAI(
+#     api_key= env('OPENAI_KEY'),
+# )
 
 # word_model = tf.keras.models.load_model('F:/final_model.h5', compile=False)
 
-def correct_grammar(words):
-    completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "user", "content": f"Correct the grammar of the following words.: {words}"}
-    ],
-    max_tokens=50,
-    temperature=0.1,
-    top_p=0.9
-    )
+# def correct_grammar(words):
+#     completion = client.chat.completions.create(
+#     model="gpt-3.5-turbo",
+#     messages=[
+#         {"role": "user", "content": f"Correct the grammar of the following words.: {words}"}
+#     ],
+#     max_tokens=50,
+#     temperature=0.1,
+#     top_p=0.9
+#     )
 
-    return(completion.choices[0].message.content)
+    # return(completion.choices[0].message.content)
 
 class SuccessView(APIView):
     def get(self, request):
@@ -166,9 +166,28 @@ class ReceiveFloodSignal(generics.GenericAPIView):
             except DeviceProfile.DoesNotExist:
                 return Response(status=404, data={"message": "DeviceProfile not found"})
             
+            device_profile.waterlevel = data['value']
             device_profile.waterlevelwarning = data['reading']
             device_profile.save()
-            print(device_profile.waterlevelwarning)
+            return Response(status=200, data={"message": "Sensor Reading Validated!!",})
+        else:
+            return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
+        
+class ReceiveFloodSignal2(generics.GenericAPIView):
+    def post(self, request):
+        data = request.data
+        device_id = (data['id'])
+        print(data)
+        if device_id:
+            try:
+                device_profile = DeviceProfile.objects.get(id=device_id)
+            except DeviceProfile.DoesNotExist:
+                return Response(status=404, data={"message": "DeviceProfile not found"})
+            
+            device_profile.waterlevel2 = data['value2']
+            device_profile.waterlevelwarning2 = data['reading2']
+            device_profile.save()
+            print(device_profile.waterlevel2)
             return Response(status=200, data={"message": "Sensor Reading Validated!!",})
         else:
             return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
@@ -230,71 +249,71 @@ class ReceiveHandReadingsLeft(generics.GenericAPIView):
         else:
             return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
 
-class ReceiveHandReadingsRight(generics.GenericAPIView):
-    def post(self, request):
-        data = request.data
-        device_id = data.get('id') 
-        print("DEVICE ID:") 
-        print(device_id)
-        if device_id:
-            try:
-                device_profile = DeviceProfile.objects.get(id=device_id)
-                print(device_profile)
-            except DeviceProfile.DoesNotExist:
-                return Response(status=404, data={"message": "DeviceProfile not found"})
-            readings = data.get('reading', [])
-            if not isinstance(readings, list):
-                return Response(status=400, data={"message": "Invalid 'reading' data format"})
-            reshaped_data = tf.reshape(readings, (1, 100, 11, 1))
-            outputm = word_model.predict(reshaped_data)
-            rounded = tf.round(outputm)
-            normal_output = rounded.numpy()
-            normal_output_list = normal_output.tolist()
-            final_output = normal_output_list[0]
-            print(final_output)
-            words_map = {0: "i",
-                         1: "communicate",
-                         2: "use",
-                         3: "gloves",
-                         4: "close",
-                        }
-            for i in range (0, len(final_output)):
-                if(final_output[i] == 1):
-                    val = i
-                    # if val == 8:
-                    #     device_profile.mode = "sentence_construct"
-                    #     device_profile.text = " "
-                    #     device_profile.save()
-                    #     output = "open"
-                    if val == 4:
-                        if device_profile.text == " ":
-                            device_profile.mode = "play_tts"
-                            output = "close"
-                            device_profile.save()
-                        else:
-                            device_profile.mode = "play_tts"
-                            if len(device_profile.text) < 12:
-                                output = device_profile.text
-                                device_profile.text = " "
-                                device_profile.save()
-                            else:
-                                output = correct_grammar(device_profile.text)
-                                output = str(output)
-                                device_profile.text = " "
-                                device_profile.save()
-                            print(output)
-                    else:
-                        word = words_map.get(val)
-                        current_phrase = device_profile.text
-                        device_profile.text = f"{current_phrase} {word}"
-                        device_profile.save()
-                        output = word
-                    break
-            print(val)
-            return Response(status=200, data={"message": "Sensor Reading Validated!!",
-                                              "output": output})
-        else:
-            return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
+# class ReceiveHandReadingsRight(generics.GenericAPIView):
+#     def post(self, request):
+#         data = request.data
+#         device_id = data.get('id') 
+#         print("DEVICE ID:") 
+#         print(device_id)
+#         if device_id:
+#             try:
+#                 device_profile = DeviceProfile.objects.get(id=device_id)
+#                 print(device_profile)
+#             except DeviceProfile.DoesNotExist:
+#                 return Response(status=404, data={"message": "DeviceProfile not found"})
+#             readings = data.get('reading', [])
+#             if not isinstance(readings, list):
+#                 return Response(status=400, data={"message": "Invalid 'reading' data format"})
+#             reshaped_data = tf.reshape(readings, (1, 100, 11, 1))
+#             outputm = word_model.predict(reshaped_data)
+#             rounded = tf.round(outputm)
+#             normal_output = rounded.numpy()
+#             normal_output_list = normal_output.tolist()
+#             final_output = normal_output_list[0]
+#             print(final_output)
+#             words_map = {0: "i",
+#                          1: "communicate",
+#                          2: "use",
+#                          3: "gloves",
+#                          4: "close",
+#                         }
+#             for i in range (0, len(final_output)):
+#                 if(final_output[i] == 1):
+#                     val = i
+#                     # if val == 8:
+#                     #     device_profile.mode = "sentence_construct"
+#                     #     device_profile.text = " "
+#                     #     device_profile.save()
+#                     #     output = "open"
+#                     if val == 4:
+#                         if device_profile.text == " ":
+#                             device_profile.mode = "play_tts"
+#                             output = "close"
+#                             device_profile.save()
+#                         else:
+#                             device_profile.mode = "play_tts"
+#                             if len(device_profile.text) < 12:
+#                                 output = device_profile.text
+#                                 device_profile.text = " "
+#                                 device_profile.save()
+#                             else:
+#                                 output = correct_grammar(device_profile.text)
+#                                 output = str(output)
+#                                 device_profile.text = " "
+#                                 device_profile.save()
+#                             print(output)
+#                     else:
+#                         word = words_map.get(val)
+#                         current_phrase = device_profile.text
+#                         device_profile.text = f"{current_phrase} {word}"
+#                         device_profile.save()
+#                         output = word
+#                     break
+#             print(val)
+#             return Response(status=200, data={"message": "Sensor Reading Validated!!",
+#                                               "output": output})
+#         else:
+#             return Response(status=400, data={"message": "Invalid data, 'id' field is missing"})
 
 # class ReceiveHandReadingsRight(generics.GenericAPIView):
 #     def post(self, request):
@@ -504,4 +523,12 @@ class EventsView(viewsets.ModelViewSet):
     queryset = EventsList.objects.all()
     serializer_class = EventsSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['date']
+    search_fields = ['date', '=category']
+
+class EventsImagesView(viewsets.ModelViewSet):
+    queryset = EventImages.objects.all()
+    serializer_class = EventImagesSerializer
+
+class ImagesofEventView(viewsets.ModelViewSet):
+    queryset = EventsList.objects.all()
+    serializer_class = ImagesofEventSerializer
